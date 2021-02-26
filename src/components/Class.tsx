@@ -17,7 +17,13 @@ const Class = ({ block }: { block: ClassType }) => {
     ).getTime();
   }
   return (
-    <Card className="card">
+    <Card
+      className={
+        compareTime(new Date(block.startTime), new Date(block.endTime))
+          ? "selected"
+          : "notSelected"
+      }
+    >
       {block.zoomLink ? (
         <a
           target="_blank"
