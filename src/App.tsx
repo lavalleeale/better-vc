@@ -48,7 +48,9 @@ function App() {
               <ImportSchedule
                 setSchedule={(e: ClassType[]) => {
                   setSchedule(e);
-                  setCookie("schedule", e);
+                  setCookie("schedule", e, {
+                    expires: new Date(new Date().getTime() + 365 * 86400000),
+                  });
                 }}
               />
             </Suspense>
