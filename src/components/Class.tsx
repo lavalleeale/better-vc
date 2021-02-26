@@ -21,6 +21,7 @@ const Class = ({ block }: { block: ClassType }) => {
       {block.zoomLink ? (
         <a
           target="_blank"
+          rel="noreferrer"
           style={{ textDecoration: "inherit", float: "right" }}
           href={block.zoomLink}
         >
