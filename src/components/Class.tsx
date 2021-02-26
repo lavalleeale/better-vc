@@ -38,13 +38,8 @@ const Class = ({ block }: { block: ClassType }) => {
           No Link
         </Button>
       )}
-      {compareTime(new Date(block.startTime), new Date(block.endTime)) && (
-        <Typography variant="h6" style={{ color: "red" }}>
-          Now
-        </Typography>
-      )}
       <Typography>Name: {block.name}</Typography>
-      <Typography>Teacher Name: {block.teacherName}</Typography>
+      <Typography>Teacher: {block.teacherName}</Typography>
       <Typography>
         Start Time: {new Date(block.startTime).toLocaleTimeString()}
       </Typography>
