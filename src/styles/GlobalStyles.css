@@ -1,0 +1,17 @@
+.card {
+  margin: 10px;
+  padding: 10px;
+}
+.spacer {
+  margin-top: 110px;
+}
+.longText {
+  width: 100%;
+}
+li {
+  margin-left: none;
+}
+ul {
+  list-style: none;
+  padding: 0;
+}
