@@ -1,4 +1,4 @@
-import { Card, Typography, Button } from "@material-ui/core";
+import { Button, Card, Typography } from "@material-ui/core";
 import PropTypes from "prop-types";
 import React from "react";
 import { ClassType } from "../@types/class";

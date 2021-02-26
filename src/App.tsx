@@ -1,13 +1,13 @@
 import {
   AppBar,
+  Card,
   createMuiTheme,
   CssBaseline,
   Toolbar,
   Typography,
-  Card,
 } from "@material-ui/core";
 import { ThemeProvider } from "@material-ui/styles";
-import { useState, lazy, Suspense } from "react";
+import { lazy, Suspense, useState } from "react";
 import { useCookies } from "react-cookie";
 import {
   HashRouter as Router,
