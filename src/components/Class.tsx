@@ -20,6 +20,7 @@ const Class = ({ block }: { block: ClassType }) => {
     <Card className="card">
       {block.zoomLink ? (
         <a
+          target="_blank"
           style={{ textDecoration: "inherit", float: "right" }}
           href={block.zoomLink}
         >
