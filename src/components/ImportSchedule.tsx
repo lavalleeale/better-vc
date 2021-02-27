@@ -115,7 +115,7 @@ const ImportSchedule = ({
                         ...localSchedule.slice(index + 1),
                       ]);
                     }}
-                    label="Link"
+                    label="Zoom Link"
                     variant="outlined"
                   />
                   <TimePicker
