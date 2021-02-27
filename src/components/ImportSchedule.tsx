@@ -136,7 +136,6 @@ const ImportSchedule = ({
                         ]);
                       }
                     }}
-                    autoOk
                   />
                   <TimePicker
                     id="End Time"
@@ -156,7 +155,6 @@ const ImportSchedule = ({
                         ]);
                       }
                     }}
-                    autoOk
                   />
                 </Card>
               </MuiPickersUtilsProvider>
