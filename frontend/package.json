@@ -1,4 +1,5 @@
 {
+  "homepage": "https://bettervc.alextesting.ninja",
   "name": "better-vc",
   "version": "0.1.0",
   "private": true,
@@ -34,7 +35,7 @@
   },
   "scripts": {
     "predeploy": "yarn build",
-    "deploy": "gh-pages -d build",
+    "deploy": "netlify deploy --prod --dir=build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "build-local": "react-scripts build",

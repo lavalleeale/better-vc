@@ -1,0 +1,11 @@
+version: '3.1'
+services:
+  db:
+    image: bettervc
+    restart: always
+    ports: 
+      - 80:80
+    volumes:
+      - ${PWD}/.env:/app/.env
+    environment:
+      NODE_ENV: production

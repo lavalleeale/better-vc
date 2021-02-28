@@ -31,7 +31,7 @@ async function main() {
   passport.serializeUser(function (user: any, done) {
     done(null, user.accessToken);
   });
-  app.use(cors({ origin: "http://localhost:3000" }));
+  app.use(cors({ origin: `${process.env.FRONTEND_URL}` }));
   app.use(passport.initialize());
   app.use(express.json());
   app.use(cookieParser());
@@ -40,7 +40,7 @@ async function main() {
       {
         clientID: process.env.GOOGLE_CLIENT_ID,
         clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-        callbackURL: "http://localhost:3002/auth/google/callback",
+        callbackURL: `${process.env.API_URL}/auth/google/callback`,
       },
       async (_accessToken, _refreshToken, profile, cb) => {
         let user = await User.findOne({ where: { userId: profile.id } });
@@ -87,13 +87,11 @@ async function main() {
         .cookie("auth", req.user.accessToken, {
           maxAge: 1 * 365 * 24 * 60 * 60 * 1000,
         })
-        .redirect("http://localhost:3000");
+        .redirect(`${process.env.FRONTEND_URL}`);
     }
   );
   app.use("/teacher", teacher);
   app.use("/student", student);
-  app.listen(3002, () => {
-    console.log("listening on localhost:3002");
-  });
+  app.listen(80);
 }
 main();
