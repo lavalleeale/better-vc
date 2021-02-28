@@ -8,6 +8,7 @@ import passport from "passport";
 import cors from "cors";
 import jwt from "jsonwebtoken";
 import teacher from "./teacher";
+import student from "./student";
 import { User } from "./entities/User";
 import cookieParser from "cookie-parser";
 
@@ -30,7 +31,7 @@ async function main() {
   passport.serializeUser(function (user: any, done) {
     done(null, user.accessToken);
   });
-  app.use(cors({ origin: "http://localhost:3000", credentials: true }));
+  app.use(cors({ origin: "http://localhost:3000" }));
   app.use(passport.initialize());
   app.use(express.json());
   app.use(cookieParser());
@@ -51,14 +52,20 @@ async function main() {
             name: profile.displayName,
             userId: profile.id,
             email: profile.emails![0].value,
+            teacher: false,
           }).save();
         }
         cb(undefined, {
           accessToken: jwt.sign(
-            { userId: user.id, name: user.name, teacher: user.teacher },
+            {
+              userId: user.id,
+              name: user.name,
+              teacher: user.teacher,
+              nickname: user.nickname,
+            },
             process.env.JWT_SECRET,
             {
-              expiresIn: "2y",
+              expiresIn: "1y",
             }
           ),
         });
@@ -84,6 +91,7 @@ async function main() {
     }
   );
   app.use("/teacher", teacher);
+  app.use("/student", student);
   app.listen(3002, () => {
     console.log("listening on localhost:3002");
   });

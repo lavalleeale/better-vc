@@ -1,11 +1,11 @@
 import {
   AppBar,
+  Button,
   IconButton,
   Menu,
   MenuItem,
   Toolbar,
   Typography,
-  Button,
 } from "@material-ui/core";
 import { AccountCircle } from "@material-ui/icons";
 import jwt_decode from "jwt-decode";
@@ -51,15 +51,21 @@ const Header = () => {
               open={Boolean(anchorEl)}
               onClose={() => setAnchorEl(null)}
             >
-              <Link style={{ textDecoration: "none" }} to="/profile">
-                <MenuItem>
-                  <Typography color="textPrimary">
-                    {jwt_decode<{ name: string }>(cookies.auth).name}
-                  </Typography>
+              <Link
+                style={{ textDecoration: "none", color: "inherit" }}
+                to="/profile"
+                onClick={() => setAnchorEl(null)}
+              >
+                <MenuItem onClick={() => setAnchorEl(null)}>
+                  {jwt_decode<{ name: string }>(cookies.auth).name}
                 </MenuItem>
               </Link>
               {jwt_decode<{ teacher: boolean }>(cookies.auth).teacher && (
-                <Link style={{ textDecoration: "none" }} to="/teacher">
+                <Link
+                  onClick={() => setAnchorEl(null)}
+                  style={{ textDecoration: "none" }}
+                  to="/teacher"
+                >
                   <Typography color="textPrimary">
                     <MenuItem>Admin</MenuItem>
                   </Typography>
