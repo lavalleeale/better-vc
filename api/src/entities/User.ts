@@ -15,8 +15,17 @@ export class User extends BaseEntity {
   @Column("text", { nullable: true })
   name!: string;
 
+  @Column("text", { nullable: true })
+  nickname!: string;
+
   @Column("text", { unique: true })
   userId!: string;
+
+  @Column("text", { unique: true })
+  email!: string;
+
+  @Column("boolean", { nullable: true })
+  teacher!: boolean;
 
   @OneToMany(() => Class, (c) => c.creator)
   todos!: Promise<Class[]>;

@@ -7,7 +7,9 @@ import { Strategy as GoogleStrategy } from "passport-google-oauth20";
 import passport from "passport";
 import cors from "cors";
 import jwt from "jsonwebtoken";
+import teacher from "./teacher";
 import { User } from "./entities/User";
+import cookieParser from "cookie-parser";
 
 const __prod__ = process.env.NODE_ENV === "production";
 require("dotenv-safe").config();
@@ -23,14 +25,15 @@ async function main() {
     entities: [join(__dirname, "./entities/*.*")],
     logging: !__prod__,
     synchronize: !__prod__,
-    dropSchema: !__prod__,
   });
   const app = express();
   passport.serializeUser(function (user: any, done) {
     done(null, user.accessToken);
   });
-  app.use(cors({ origin: "*" }));
+  app.use(cors({ origin: "http://localhost:3000", credentials: true }));
   app.use(passport.initialize());
+  app.use(express.json());
+  app.use(cookieParser());
   passport.use(
     new GoogleStrategy(
       {
@@ -47,19 +50,27 @@ async function main() {
           user = await User.create({
             name: profile.displayName,
             userId: profile.id,
+            email: profile.emails![0].value,
           }).save();
         }
         cb(undefined, {
-          accessToken: jwt.sign({ userId: user.id }, process.env.JWT_SECRET, {
-            expiresIn: "1y",
-          }),
+          accessToken: jwt.sign(
+            { userId: user.id, name: user.name, teacher: user.teacher },
+            process.env.JWT_SECRET,
+            {
+              expiresIn: "2y",
+            }
+          ),
         });
       }
     )
   );
   app.get(
     "/auth/google",
-    passport.authenticate("google", { session: false, scope: ["profile"] })
+    passport.authenticate("google", {
+      session: false,
+      scope: ["email", "profile"],
+    })
   );
   app.get(
     "/auth/google/callback",
@@ -72,6 +83,7 @@ async function main() {
         .redirect("http://localhost:3000");
     }
   );
+  app.use("/teacher", teacher);
   app.listen(3002, () => {
     console.log("listening on localhost:3002");
   });
