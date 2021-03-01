@@ -3,7 +3,9 @@ import {
   Column,
   Entity,
   JoinColumn,
-  ManyToOne,
+  JoinTable,
+  ManyToMany,
+  OneToOne,
   PrimaryGeneratedColumn,
 } from "typeorm";
 import { User } from "./User";
@@ -14,15 +16,22 @@ export class Class extends BaseEntity {
   id!: number;
 
   @Column("text")
-  text!: string;
+  name!: string;
 
-  @Column("boolean", { default: false })
-  completed!: boolean;
+  @Column("text")
+  startTime!: string;
 
-  @Column()
-  creatorId!: number;
+  @Column("text")
+  endTime!: string;
 
-  @JoinColumn({ name: "creatorId" })
-  @ManyToOne(() => User, (u) => u.todos)
-  creator!: Promise<User>;
+  @Column("text", { nullable: true })
+  zoomLink!: string;
+
+  @OneToOne(() => User)
+  @JoinColumn()
+  teacher: User;
+
+  @ManyToMany(() => User)
+  @JoinTable()
+  students: User[];
 }

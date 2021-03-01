@@ -1,3 +1,4 @@
+require("dotenv-safe").config();
 import cookieParser from "cookie-parser";
 import cors from "cors";
 import { Response } from "express";
@@ -13,7 +14,6 @@ import user from "./user";
 const express = require("express");
 
 const __prod__ = process.env.NODE_ENV === "production";
-require("dotenv-safe").config();
 
 async function main() {
   await createConnection({

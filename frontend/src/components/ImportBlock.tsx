@@ -1,5 +1,12 @@
 import DateFnsUtils from "@date-io/date-fns";
-import { Card, TextField } from "@material-ui/core";
+import {
+  Card,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  TextField,
+} from "@material-ui/core";
 import { MuiPickersUtilsProvider, TimePicker } from "@material-ui/pickers";
 import React, { Dispatch, SetStateAction } from "react";
 import { ClassType } from "../@types/class";
@@ -7,9 +14,11 @@ import { ClassType } from "../@types/class";
 const ImportBlock = ({
   block,
   setBlock,
+  teachers,
 }: {
   block: ClassType;
   setBlock: Dispatch<SetStateAction<ClassType>>;
+  teachers: Array<string>;
 }) => {
   return (
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
@@ -28,21 +37,33 @@ const ImportBlock = ({
           label="Class Name"
           variant="outlined"
         />
-        <TextField
-          id="Teacher Name"
-          value={block.teacherName}
-          style={{ marginTop: "10px" }}
+        <FormControl
           className="longText"
-          onChange={(e) => {
-            setBlock({
-              ...block,
-              teacherName: e.target.value,
-            });
-          }}
-          required
-          label="Teacher Name"
-          variant="outlined"
-        />
+          style={{ marginTop: "10px", padding: "10px" }}
+        >
+          <InputLabel>Teacher Name</InputLabel>
+          <Select
+            label="Teacher Name"
+            required
+            value={block.teacherName}
+            onChange={(e) => {
+              if (e.target.value) {
+                setBlock({
+                  ...block,
+                  teacherName: e.target.value as string,
+                });
+              }
+            }}
+          >
+            {teachers.map((teacher: string, index) => {
+              return (
+                <MenuItem key={teacher} value={teacher}>
+                  {teacher}
+                </MenuItem>
+              );
+            })}
+          </Select>
+        </FormControl>
         <TextField
           id="Zoom Link"
           value={block.zoomLink}

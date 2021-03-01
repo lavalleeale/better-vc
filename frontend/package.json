@@ -29,7 +29,7 @@
     "build-local": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "prod": "serve build -p 3000"
+    "prod": "yarn build;serve build"
   },
   "eslintConfig": {
     "extends": [

@@ -88,7 +88,10 @@ const Header = () => {
               )}
               <MenuItem
                 onClick={() => {
-                  removeCookie("auth");
+                  removeCookie("auth", {
+                    path: "/",
+                    domain: ".alextesting.ninja",
+                  });
                   setAnchorEl(null);
                 }}
               >

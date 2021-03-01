@@ -1,11 +1,4 @@
-import {
-  BaseEntity,
-  Column,
-  Entity,
-  OneToMany,
-  PrimaryGeneratedColumn,
-} from "typeorm";
-import { Class } from "./Class";
+import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity()
 export class User extends BaseEntity {
@@ -26,7 +19,4 @@ export class User extends BaseEntity {
 
   @Column("boolean", { nullable: true })
   teacher!: boolean;
-
-  @OneToMany(() => Class, (c) => c.creator)
-  todos!: Promise<Class[]>;
 }

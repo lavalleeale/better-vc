@@ -8,7 +8,7 @@ const Login = () => {
       style={{
         margin: "auto",
         width: "75%",
-        height: "40vh",
+        height: "50vh",
         textAlign: "center",
         position: "relative",
       }}
@@ -17,7 +17,7 @@ const Login = () => {
         Final Name
       </Typography>
       <Button
-        style={{ padding: "100px" }}
+        style={{ padding: "10vh" }}
         variant="outlined"
         onClick={() => window.open(`${API_BASE_URL}/auth/google`, "_self")}
       >
