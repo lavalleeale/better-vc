@@ -1,14 +1,24 @@
 import { Button, Card, TextField, Typography } from "@material-ui/core";
 import jwt_decode from "jwt-decode";
-import React, { FormEvent, useState } from "react";
+import React, { FormEvent, useState, useEffect } from "react";
 import { useCookies } from "react-cookie";
 import { API_BASE_URL } from "../constants";
 
 const Profile = () => {
   const [cookies] = useCookies(["auth"]);
-  const [nickname, setNickname] = useState(
-    (jwt_decode(cookies.auth) as { nickname: string }).nickname
-  );
+  const [info, setInfo] = useState({ nickname: "" } as { nickname: string });
+  useEffect(() => {
+    async function getData() {
+      const response = await fetch(`${API_BASE_URL}/user/getInfo`, {
+        credentials: "omit",
+        headers: {
+          jwt: cookies.auth,
+        },
+      });
+      setInfo(await response.json());
+    }
+    getData();
+  }, [cookies.auth]);
   function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     fetch(`${API_BASE_URL}/user/updateNickname`, {
@@ -19,7 +29,7 @@ const Profile = () => {
         jwt: cookies.auth,
       },
       body: JSON.stringify({
-        nickname: nickname,
+        nickname: info.nickname,
       }),
     });
   }
@@ -30,9 +40,9 @@ const Profile = () => {
       </Typography>
       <form onSubmit={onSubmit}>
         <TextField
-          value={nickname}
+          value={info.nickname}
           onChange={(e) => {
-            setNickname(e.target.value);
+            setInfo({ ...info, nickname: e.target.value });
           }}
           style={{ marginTop: "10px" }}
           required

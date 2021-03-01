@@ -9,7 +9,7 @@ import {
 } from "@material-ui/core";
 import { AccountCircle } from "@material-ui/icons";
 import jwt_decode from "jwt-decode";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import { Link } from "react-router-dom";
 import { API_BASE_URL } from "../constants";
@@ -17,6 +17,21 @@ import { API_BASE_URL } from "../constants";
 const Header = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [cookies, , removeCookie] = useCookies(["auth"]);
+  const [info, setInfo] = useState({ nickname: "" } as { nickname: string });
+  useEffect(() => {
+    async function getData() {
+      const response = await fetch(`${API_BASE_URL}/user/getInfo`, {
+        credentials: "omit",
+        headers: {
+          jwt: cookies.auth,
+        },
+      });
+      setInfo(await response.json());
+    }
+    if (cookies.auth) {
+      getData();
+    }
+  }, [cookies.auth]);
   return (
     <AppBar position="fixed" color="inherit" style={{ padding: "10px" }}>
       <Toolbar>
@@ -57,7 +72,7 @@ const Header = () => {
                 onClick={() => setAnchorEl(null)}
               >
                 <MenuItem onClick={() => setAnchorEl(null)}>
-                  {jwt_decode<{ name: string }>(cookies.auth).name}
+                  {info.nickname}
                 </MenuItem>
               </Link>
               {jwt_decode<{ teacher: boolean }>(cookies.auth).teacher && (
@@ -67,15 +82,13 @@ const Header = () => {
                   to="/teacher"
                 >
                   <Typography color="textPrimary">
-                    <MenuItem>Admin</MenuItem>
+                    <MenuItem>Teacher</MenuItem>
                   </Typography>
                 </Link>
               )}
               <MenuItem
                 onClick={() => {
-                  removeCookie("auth", {
-                    domain: ".alextesting.ninja",
-                  });
+                  removeCookie("auth");
                   setAnchorEl(null);
                 }}
               >

@@ -53,15 +53,14 @@ async function main() {
             userId: profile.id,
             email: profile.emails![0].value,
             teacher: false,
+            nickname: profile.displayName.split(" ")[0],
           }).save();
         }
         cb(undefined, {
           accessToken: jwt.sign(
             {
               id: user.id,
-              name: user.name,
               teacher: user.teacher,
-              nickname: user.nickname,
             },
             process.env.JWT_SECRET,
             {
