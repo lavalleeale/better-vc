@@ -1,1 +1,1 @@
-export const API_BASE_URL = "https://api.bettervc.alextesting.ninja";
+export const API_BASE_URL = "https://bettervc-api.alextesting.ninja";
