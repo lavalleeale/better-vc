@@ -11,7 +11,7 @@ const Profile = () => {
   );
   function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    fetch(`${API_BASE_URL}/student/updateNickname`, {
+    fetch(`${API_BASE_URL}/user/updateNickname`, {
       method: "PUT",
       credentials: "omit",
       headers: {

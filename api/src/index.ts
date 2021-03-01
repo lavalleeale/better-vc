@@ -1,16 +1,16 @@
-import "reflect-metadata";
-const express = require("express");
-import { Response } from "express";
-import { join } from "path";
-import { createConnection } from "typeorm";
-import { Strategy as GoogleStrategy } from "passport-google-oauth20";
-import passport from "passport";
-import cors from "cors";
-import jwt from "jsonwebtoken";
-import teacher from "./teacher";
-import student from "./student";
-import { User } from "./entities/User";
 import cookieParser from "cookie-parser";
+import cors from "cors";
+import { Response } from "express";
+import jwt from "jsonwebtoken";
+import passport from "passport";
+import { Strategy as GoogleStrategy } from "passport-google-oauth20";
+import { join } from "path";
+import "reflect-metadata";
+import { createConnection } from "typeorm";
+import { User } from "./entities/User";
+import teacher from "./teacher";
+import user from "./user";
+const express = require("express");
 
 const __prod__ = process.env.NODE_ENV === "production";
 require("dotenv-safe").config();
@@ -58,7 +58,7 @@ async function main() {
         cb(undefined, {
           accessToken: jwt.sign(
             {
-              userId: user.id,
+              id: user.id,
               name: user.name,
               teacher: user.teacher,
               nickname: user.nickname,
@@ -86,14 +86,14 @@ async function main() {
       res
         .cookie("auth", req.user.accessToken, {
           maxAge: 1 * 365 * 24 * 60 * 60 * 1000,
-          domain: ".alextesting.ninja",
-          secure: true,
+          domain: __prod__ ? ".alextesting.ninja" : "localhost",
+          secure: __prod__,
         })
         .redirect(`${process.env.FRONTEND_URL}`);
     }
   );
   app.use("/teacher", teacher);
-  app.use("/student", student);
+  app.use("/user", user);
   app.listen(80);
 }
 main();
