@@ -7,7 +7,7 @@ const Schedule = () => {
         /*schedule*/ [].map((block, index) => {
           return (
             <li key={index}>
-              <Class block={block} />
+              <Class teacher={false} block={block} />
             </li>
           );
         })

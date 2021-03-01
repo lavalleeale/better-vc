@@ -1,9 +1,7 @@
 import { Button, Card, Typography } from "@material-ui/core";
-import PropTypes from "prop-types";
-import React from "react";
 import { ClassType } from "../@types/class";
 
-const Class = ({ block }: { block: ClassType }) => {
+const Class = ({ block, teacher }: { block: ClassType; teacher: boolean }) => {
   function compareTime(startTime: Date, endTime: Date) {
     const currentTime = new Date();
     return (
@@ -24,40 +22,35 @@ const Class = ({ block }: { block: ClassType }) => {
           : "notSelected"
       }
     >
-      {block.zoomLink ? (
-        <a
-          target="_blank"
-          rel="noreferrer"
-          style={{ textDecoration: "inherit", float: "right" }}
-          href={block.zoomLink}
-        >
-          <Button variant="outlined">Zoom Link</Button>
-        </a>
-      ) : (
-        <Button variant="outlined" disabled style={{ float: "right" }}>
-          No Link
-        </Button>
+      {!teacher && (
+        <>
+          {block.zoomLink ? (
+            <a
+              target="_blank"
+              rel="noreferrer"
+              style={{ textDecoration: "inherit", float: "right" }}
+              href={block.zoomLink}
+            >
+              <Button variant="outlined">Zoom Link</Button>
+            </a>
+          ) : (
+            <Button variant="outlined" disabled style={{ float: "right" }}>
+              No Link
+            </Button>
+          )}
+        </>
       )}
       <Typography>Name: {block.name}</Typography>
-      <Typography>Teacher: {block.teacherName}</Typography>
+      <Typography>Teacher: {block.teacher}</Typography>
       <Typography>
         Start Time: {new Date(block.startTime).toLocaleTimeString()}
       </Typography>
       <Typography>
         End Time: {new Date(block.endTime).toLocaleTimeString()}
       </Typography>
+      {teacher && <Typography>Zoom Link: {block.zoomLink}</Typography>}
     </Card>
   );
-};
-
-Class.propTypes = {
-  block: PropTypes.shape({
-    name: PropTypes.string,
-    teachernName: PropTypes.string,
-    id: PropTypes.number,
-    startTime: PropTypes.string,
-    endTime: PropTypes.string,
-  }),
 };
 
 export default Class;

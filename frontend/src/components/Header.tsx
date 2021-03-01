@@ -20,18 +20,28 @@ const Header = () => {
   const [info, setInfo] = useState({ nickname: "" } as { nickname: string });
   useEffect(() => {
     async function getData() {
-      const response = await fetch(`${API_BASE_URL}/user/getInfo`, {
-        credentials: "omit",
-        headers: {
-          jwt: cookies.auth,
-        },
-      });
-      setInfo(await response.json());
+      try {
+        const response = await fetch(`${API_BASE_URL}/user/getInfo`, {
+          credentials: "omit",
+          headers: {
+            jwt: cookies.auth,
+          },
+        });
+        setInfo(await response.json());
+      } catch {
+        removeCookie("auth", {
+          path: "/",
+          domain:
+            process.env.NODE_ENV === "production"
+              ? ".alextesting.ninja"
+              : "localhost",
+        });
+      }
     }
     if (cookies.auth) {
       getData();
     }
-  }, [cookies.auth]);
+  }, [cookies.auth, removeCookie]);
   return (
     <AppBar position="fixed" color="inherit" style={{ padding: "10px" }}>
       <Toolbar>
@@ -40,6 +50,11 @@ const Header = () => {
         </Typography>
         {cookies.auth ? (
           <div>
+            {jwt_decode<{ teacher: boolean }>(cookies.auth).teacher && (
+              <Link style={{ textDecoration: "none" }} to="/teacher">
+                <Button variant="outlined">Dashboard</Button>
+              </Link>
+            )}
             <IconButton
               aria-label="account of current user"
               aria-controls="menu-appbar"
@@ -75,22 +90,14 @@ const Header = () => {
                   {info.nickname}
                 </MenuItem>
               </Link>
-              {jwt_decode<{ teacher: boolean }>(cookies.auth).teacher && (
-                <Link
-                  onClick={() => setAnchorEl(null)}
-                  style={{ textDecoration: "none" }}
-                  to="/teacher"
-                >
-                  <Typography color="textPrimary">
-                    <MenuItem>Teacher</MenuItem>
-                  </Typography>
-                </Link>
-              )}
               <MenuItem
                 onClick={() => {
                   removeCookie("auth", {
                     path: "/",
-                    domain: ".alextesting.ninja",
+                    domain:
+                      process.env.NODE_ENV === "production"
+                        ? ".alextesting.ninja"
+                        : "localhost",
                   });
                   setAnchorEl(null);
                 }}

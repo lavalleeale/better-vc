@@ -5,7 +5,7 @@ import {
   JoinColumn,
   JoinTable,
   ManyToMany,
-  OneToOne,
+  ManyToOne,
   PrimaryGeneratedColumn,
 } from "typeorm";
 import { User } from "./User";
@@ -13,21 +13,21 @@ import { User } from "./User";
 @Entity()
 export class Class extends BaseEntity {
   @PrimaryGeneratedColumn()
-  id!: number;
+  id: number;
 
   @Column("text")
-  name!: string;
+  name: string;
 
   @Column("text")
-  startTime!: string;
+  startTime: string;
 
   @Column("text")
-  endTime!: string;
+  endTime: string;
 
   @Column("text", { nullable: true })
   zoomLink!: string;
 
-  @OneToOne(() => User)
+  @ManyToOne(() => User)
   @JoinColumn()
   teacher: User;
 

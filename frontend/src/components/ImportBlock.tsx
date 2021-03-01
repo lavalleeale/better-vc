@@ -45,23 +45,21 @@ const ImportBlock = ({
           <Select
             label="Teacher Name"
             required
-            value={block.teacherName}
+            value={block.teacher}
             onChange={(e) => {
               if (e.target.value) {
                 setBlock({
                   ...block,
-                  teacherName: e.target.value as string,
+                  teacher: e.target.value as string,
                 });
               }
             }}
           >
-            {teachers.map((teacher: string, index) => {
-              return (
-                <MenuItem key={teacher} value={teacher}>
-                  {teacher}
-                </MenuItem>
-              );
-            })}
+            {teachers.map((teacher: string) => (
+              <MenuItem key={teacher} value={teacher}>
+                {teacher}
+              </MenuItem>
+            ))}
           </Select>
         </FormControl>
         <TextField

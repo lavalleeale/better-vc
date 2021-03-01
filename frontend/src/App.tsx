@@ -10,6 +10,7 @@ const AddTeacher = lazy(() => import("./components/AddTeacher"));
 const Profile = lazy(() => import("./components/Profile"));
 const Schedule = lazy(() => import("./components/Schedule"));
 const AddClass = lazy(() => import("./components/AddClass"));
+const ManageClasses = lazy(() => import("./components/ManageClasses"));
 
 const theme = createMuiTheme({
   palette: {
@@ -53,6 +54,11 @@ function App() {
             <Route path="/teacher/addTeacher">
               <Suspense fallback={<Card className="card">Loading...</Card>}>
                 <AddTeacher />
+              </Suspense>
+            </Route>
+            <Route path="/teacher/manageClasses">
+              <Suspense fallback={<Card className="card">Loading...</Card>}>
+                <ManageClasses />
               </Suspense>
             </Route>
           </Switch>

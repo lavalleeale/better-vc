@@ -1,6 +1,6 @@
 export type ClassType = {
   name: string;
-  teacherName: string;
+  teacher: string;
   startTime: string;
   endTime: string;
   zoomLink: string;

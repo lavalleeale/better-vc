@@ -48,7 +48,12 @@ router.get("/getClasses", async (req: Request, res: Response) => {
         teacher: boolean;
       };
       if (token.teacher) {
-        return res.status(200).send((await Class.find()).map((a) => a.name));
+        return res.status(200).send(
+          (await Class.find({ relations: ["teacher"] })).map((block) => ({
+            ...block,
+            teacher: block.teacher.name,
+          }))
+        );
       }
     }
   }
@@ -68,13 +73,13 @@ router.post("/addClass", async (req: Request, res: Response) => {
             startTime: req.body.startTime,
             endTime: req.body.endTime,
             zoomLink: req.body.zoomLink,
-            teacher: await User.findOne({ name: req.body.teacher }),
+            teacher: await User.findOne({ where: { name: req.body.teacher } }),
           }).save()
         );
       }
     }
   }
-  return res.status(401).send("no auth");
+  return res.status(401).send("not authed");
 });
 
 export default router;

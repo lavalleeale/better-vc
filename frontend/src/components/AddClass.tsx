@@ -10,7 +10,7 @@ const AddClass = () => {
   const [teachers, setTeachers] = useState([]);
   const [block, setBlock] = useState({
     name: "",
-    teacherName: "",
+    teacher: "",
     startTime: new Date(0, 0, 0, 8, 0, 0, 0).toLocaleString(),
     endTime: new Date(0, 0, 0, 8, 0, 0, 0).toLocaleString(),
     link: "",
@@ -19,22 +19,15 @@ const AddClass = () => {
   } as ClassType);
   async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const response = await fetch(`${API_BASE_URL}/teacher/addClass`, {
+    await fetch(`${API_BASE_URL}/teacher/addClass`, {
       method: "POST",
       credentials: "omit",
       headers: {
         jwt: cookies.auth,
         "content-type": "application/json",
       },
-      body: JSON.stringify({
-        name: block.name,
-        startTime: block.startTime,
-        endTime: block.endTime,
-        zoomLink: block.zoomLink,
-        teacher: block.teacherName,
-      }),
+      body: JSON.stringify(block),
     });
-    console.log(await response.text());
   }
   useEffect(() => {
     async function getData() {
