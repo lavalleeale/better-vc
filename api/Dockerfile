@@ -22,7 +22,7 @@ COPY . ./
 
 RUN yarn compile
 
-FROM amd64/node:14-alpine as run
+FROM node:14-alpine as run
 
 WORKDIR /app
 
