@@ -86,7 +86,7 @@ const ImportBlock = ({
             if (e) {
               setBlock({
                 ...block,
-                startTime: e.toLocaleTimeString(),
+                startTime: e.toLocaleString(),
               });
             }
           }}
@@ -101,7 +101,7 @@ const ImportBlock = ({
             if (e) {
               setBlock({
                 ...block,
-                endTime: e.toLocaleTimeString(),
+                endTime: e.toLocaleString(),
               });
             }
           }}
