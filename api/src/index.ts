@@ -87,6 +87,7 @@ async function main() {
         .cookie("auth", req.user.accessToken, {
           maxAge: 1 * 365 * 24 * 60 * 60 * 1000,
           domain: ".alextesting.ninja",
+          secure: true,
         })
         .redirect(`${process.env.FRONTEND_URL}`);
     }

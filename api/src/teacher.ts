@@ -6,8 +6,9 @@ import jwt from "jsonwebtoken";
 var router = express.Router();
 
 router.post("/addTeacher", async (req: Request, res: Response) => {
-  if (req.cookies.auth) {
-    const token = jwt.verify(req.cookies.auth, process.env.JWT_SECRET) as {
+  const rawToken = req.headers.jwt as string;
+  if (rawToken) {
+    const token = jwt.verify(rawToken, process.env.JWT_SECRET) as {
       teacher: boolean;
     };
     if (token.teacher) {
