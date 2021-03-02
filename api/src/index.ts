@@ -39,7 +39,7 @@ async function main() {
   app.use(cookieParser());
   const authLimiter = rateLimit({
     windowMs: 15 * 60 * 1000, // 15 minutes
-    max: 15,
+    max: 100,
   });
 
   // only apply to requests that begin with /api/
