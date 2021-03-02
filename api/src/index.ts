@@ -43,23 +43,19 @@ async function main() {
         callbackURL: `${process.env.API_URL}/auth/google/callback`,
       },
       async (_accessToken, _refreshToken, profile, cb) => {
-        let user = await User.findOne({ where: { userId: profile.id } });
+        let user = await User.findOne({
+          where: { email: profile.emails![0].value },
+        });
         if (user) {
           user.name = profile.displayName;
           await user.save();
         } else {
-          user = await User.create({
-            name: profile.displayName,
-            userId: profile.id,
-            email: profile.emails![0].value,
-            teacher: false,
-            nickname: profile.displayName.split(" ")[0],
-          }).save();
+          return cb();
         }
-        cb(undefined, {
+        return cb(undefined, {
           accessToken: jwt.sign(
             {
-              id: user.id,
+              email: user.email,
               teacher: user.teacher,
             },
             process.env.JWT_SECRET,

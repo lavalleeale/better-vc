@@ -4,9 +4,9 @@ import React, { lazy, Suspense } from "react";
 import { useCookies } from "react-cookie";
 import { HashRouter as Router, Route, Switch } from "react-router-dom";
 import Header from "./components/Header";
+const AddStudent = lazy(() => import("./components/AddUser"));
 const TeacherDash = lazy(() => import("./components/TeacherDash"));
 const Login = lazy(() => import("./components/Login"));
-const AddTeacher = lazy(() => import("./components/AddTeacher"));
 const Profile = lazy(() => import("./components/Profile"));
 const Schedule = lazy(() => import("./components/Schedule"));
 const AddClass = lazy(() => import("./components/AddClass"));
@@ -53,7 +53,12 @@ function App() {
             </Route>
             <Route path="/teacher/addTeacher">
               <Suspense fallback={<Card className="card">Loading...</Card>}>
-                <AddTeacher />
+                <AddStudent teacher={true} />
+              </Suspense>
+            </Route>
+            <Route path="/teacher/addStudent">
+              <Suspense fallback={<Card className="card">Loading...</Card>}>
+                <AddStudent teacher={false} />
               </Suspense>
             </Route>
             <Route path="/teacher/manageClasses">

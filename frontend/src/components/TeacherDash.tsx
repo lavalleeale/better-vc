@@ -18,6 +18,17 @@ const TeacherDash = () => {
         </Button>
       </Link>
       <Link
+        to="/teacher/addStudent"
+        style={{ textDecoration: "none", color: "inherit" }}
+      >
+        <Button
+          variant="outlined"
+          style={{ width: "100%", padding: "10px", marginTop: "10px" }}
+        >
+          <Typography>Add Student</Typography>
+        </Button>
+      </Link>
+      <Link
         to="/teacher/addClass"
         style={{ textDecoration: "none", color: "inherit" }}
       >

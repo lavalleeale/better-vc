@@ -1,4 +1,4 @@
-import { Button, Card } from "@material-ui/core";
+import { Button, Card, Typography } from "@material-ui/core";
 import React, { FormEvent, useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import { ClassType } from "../@types/class";
@@ -8,18 +8,18 @@ import ImportBlock from "./ImportBlock";
 const AddClass = () => {
   const [cookies] = useCookies();
   const [teachers, setTeachers] = useState([]);
+  const [error, setError] = useState("");
   const [block, setBlock] = useState({
     name: "",
     teacher: "",
     startTime: new Date(0, 0, 0, 8, 0, 0, 0).toLocaleString(),
     endTime: new Date(0, 0, 0, 8, 0, 0, 0).toLocaleString(),
-    link: "",
     zoomLink: "",
     classroomLink: "",
   } as ClassType);
   async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    await fetch(`${API_BASE_URL}/teacher/addClass`, {
+    const response = await fetch(`${API_BASE_URL}/teacher/addClass`, {
       method: "POST",
       credentials: "omit",
       headers: {
@@ -28,6 +28,18 @@ const AddClass = () => {
       },
       body: JSON.stringify(block),
     });
+    if (response.ok) {
+      setBlock({
+        name: "",
+        teacher: "",
+        startTime: new Date(0, 0, 0, 8, 0, 0, 0).toLocaleString(),
+        endTime: new Date(0, 0, 0, 8, 0, 0, 0).toLocaleString(),
+        zoomLink: "",
+        classroomLink: "",
+      });
+    } else {
+      setError(await response.text());
+    }
   }
   useEffect(() => {
     async function getData() {
@@ -42,14 +54,25 @@ const AddClass = () => {
     getData();
   }, [cookies.auth]);
   return (
-    <form onSubmit={(e) => onSubmit(e)}>
-      <ImportBlock block={block} setBlock={setBlock} teachers={teachers} />
-      <Card className="card">
-        <Button style={{ float: "right" }} variant="outlined" type="submit">
-          add class
-        </Button>
-      </Card>
-    </form>
+    <>
+      {error && (
+        <Card className="card">
+          <Typography color="error" variant="h4">
+            {error === "QueryFailedError"
+              ? "An internal server error occured. Is this class name in use?"
+              : "An unkown error occured. Try again later?"}
+          </Typography>
+        </Card>
+      )}
+      <form onSubmit={(e) => onSubmit(e)}>
+        <ImportBlock block={block} setBlock={setBlock} teachers={teachers} />
+        <Card className="card">
+          <Button style={{ float: "right" }} variant="outlined" type="submit">
+            add class
+          </Button>
+        </Card>
+      </form>
+    </>
   );
 };
 

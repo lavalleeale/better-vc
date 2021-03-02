@@ -15,7 +15,7 @@ export class Class extends BaseEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column("text")
+  @Column("text", { unique: true })
   name: string;
 
   @Column("text")

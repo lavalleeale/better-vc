@@ -9,13 +9,16 @@ router.put("/updateNickname", async (req: Request, res: Response) => {
   if (typeof req.headers.jwt === "string") {
     const rawToken = req.headers.jwt as string;
     const token = jwt.verify(rawToken, process.env.JWT_SECRET) as {
-      id: number;
+      email: string;
     };
-    if (token.id) {
+    if (token.email) {
       return res
         .status(200)
         .send(
-          await User.update({ id: token.id }, { nickname: req.body.nickname })
+          await User.update(
+            { email: token.email },
+            { nickname: req.body.nickname }
+          )
         );
     }
   }
@@ -26,13 +29,15 @@ router.get("/getInfo", async (req: Request, res: Response) => {
     const rawToken = req.headers.jwt as string;
     try {
       const token = jwt.verify(rawToken, process.env.JWT_SECRET) as {
-        id: number;
+        email: number;
       };
-      if (token.id) {
+      if (token.email) {
         return res
           .status(200)
           .send(
-            JSON.stringify(await User.findOne({ where: { id: token.id } }))
+            JSON.stringify(
+              await User.findOne({ where: { email: token.email } })
+            )
           );
       }
     } catch {}
