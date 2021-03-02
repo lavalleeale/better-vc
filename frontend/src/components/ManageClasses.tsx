@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import { API_BASE_URL } from "../constants";
 import { ClassType } from "../@types/class";
-import Class from "./Class";
+import EditClass from "./EditClass";
 
 const ManageClasses = () => {
   const [cookies, , removeCookie] = useCookies(["auth"]);
@@ -36,7 +36,7 @@ const ManageClasses = () => {
       {classes.map((block: ClassType, index) => {
         return (
           <li key={index}>
-            <Class teacher={true} block={block} />
+            <EditClass block={block} />
           </li>
         );
       })}

@@ -1,4 +1,4 @@
-import Class from "./Class";
+import ViewClass from "./ViewClass";
 
 const Schedule = () => {
   return (
@@ -7,7 +7,7 @@ const Schedule = () => {
         /*schedule*/ [].map((block, index) => {
           return (
             <li key={index}>
-              <Class teacher={false} block={block} />
+              <ViewClass teacher={false} block={block} setEditing={() => {}} />
             </li>
           );
         })

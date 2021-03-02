@@ -11,6 +11,7 @@ const Login = () => {
         height: "50vh",
         textAlign: "center",
         position: "relative",
+        padding: "10px",
       }}
     >
       <Typography variant="h3" style={{ margin: "auto" }}>

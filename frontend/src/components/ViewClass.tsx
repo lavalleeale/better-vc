@@ -1,7 +1,16 @@
-import { Button, Card, Typography } from "@material-ui/core";
+import { Button, Card, IconButton, Typography } from "@material-ui/core";
 import { ClassType } from "../@types/class";
+import { Edit } from "@material-ui/icons";
 
-const Class = ({ block, teacher }: { block: ClassType; teacher: boolean }) => {
+const ViewClass = ({
+  block,
+  teacher,
+  setEditing,
+}: {
+  block: ClassType;
+  teacher: boolean;
+  setEditing(value: boolean): void;
+}) => {
   function compareTime(startTime: Date, endTime: Date) {
     const currentTime = new Date();
     return (
@@ -40,6 +49,9 @@ const Class = ({ block, teacher }: { block: ClassType; teacher: boolean }) => {
           )}
         </>
       )}
+      <IconButton onClick={() => setEditing(true)} style={{ float: "right" }}>
+        <Edit />
+      </IconButton>
       <Typography>Name: {block.name}</Typography>
       <Typography>Teacher: {block.teacher}</Typography>
       <Typography>
@@ -53,4 +65,4 @@ const Class = ({ block, teacher }: { block: ClassType; teacher: boolean }) => {
   );
 };
 
-export default Class;
+export default ViewClass;

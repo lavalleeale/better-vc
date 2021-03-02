@@ -5,18 +5,25 @@ import { ClassType } from "../@types/class";
 import { API_BASE_URL } from "../constants";
 import ImportBlock from "./ImportBlock";
 
-const AddClass = () => {
+const AddClass = ({ initBlock }: { initBlock?: ClassType }) => {
   const [cookies] = useCookies();
   const [teachers, setTeachers] = useState([]);
   const [error, setError] = useState("");
-  const [block, setBlock] = useState({
-    name: "",
-    teacher: "",
-    startTime: new Date(0, 0, 0, 8, 0, 0, 0).toLocaleString(),
-    endTime: new Date(0, 0, 0, 8, 0, 0, 0).toLocaleString(),
-    zoomLink: "",
-    classroomLink: "",
-  } as ClassType);
+  const [block, setBlock] = useState({} as ClassType);
+  if (Object.keys(block).length === 0) {
+    if (initBlock) {
+      setBlock(initBlock);
+    } else {
+      setBlock({
+        name: "",
+        teacher: "",
+        startTime: new Date(0, 0, 0, 8, 0, 0, 0).toLocaleString(),
+        endTime: new Date(0, 0, 0, 8, 0, 0, 0).toLocaleString(),
+        zoomLink: "",
+        classroomLink: "",
+      });
+    }
+  }
   async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const response = await fetch(`${API_BASE_URL}/teacher/addClass`, {
@@ -68,7 +75,7 @@ const AddClass = () => {
         <ImportBlock block={block} setBlock={setBlock} teachers={teachers} />
         <Card className="card">
           <Button style={{ float: "right" }} variant="outlined" type="submit">
-            add class
+            {initBlock ? "save class" : "add class"}
           </Button>
         </Card>
       </form>

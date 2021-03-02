@@ -20,6 +20,7 @@ const ImportBlock = ({
   setBlock: Dispatch<SetStateAction<ClassType>>;
   teachers: Array<string>;
 }) => {
+  console.log(block.teacher);
   return (
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
       <Card className="card">
