@@ -7,7 +7,9 @@
     "compile": "tsc",
     "watch": "tsc -w",
     "start": "concurrently \"yarn watch\" \"nodemon dist\"",
-    "prod": "NODE_ENV=production node dist"
+    "prod": "NODE_ENV=production node dist",
+    "predeploy":"docker build . -t ghcr.io/lavalleeale/better-vc/better-vc:latest",
+    "deploy": "docker push ghcr.io/lavalleeale/better-vc/better-vc:latest"
   },
   "keywords": [],
   "author": "",

@@ -49,8 +49,15 @@ async function main() {
         if (user) {
           user.name = profile.displayName;
           await user.save();
-        } else {
+        } else if (__prod__) {
           return cb();
+        } else {
+          user = await User.create({
+            name: profile.displayName,
+            nickname: profile.displayName.split(" ")[0],
+            teacher: true,
+            email: profile.emails![0].value,
+          }).save();
         }
         return cb(undefined, {
           accessToken: jwt.sign(

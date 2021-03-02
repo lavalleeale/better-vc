@@ -47,7 +47,7 @@ const TeacherDash = () => {
           variant="outlined"
           style={{ width: "100%", padding: "10px", marginTop: "10px" }}
         >
-          <Typography>Mange Classes</Typography>
+          <Typography>Manage Classes</Typography>
         </Button>
       </Link>
       <Button
