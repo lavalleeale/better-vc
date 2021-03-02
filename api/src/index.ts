@@ -11,6 +11,8 @@ import { createConnection } from "typeorm";
 import { User } from "./entities/User";
 import teacher from "./teacher";
 import user from "./user";
+import rateLimit from "express-rate-limit";
+
 const express = require("express");
 
 const __prod__ = process.env.NODE_ENV === "production";
@@ -35,6 +37,13 @@ async function main() {
   app.use(passport.initialize());
   app.use(express.json());
   app.use(cookieParser());
+  const authLimiter = rateLimit({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    max: 15,
+  });
+
+  // only apply to requests that begin with /api/
+  app.use("/auth/", authLimiter);
   passport.use(
     new GoogleStrategy(
       {
