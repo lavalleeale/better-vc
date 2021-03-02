@@ -1,6 +1,6 @@
 import { Card, createMuiTheme, CssBaseline } from "@material-ui/core";
 import { ThemeProvider } from "@material-ui/styles";
-import React, { lazy, Suspense } from "react";
+import React, { lazy, Suspense, useState } from "react";
 import { useCookies } from "react-cookie";
 import { HashRouter as Router, Route, Switch } from "react-router-dom";
 import Header from "./components/Header";
@@ -12,16 +12,26 @@ const Schedule = lazy(() => import("./components/Schedule"));
 const AddClass = lazy(() => import("./components/AddClass"));
 const ManageClasses = lazy(() => import("./components/ManageClasses"));
 
-const theme = createMuiTheme({
+const darkThemeMq = window.matchMedia("(prefers-color-scheme: dark)");
+let darkTheme = createMuiTheme({
   palette: {
     type: "dark",
   },
 });
+let lightTheme = createMuiTheme({
+  palette: {
+    type: "light",
+  },
+});
 
 function App() {
+  const [darkMode, setDarkMode] = useState(darkThemeMq.matches);
+  darkThemeMq.addEventListener("change", function (evt) {
+    setDarkMode(evt.matches);
+  });
   const [cookies] = useCookies(["auth"]);
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
       <CssBaseline />
       <Router>
         <div className="spacer" />

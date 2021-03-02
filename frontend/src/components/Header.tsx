@@ -45,7 +45,7 @@ const Header = () => {
   return (
     <AppBar position="fixed" color="inherit" style={{ padding: "10px" }}>
       <Toolbar>
-        <Typography style={{ flexGrow: 1 }} variant="h6">
+        <Typography style={{ flexGrow: 1 }} variant="h3">
           The Better Veracross
         </Typography>
         {cookies.auth ? (
