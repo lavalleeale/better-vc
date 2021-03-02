@@ -9,7 +9,7 @@ import {
 } from "@material-ui/core";
 import { AccountCircle } from "@material-ui/icons";
 import jwt_decode from "jwt-decode";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useCookies } from "react-cookie";
 import { Link } from "react-router-dom";
 import { API_BASE_URL } from "../constants";
@@ -17,31 +17,6 @@ import { API_BASE_URL } from "../constants";
 const Header = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [cookies, , removeCookie] = useCookies(["auth"]);
-  const [info, setInfo] = useState({ nickname: "" } as { nickname: string });
-  useEffect(() => {
-    async function getData() {
-      try {
-        const response = await fetch(`${API_BASE_URL}/user/getInfo`, {
-          credentials: "omit",
-          headers: {
-            jwt: cookies.auth,
-          },
-        });
-        setInfo(await response.json());
-      } catch {
-        removeCookie("auth", {
-          path: "/",
-          domain:
-            process.env.NODE_ENV === "production"
-              ? ".alextesting.ninja"
-              : "localhost",
-        });
-      }
-    }
-    if (cookies.auth) {
-      getData();
-    }
-  }, [cookies.auth, removeCookie]);
   return (
     <AppBar position="fixed" color="inherit" style={{ padding: "10px" }}>
       <Toolbar>
@@ -87,7 +62,7 @@ const Header = () => {
                 onClick={() => setAnchorEl(null)}
               >
                 <MenuItem onClick={() => setAnchorEl(null)}>
-                  {info.nickname}
+                  {jwt_decode<{ nickname: string }>(cookies.auth).nickname}
                 </MenuItem>
               </Link>
               <MenuItem

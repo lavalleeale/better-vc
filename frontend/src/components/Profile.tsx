@@ -1,29 +1,19 @@
 import { Button, Card, TextField, Typography } from "@material-ui/core";
 import jwt_decode from "jwt-decode";
-import React, { FormEvent, useState, useEffect } from "react";
+import React, { FormEvent, useState } from "react";
 import { useCookies } from "react-cookie";
 import { API_BASE_URL } from "../constants";
 
 const Profile = () => {
   const [cookies] = useCookies(["auth"]);
-  const [info, setInfo] = useState({ nickname: "" } as { nickname: string });
-  useEffect(() => {
-    async function getData() {
-      const response = await fetch(`${API_BASE_URL}/user/getInfo`, {
-        credentials: "omit",
-        headers: {
-          jwt: cookies.auth,
-        },
-      });
-      setInfo(await response.json());
-    }
-    getData();
-  }, [cookies.auth]);
+  const [info, setInfo] = useState({
+    nickname: jwt_decode<{ nickname: string }>(cookies.auth).nickname,
+  });
   function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     fetch(`${API_BASE_URL}/user/updateNickname`, {
       method: "PUT",
-      credentials: "omit",
+      credentials: "include",
       headers: {
         "content-type": "application/json",
         jwt: cookies.auth,

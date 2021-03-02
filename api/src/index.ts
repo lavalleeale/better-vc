@@ -31,7 +31,7 @@ async function main() {
   passport.serializeUser(function (user: any, done) {
     done(null, user.accessToken);
   });
-  app.use(cors({ origin: `${process.env.FRONTEND_URL}` }));
+  app.use(cors({ origin: `${process.env.FRONTEND_URL}`, credentials: true }));
   app.use(passport.initialize());
   app.use(express.json());
   app.use(cookieParser());
@@ -64,6 +64,7 @@ async function main() {
             {
               email: user.email,
               teacher: user.teacher,
+              nickname: user.nickname,
             },
             process.env.JWT_SECRET,
             {
