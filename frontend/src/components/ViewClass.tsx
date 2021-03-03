@@ -40,17 +40,28 @@ const ViewClass = ({
               style={{ textDecoration: "inherit", float: "right" }}
               href={block.zoomLink}
             >
-              <Button variant="outlined">Zoom Link</Button>
+              <Button aria-label="Zoom Link" variant="outlined">
+                Zoom Link
+              </Button>
             </a>
           ) : (
-            <Button variant="outlined" disabled style={{ float: "right" }}>
+            <Button
+              aria-label="no link"
+              variant="outlined"
+              disabled
+              style={{ float: "right" }}
+            >
               No Link
             </Button>
           )}
         </>
       )}
       {setEditing && (
-        <IconButton onClick={() => setEditing(true)} style={{ float: "right" }}>
+        <IconButton
+          aria-label="Edit"
+          onClick={() => setEditing(true)}
+          style={{ float: "right" }}
+        >
           <Edit />
         </IconButton>
       )}

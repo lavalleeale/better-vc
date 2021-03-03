@@ -18,6 +18,7 @@ const Login = () => {
         Final Name
       </Typography>
       <Button
+        aria-label="login"
         style={{ padding: "10vh" }}
         variant="outlined"
         onClick={() => window.open(`${API_BASE_URL}/auth/google`, "_self")}

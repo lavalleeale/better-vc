@@ -41,6 +41,7 @@ const Profile = () => {
           label="Nickname"
         />
         <Button
+          aria-label="update"
           type="submit"
           style={{ float: "right", marginTop: "10px" }}
           variant="outlined"

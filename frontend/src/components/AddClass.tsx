@@ -111,10 +111,15 @@ const AddClass = ({
           <ImportBlock block={block} setBlock={setBlock} teachers={teachers} />
           {initBlock && setEditing ? (
             <div style={{ float: "right", marginTop: "10px" }}>
-              <Button variant="outlined" onClick={() => setEditing(false)}>
+              <Button
+                aria-label="cancel"
+                variant="outlined"
+                onClick={() => setEditing(false)}
+              >
                 cancel
               </Button>
               <Button
+                aria-label="save"
                 style={{ marginLeft: "10px" }}
                 variant="outlined"
                 type="submit"
@@ -124,6 +129,7 @@ const AddClass = ({
             </div>
           ) : (
             <Button
+              aria-label="add"
               style={{ float: "right", marginTop: "10px" }}
               variant="outlined"
               type="submit"

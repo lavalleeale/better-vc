@@ -27,7 +27,9 @@ const Header = () => {
           <div>
             {jwt_decode<{ teacher: boolean }>(cookies.auth).teacher && (
               <Link style={{ textDecoration: "none" }} to="/teacher">
-                <Button variant="outlined">Dashboard</Button>
+                <Button aria-label="go to dashboard" variant="outlined">
+                  Dashboard
+                </Button>
               </Link>
             )}
             <IconButton
@@ -83,6 +85,7 @@ const Header = () => {
           </div>
         ) : (
           <Button
+            aria-label="login"
             variant="outlined"
             onClick={() => window.open(`${API_BASE_URL}/auth/google`, "_self")}
           >

@@ -31,6 +31,7 @@ const AddUser = ({ teacher }: { teacher: boolean }) => {
     <Card className="card">
       <form onSubmit={onSubmit}>
         <TextField
+          aria-label="name"
           required
           className="longText"
           value={student.name}
@@ -44,6 +45,7 @@ const AddUser = ({ teacher }: { teacher: boolean }) => {
           variant="outlined"
         />
         <TextField
+          aria-label="nickname"
           style={{ marginTop: "15px" }}
           required
           className="longText"
@@ -58,6 +60,7 @@ const AddUser = ({ teacher }: { teacher: boolean }) => {
           variant="outlined"
         />
         <TextField
+          aria-label="email"
           style={{ marginTop: "15px" }}
           required
           error={!validateEmail(student.email)}
@@ -73,6 +76,7 @@ const AddUser = ({ teacher }: { teacher: boolean }) => {
           variant="outlined"
         />
         <Button
+          aria-label="Add"
           type="submit"
           style={{ float: "right", marginTop: "10px" }}
           variant="outlined"

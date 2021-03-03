@@ -11,6 +11,7 @@ const TeacherDash = () => {
         style={{ textDecoration: "none", color: "inherit" }}
       >
         <Button
+          aria-label="Add Teacher"
           variant="outlined"
           style={{ width: "100%", padding: "10px", marginTop: "10px" }}
         >
@@ -22,6 +23,7 @@ const TeacherDash = () => {
         style={{ textDecoration: "none", color: "inherit" }}
       >
         <Button
+          aria-label="Add Student"
           variant="outlined"
           style={{ width: "100%", padding: "10px", marginTop: "10px" }}
         >
@@ -33,6 +35,7 @@ const TeacherDash = () => {
         style={{ textDecoration: "none", color: "inherit" }}
       >
         <Button
+          aria-label="Add Class"
           variant="outlined"
           style={{ width: "100%", padding: "10px", marginTop: "10px" }}
         >
@@ -44,6 +47,7 @@ const TeacherDash = () => {
         style={{ textDecoration: "none", color: "inherit" }}
       >
         <Button
+          aria-label="Manage Classes"
           variant="outlined"
           style={{ width: "100%", padding: "10px", marginTop: "10px" }}
         >
@@ -51,6 +55,7 @@ const TeacherDash = () => {
         </Button>
       </Link>
       <Button
+        aria-label="Change Schedules"
         variant="outlined"
         style={{ width: "100%", padding: "10px", marginTop: "10px" }}
       >
