@@ -2,8 +2,6 @@ name: Publish Docker Image
 
 on:  
   push:
-    tags:
-      - v*
 
 jobs:
   push:
@@ -29,7 +27,7 @@ jobs:
         with:
           context: ./api
           platforms: linux/amd64,linux/arm64
-          push: true
+          push: false
           tags: |
             ghcr.io/lavalleeale/better-vc/better-vc:latest
       -
