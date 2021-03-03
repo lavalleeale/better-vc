@@ -130,6 +130,9 @@ router.post("/addUser", async (req: Request, res: Response) => {
         teacher: boolean;
       };
       if (token.teacher) {
+        if (!req.body.nickname) {
+          req.body.nickname = req.body.name.split(" ")[0];
+        }
         try {
           const block = await User.create({
             name: req.body.name,

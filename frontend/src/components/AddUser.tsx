@@ -47,7 +47,6 @@ const AddUser = ({ teacher }: { teacher: boolean }) => {
         <TextField
           aria-label="nickname"
           style={{ marginTop: "15px" }}
-          required
           className="longText"
           value={student.nickname}
           onChange={(e) => {
