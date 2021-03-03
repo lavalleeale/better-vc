@@ -58,7 +58,7 @@ const AddClass = ({
   }
   async function updateClass(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    if (initBlock && setInitBlock) {
+    if (initBlock && setInitBlock && setEditing) {
       const response = await fetch(`${API_BASE_URL}/teacher/updateClass`, {
         method: "PUT",
         credentials: "omit",
@@ -70,6 +70,7 @@ const AddClass = ({
       });
       if (response.ok) {
         setInitBlock(await response.json());
+        setEditing(false);
       } else {
         setError(await response.text());
       }
