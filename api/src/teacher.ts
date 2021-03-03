@@ -97,17 +97,16 @@ router.put("/updateClass", async (req: Request, res: Response) => {
       };
       if (token.teacher) {
         try {
-          const block = (
-            await Class.update(
-              { name: req.body.name },
-              {
-                ...req.body.block,
-                teacher: await User.findOne({
-                  where: { name: req.body.block.teacher },
-                }),
-              }
-            )
-          ).raw[0];
+          await Class.update(
+            { name: req.body.name },
+            {
+              ...req.body.block,
+              teacher: await User.findOne({
+                where: { name: req.body.block.teacher },
+              }),
+            }
+          );
+          const block = await Class.findOne({ name: req.body.block.name });
           return res.status(200).send({
             ...block,
             teacher: req.body.block.teacher,
