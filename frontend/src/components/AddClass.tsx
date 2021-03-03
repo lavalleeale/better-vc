@@ -5,7 +5,15 @@ import { ClassType } from "../@types/class";
 import { API_BASE_URL } from "../constants";
 import ImportBlock from "./ImportBlock";
 
-const AddClass = ({ initBlock }: { initBlock?: ClassType }) => {
+const AddClass = ({
+  initBlock,
+  setInitBlock,
+  setEditing,
+}: {
+  initBlock?: ClassType;
+  setInitBlock?: (value: ClassType) => void;
+  setEditing?: (value: boolean) => void;
+}) => {
   const [cookies] = useCookies();
   const [teachers, setTeachers] = useState([]);
   const [error, setError] = useState("");
@@ -24,7 +32,7 @@ const AddClass = ({ initBlock }: { initBlock?: ClassType }) => {
       });
     }
   }
-  async function onSubmit(e: FormEvent<HTMLFormElement>) {
+  async function addClass(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     const response = await fetch(`${API_BASE_URL}/teacher/addClass`, {
       method: "POST",
@@ -48,6 +56,25 @@ const AddClass = ({ initBlock }: { initBlock?: ClassType }) => {
       setError(await response.text());
     }
   }
+  async function updateClass(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    if (initBlock && setInitBlock) {
+      const response = await fetch(`${API_BASE_URL}/teacher/updateClass`, {
+        method: "PUT",
+        credentials: "omit",
+        headers: {
+          jwt: cookies.auth,
+          "content-type": "application/json",
+        },
+        body: JSON.stringify({ name: initBlock.name, block }),
+      });
+      if (response.ok) {
+        setInitBlock(await response.json());
+      } else {
+        setError(await response.text());
+      }
+    }
+  }
   useEffect(() => {
     async function getData() {
       const response = await fetch(`${API_BASE_URL}/teacher/getTeachers`, {
@@ -66,17 +93,43 @@ const AddClass = ({ initBlock }: { initBlock?: ClassType }) => {
         <Card className="card">
           <Typography color="error" variant="h4">
             {error === "QueryFailedError"
-              ? "An internal server error occured. Is this class name in use?"
+              ? "An internal server error occured."
               : "An unkown error occured. Try again later?"}
           </Typography>
         </Card>
       )}
-      <form onSubmit={(e) => onSubmit(e)}>
-        <ImportBlock block={block} setBlock={setBlock} teachers={teachers} />
+      <form
+        onSubmit={(e) => {
+          if (initBlock) {
+            return updateClass(e);
+          }
+          return addClass(e);
+        }}
+      >
         <Card className="card">
-          <Button style={{ float: "right" }} variant="outlined" type="submit">
-            {initBlock ? "save class" : "add class"}
-          </Button>
+          <ImportBlock block={block} setBlock={setBlock} teachers={teachers} />
+          {initBlock && setEditing ? (
+            <div style={{ float: "right", marginTop: "10px" }}>
+              <Button variant="outlined" onClick={() => setEditing(false)}>
+                cancel
+              </Button>
+              <Button
+                style={{ marginLeft: "10px" }}
+                variant="outlined"
+                type="submit"
+              >
+                save class
+              </Button>
+            </div>
+          ) : (
+            <Button
+              style={{ float: "right", marginTop: "10px" }}
+              variant="outlined"
+              type="submit"
+            >
+              add class
+            </Button>
+          )}
         </Card>
       </form>
     </>

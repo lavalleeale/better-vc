@@ -7,7 +7,7 @@ import { QueryFailedError } from "typeorm";
 
 var router = express.Router();
 
-router.post("/addTeacher", async (req: Request, res: Response) => {
+router.post("/promoteTeacher", async (req: Request, res: Response) => {
   if (typeof req.headers.jwt === "string") {
     const rawToken = req.headers.jwt as string;
     if (rawToken) {
@@ -77,6 +77,39 @@ router.post("/addClass", async (req: Request, res: Response) => {
             teacher: await User.findOne({ where: { name: req.body.teacher } }),
           }).save();
           return res.status(200).send(block);
+        } catch (e) {
+          if (e instanceof QueryFailedError) {
+            return res.status(500).send("QueryFailedError");
+          }
+          return res.status(500).end();
+        }
+      }
+    }
+  }
+  return res.status(401).send("not authed");
+});
+router.put("/updateClass", async (req: Request, res: Response) => {
+  if (typeof req.headers.jwt === "string") {
+    const rawToken = req.headers.jwt as string;
+    if (rawToken) {
+      const token = jwt.verify(rawToken, process.env.JWT_SECRET) as {
+        teacher: boolean;
+      };
+      if (token.teacher) {
+        try {
+          const block = await Class.update(
+            { name: req.body.name },
+            {
+              ...req.body.block,
+              teacher: await User.findOne({
+                where: { name: req.body.block.teacher },
+              }),
+            }
+          );
+          return res.status(200).send({
+            ...block,
+            teacher: req.body.block.teacher,
+          });
         } catch (e) {
           if (e instanceof QueryFailedError) {
             return res.status(500).send("QueryFailedError");

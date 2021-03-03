@@ -9,7 +9,7 @@ const ViewClass = ({
 }: {
   block: ClassType;
   teacher: boolean;
-  setEditing(value: boolean): void;
+  setEditing?: (value: boolean) => void;
 }) => {
   function compareTime(startTime: Date, endTime: Date) {
     const currentTime = new Date();
@@ -49,9 +49,11 @@ const ViewClass = ({
           )}
         </>
       )}
-      <IconButton onClick={() => setEditing(true)} style={{ float: "right" }}>
-        <Edit />
-      </IconButton>
+      {setEditing && (
+        <IconButton onClick={() => setEditing(true)} style={{ float: "right" }}>
+          <Edit />
+        </IconButton>
+      )}
       <Typography>Name: {block.name}</Typography>
       <Typography>Teacher: {block.teacher}</Typography>
       <Typography>

@@ -7,7 +7,7 @@ const Schedule = () => {
         /*schedule*/ [].map((block, index) => {
           return (
             <li key={index}>
-              <ViewClass teacher={false} block={block} setEditing={() => {}} />
+              <ViewClass teacher={false} block={block} />
             </li>
           );
         })

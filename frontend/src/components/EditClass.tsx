@@ -3,7 +3,13 @@ import { ClassType } from "../@types/class";
 import AddClass from "./AddClass";
 import ViewClass from "./ViewClass";
 
-const Class = ({ block }: { block: ClassType }) => {
+const Class = ({
+  block,
+  setBlock,
+}: {
+  block: ClassType;
+  setBlock: (value: ClassType) => void;
+}) => {
   const [editing, setEditing] = useState(false);
 
   return (
@@ -11,7 +17,11 @@ const Class = ({ block }: { block: ClassType }) => {
       {!editing ? (
         <ViewClass block={block} teacher={true} setEditing={setEditing} />
       ) : (
-        <AddClass initBlock={block} />
+        <AddClass
+          initBlock={block}
+          setEditing={setEditing}
+          setInitBlock={setBlock}
+        />
       )}
     </>
   );

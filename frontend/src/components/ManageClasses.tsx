@@ -36,7 +36,16 @@ const ManageClasses = () => {
       {classes.map((block: ClassType, index) => {
         return (
           <li key={index}>
-            <EditClass block={block} />
+            <EditClass
+              block={block}
+              setBlock={(value) => {
+                setClasses([
+                  ...classes.slice(0, index),
+                  value,
+                  ...classes.slice(index + 1),
+                ]);
+              }}
+            />
           </li>
         );
       })}
