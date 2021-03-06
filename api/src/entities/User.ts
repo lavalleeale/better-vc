@@ -1,4 +1,5 @@
-import { BaseEntity, Column, Entity, PrimaryColumn } from "typeorm";
+import { BaseEntity, Column, Entity, ManyToMany, PrimaryColumn } from "typeorm";
+import { Class } from "./Class";
 
 @Entity()
 export class User extends BaseEntity {
@@ -13,4 +14,7 @@ export class User extends BaseEntity {
 
   @Column("boolean", { nullable: true })
   teacher!: boolean;
+
+  @ManyToMany(() => Class, (block) => block.students)
+  classes: Class[];
 }

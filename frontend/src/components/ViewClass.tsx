@@ -75,7 +75,7 @@ const ViewClass = ({
         </>
       )}
       <Typography>Name: {block.name}</Typography>
-      <Typography>Teacher: {block.teacher.name}</Typography>
+      <Typography>Teacher: {block.teacher}</Typography>
       <Typography>
         Start Time: {new Date(block.startTime).toLocaleTimeString()}
       </Typography>
@@ -87,7 +87,9 @@ const ViewClass = ({
       <ul style={{ listStyle: "inside" }}>
         {block.students.map((student) => (
           <li key={student.name}>
-            <Typography>{student.name}</Typography>
+            <Typography style={{ display: "inline" }}>
+              {student.name}
+            </Typography>
           </li>
         ))}
       </ul>

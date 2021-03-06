@@ -2,10 +2,8 @@ import {
   BaseEntity,
   Column,
   Entity,
-  JoinColumn,
   JoinTable,
   ManyToMany,
-  ManyToOne,
   PrimaryGeneratedColumn,
 } from "typeorm";
 import { User } from "./User";
@@ -27,11 +25,10 @@ export class Class extends BaseEntity {
   @Column("text", { nullable: true })
   zoomLink!: string;
 
-  @ManyToOne(() => User)
-  @JoinColumn()
-  teacher: User;
+  @Column("text")
+  teacher: string;
 
-  @ManyToMany(() => User, { cascade: true })
+  @ManyToMany(() => User, (user) => user.classes, { eager: true })
   @JoinTable()
   students: User[];
 }

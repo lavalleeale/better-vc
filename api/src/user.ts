@@ -65,5 +65,23 @@ router.get("/getInfo", async (req: Request, res: Response) => {
   }
   return res.status(401).send("no auth");
 });
+router.get("/getClasses", async (req: Request, res: Response) => {
+  if (typeof req.headers.jwt === "string") {
+    const rawToken = req.headers.jwt as string;
+    try {
+      const token = jwt.verify(rawToken, process.env.JWT_SECRET) as {
+        email: number;
+      };
+      if (token.email) {
+        return res.status(200).send(
+          (await User.findOne(token.email, {
+            relations: ["classes"],
+          }))!.classes
+        );
+      }
+    } catch {}
+  }
+  return res.status(401).send("no auth");
+});
 
 export default router;

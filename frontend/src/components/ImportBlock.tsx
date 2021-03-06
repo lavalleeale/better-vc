@@ -45,12 +45,12 @@ const ImportBlock = ({
         <Select
           label="Teacher Name"
           required
-          value={block.teacher.name}
+          value={block.teacher}
           onChange={(e) => {
             if (e.target.value) {
               setBlock({
                 ...block,
-                teacher: { name: e.target.value as string },
+                teacher: e.target.value as string,
               });
             }
           }}

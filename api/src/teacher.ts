@@ -64,7 +64,7 @@ router.get("/getClasses", async (req: Request, res: Response) => {
       if (token.teacher) {
         return res
           .status(200)
-          .send(await Class.find({ relations: ["teacher", "students"] }));
+          .send(await Class.find({ relations: ["students"] }));
       }
     }
   }
@@ -84,9 +84,9 @@ router.post("/addClass", async (req: Request, res: Response) => {
             startTime: req.body.startTime,
             endTime: req.body.endTime,
             zoomLink: req.body.zoomLink,
-            teacher: await User.findOne({
-              where: { name: req.body.teacher.name },
-            }),
+            teacher: (await User.findOne({
+              where: { name: req.body.teacher },
+            }))!.name,
             students: (await Promise.all(
               req.body.students.map(
                 async (student: { name: string }) =>

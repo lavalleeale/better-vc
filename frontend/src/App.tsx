@@ -41,7 +41,7 @@ function App() {
           </Suspense>
         ) : (
           <Switch>
-            <Route path="/schedule">
+            <Route exact path="/">
               <Suspense fallback={<Card className="card">Loading...</Card>}>
                 <Schedule />
               </Suspense>
