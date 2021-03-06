@@ -23,6 +23,7 @@ const ViewClass = ({
       Date.UTC(0, 0, 0, date.getUTCHours(), date.getUTCMinutes())
     ).getTime();
   }
+  console.log(block);
   return (
     <Card
       className={

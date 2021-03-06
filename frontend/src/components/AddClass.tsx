@@ -43,7 +43,7 @@ const AddClass = ({
         jwt: cookies.auth,
         "content-type": "application/json",
       },
-      body: JSON.stringify(block),
+      body: JSON.stringify({ ...block, teacher: block.teacher.name }),
     });
     if (response.ok) {
       setBlock({
