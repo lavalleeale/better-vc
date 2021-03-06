@@ -33,9 +33,22 @@ router.get("/getTeachers", async (req: Request, res: Response) => {
         teacher: boolean;
       };
       if (token.teacher) {
-        return res
-          .status(200)
-          .send((await User.find({ teacher: true })).map((a) => a.name));
+        return res.status(200).send(await User.find({ teacher: true }));
+      }
+    }
+  }
+  return res.status(401).send("no auth");
+});
+router.get("/getStudents", async (req: Request, res: Response) => {
+  if (typeof req.headers.jwt === "string") {
+    const rawToken = req.headers.jwt as string;
+    if (rawToken) {
+      const token = jwt.verify(rawToken, process.env.JWT_SECRET) as {
+        teacher: boolean;
+      };
+      if (token.teacher) {
+        const students = await User.find({ teacher: false });
+        return res.status(200).send(students);
       }
     }
   }
@@ -49,12 +62,9 @@ router.get("/getClasses", async (req: Request, res: Response) => {
         teacher: boolean;
       };
       if (token.teacher) {
-        return res.status(200).send(
-          (await Class.find({ relations: ["teacher"] })).map((block) => ({
-            ...block,
-            teacher: block.teacher.name,
-          }))
-        );
+        return res
+          .status(200)
+          .send(await Class.find({ relations: ["teacher", "students"] }));
       }
     }
   }
@@ -74,7 +84,15 @@ router.post("/addClass", async (req: Request, res: Response) => {
             startTime: req.body.startTime,
             endTime: req.body.endTime,
             zoomLink: req.body.zoomLink,
-            teacher: await User.findOne({ where: { name: req.body.teacher } }),
+            teacher: await User.findOne({
+              where: { name: req.body.teacher.name },
+            }),
+            students: (await Promise.all(
+              req.body.students.map(
+                async (student: { name: string }) =>
+                  await User.findOne({ name: student.name })
+              )
+            )) as User[],
           }).save();
           return res.status(200).send(block);
         } catch (e) {
@@ -97,20 +115,20 @@ router.put("/updateClass", async (req: Request, res: Response) => {
       };
       if (token.teacher) {
         try {
-          await Class.update(
-            { name: req.body.name },
-            {
+          return res.status(200).send(
+            await Class.save({
               ...req.body.block,
               teacher: await User.findOne({
-                where: { name: req.body.block.teacher },
+                where: { name: req.body.block.teacher.name },
               }),
-            }
+              students: (await Promise.all(
+                req.body.block.students.map(
+                  async (student: { name: string }) =>
+                    await User.findOne({ name: student.name })
+                )
+              )) as User[],
+            })
           );
-          const block = await Class.findOne({ name: req.body.block.name });
-          return res.status(200).send({
-            ...block,
-            teacher: req.body.block.teacher,
-          });
         } catch (e) {
           if (e instanceof QueryFailedError) {
             return res.status(500).send("QueryFailedError");

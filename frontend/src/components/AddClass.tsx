@@ -16,6 +16,7 @@ const AddClass = ({
 }) => {
   const [cookies] = useCookies();
   const [teachers, setTeachers] = useState([]);
+  const [students, setStudents] = useState([]);
   const [error, setError] = useState("");
   const [block, setBlock] = useState({} as ClassType);
   if (Object.keys(block).length === 0) {
@@ -24,11 +25,12 @@ const AddClass = ({
     } else {
       setBlock({
         name: "",
-        teacher: "",
+        teacher: { name: "" },
         startTime: new Date(0, 0, 0, 8, 0, 0, 0).toLocaleString(),
         endTime: new Date(0, 0, 0, 8, 0, 0, 0).toLocaleString(),
         zoomLink: "",
         classroomLink: "",
+        students: [],
       });
     }
   }
@@ -46,11 +48,12 @@ const AddClass = ({
     if (response.ok) {
       setBlock({
         name: "",
-        teacher: "",
+        teacher: { name: "" },
         startTime: new Date(0, 0, 0, 8, 0, 0, 0).toLocaleString(),
         endTime: new Date(0, 0, 0, 8, 0, 0, 0).toLocaleString(),
         zoomLink: "",
         classroomLink: "",
+        students: [],
       });
     } else {
       setError(await response.text());
@@ -78,13 +81,20 @@ const AddClass = ({
   }
   useEffect(() => {
     async function getData() {
-      const response = await fetch(`${API_BASE_URL}/teacher/getTeachers`, {
+      let response = await fetch(`${API_BASE_URL}/teacher/getTeachers`, {
         credentials: "omit",
         headers: {
           jwt: cookies.auth,
         },
       });
       setTeachers(await response.json());
+      response = await fetch(`${API_BASE_URL}/teacher/getStudents`, {
+        credentials: "omit",
+        headers: {
+          jwt: cookies.auth,
+        },
+      });
+      setStudents(await response.json());
     }
     getData();
   }, [cookies.auth]);
@@ -108,7 +118,12 @@ const AddClass = ({
         }}
       >
         <Card className="card">
-          <ImportBlock block={block} setBlock={setBlock} teachers={teachers} />
+          <ImportBlock
+            students={students}
+            block={block}
+            setBlock={setBlock}
+            teachers={teachers}
+          />
           {initBlock && setEditing ? (
             <div style={{ float: "right", marginTop: "10px" }}>
               <Button

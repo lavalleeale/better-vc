@@ -28,6 +28,7 @@ async function main() {
     entities: [join(__dirname, "./entities/*.*")],
     logging: !__prod__,
     synchronize: !__prod__,
+    dropSchema: false,
   });
   const app = express();
   passport.serializeUser(function (user: any, done) {

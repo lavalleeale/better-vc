@@ -31,7 +31,7 @@ export class Class extends BaseEntity {
   @JoinColumn()
   teacher: User;
 
-  @ManyToMany(() => User)
+  @ManyToMany(() => User, { cascade: true })
   @JoinTable()
   students: User[];
 }

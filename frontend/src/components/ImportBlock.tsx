@@ -14,12 +14,13 @@ const ImportBlock = ({
   block,
   setBlock,
   teachers,
+  students,
 }: {
   block: ClassType;
   setBlock: Dispatch<SetStateAction<ClassType>>;
-  teachers: Array<string>;
+  teachers: Array<{ name: string }>;
+  students: Array<{ name: string }>;
 }) => {
-  console.log(block.teacher);
   return (
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
       <TextField
@@ -44,19 +45,19 @@ const ImportBlock = ({
         <Select
           label="Teacher Name"
           required
-          value={block.teacher}
+          value={block.teacher.name}
           onChange={(e) => {
             if (e.target.value) {
               setBlock({
                 ...block,
-                teacher: e.target.value as string,
+                teacher: { name: e.target.value as string },
               });
             }
           }}
         >
-          {teachers.map((teacher: string) => (
-            <MenuItem key={teacher} value={teacher}>
-              {teacher}
+          {teachers.map((teacher) => (
+            <MenuItem key={teacher.name} value={teacher.name}>
+              {teacher.name}
             </MenuItem>
           ))}
         </Select>
@@ -94,7 +95,7 @@ const ImportBlock = ({
         id="End Time"
         label="End Time"
         required
-        style={{ marginTop: "10px" }}
+        style={{ marginTop: "10px", marginLeft: "10px" }}
         value={block.endTime}
         onChange={(e) => {
           if (e) {
@@ -105,6 +106,47 @@ const ImportBlock = ({
           }
         }}
       />
+      <ul>
+        {[...block.students, { name: "" }].map((student, index) => (
+          <li key={student.name}>
+            <Select
+              className="longText"
+              style={{ marginTop: "10px" }}
+              label="Teacher Name"
+              value={block.students[index] ? block.students[index].name : ""}
+              onChange={(e) => {
+                if (e.target.value) {
+                  setBlock({
+                    ...block,
+                    students: [
+                      ...block.students.slice(0, index),
+                      { name: e.target.value as string },
+                      ...block.students.slice(index + 1),
+                    ],
+                  });
+                } else {
+                  setBlock({
+                    ...block,
+                    students: [
+                      ...block.students.slice(0, index),
+                      ...block.students.slice(index + 1),
+                    ],
+                  });
+                }
+              }}
+            >
+              <MenuItem key="None" value="">
+                None
+              </MenuItem>
+              {students.map((student) => (
+                <MenuItem key={student.name} value={student.name}>
+                  {student.name}
+                </MenuItem>
+              ))}
+            </Select>
+          </li>
+        ))}
+      </ul>
     </MuiPickersUtilsProvider>
   );
 };

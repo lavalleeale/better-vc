@@ -1,6 +1,6 @@
 import { Button, Card, IconButton, Typography } from "@material-ui/core";
 import { ClassType } from "../@types/class";
-import { Edit } from "@material-ui/icons";
+import { Edit, Delete } from "@material-ui/icons";
 
 const ViewClass = ({
   block,
@@ -57,16 +57,25 @@ const ViewClass = ({
         </>
       )}
       {setEditing && (
-        <IconButton
-          aria-label="Edit"
-          onClick={() => setEditing(true)}
-          style={{ float: "right" }}
-        >
-          <Edit />
-        </IconButton>
+        <>
+          <IconButton
+            aria-label="Edit"
+            onClick={() => setEditing(true)}
+            style={{ float: "right" }}
+          >
+            <Edit />
+          </IconButton>
+          <IconButton
+            aria-label="Edit"
+            onClick={() => setEditing(true)}
+            style={{ float: "right" }}
+          >
+            <Delete />
+          </IconButton>
+        </>
       )}
       <Typography>Name: {block.name}</Typography>
-      <Typography>Teacher: {block.teacher}</Typography>
+      <Typography>Teacher: {block.teacher.name}</Typography>
       <Typography>
         Start Time: {new Date(block.startTime).toLocaleTimeString()}
       </Typography>
@@ -74,6 +83,14 @@ const ViewClass = ({
         End Time: {new Date(block.endTime).toLocaleTimeString()}
       </Typography>
       {teacher && <Typography>Zoom Link: {block.zoomLink}</Typography>}
+      <Typography>Students:</Typography>
+      <ul style={{ listStyle: "inside" }}>
+        {block.students.map((student) => (
+          <li key={student.name}>
+            <Typography>{student.name}</Typography>
+          </li>
+        ))}
+      </ul>
     </Card>
   );
 };
