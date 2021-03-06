@@ -54,13 +54,6 @@ const TeacherDash = () => {
           <Typography>Manage Classes</Typography>
         </Button>
       </Link>
-      <Button
-        aria-label="Change Schedules"
-        variant="outlined"
-        style={{ width: "100%", padding: "10px", marginTop: "10px" }}
-      >
-        <Typography>Change Schedules</Typography>
-      </Button>
     </Card>
   );
 };

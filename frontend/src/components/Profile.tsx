@@ -39,6 +39,7 @@ const Profile = () => {
           className="longText"
           variant="outlined"
           label="Nickname"
+          id="Nickname"
         />
         <Button
           aria-label="update"
