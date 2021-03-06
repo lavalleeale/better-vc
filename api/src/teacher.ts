@@ -62,9 +62,7 @@ router.get("/getClasses", async (req: Request, res: Response) => {
         teacher: boolean;
       };
       if (token.teacher) {
-        return res
-          .status(200)
-          .send(await Class.find({ relations: ["students"] }));
+        return res.status(200).send(await Class.find());
       }
     }
   }
@@ -84,9 +82,9 @@ router.post("/addClass", async (req: Request, res: Response) => {
             startTime: req.body.startTime,
             endTime: req.body.endTime,
             zoomLink: req.body.zoomLink,
-            teacher: (await User.findOne({
+            teacher: await User.findOne({
               where: { name: req.body.teacher },
-            }))!.name,
+            }),
             students: (await Promise.all(
               req.body.students.map(
                 async (student: { name: string }) =>
@@ -115,20 +113,21 @@ router.put("/updateClass", async (req: Request, res: Response) => {
       };
       if (token.teacher) {
         try {
-          return res.status(200).send(
-            await Class.save({
+          let teacher = await User.findOne({
+            where: { name: req.body.block.teacher },
+          });
+          return res.status(200).send({
+            ...(await Class.save({
               ...req.body.block,
-              teacher: await User.findOne({
-                where: { name: req.body.block.teacher.name },
-              }),
+              teacher,
               students: (await Promise.all(
                 req.body.block.students.map(
                   async (student: { name: string }) =>
                     await User.findOne({ name: student.name })
                 )
               )) as User[],
-            })
-          );
+            })),
+          });
         } catch (e) {
           if (e instanceof QueryFailedError) {
             return res.status(500).send("QueryFailedError");

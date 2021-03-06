@@ -75,7 +75,7 @@ const ViewClass = ({
         </>
       )}
       <Typography>Name: {block.name}</Typography>
-      <Typography>Teacher: {block.teacher}</Typography>
+      <Typography>Teacher: {block.teacher.name}</Typography>
       <Typography>
         Start Time: {new Date(block.startTime).toLocaleTimeString()}
       </Typography>

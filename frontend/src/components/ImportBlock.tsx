@@ -50,7 +50,7 @@ const ImportBlock = ({
             if (e.target.value) {
               setBlock({
                 ...block,
-                teacher: e.target.value as string,
+                teacher: { name: e.target.value as string },
               });
             }
           }}

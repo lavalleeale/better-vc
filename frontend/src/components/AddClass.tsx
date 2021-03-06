@@ -25,7 +25,7 @@ const AddClass = ({
     } else {
       setBlock({
         name: "",
-        teacher: "",
+        teacher: { name: "" },
         startTime: new Date(0, 0, 0, 8, 0, 0, 0).toLocaleString(),
         endTime: new Date(0, 0, 0, 8, 0, 0, 0).toLocaleString(),
         zoomLink: "",
@@ -48,7 +48,7 @@ const AddClass = ({
     if (response.ok) {
       setBlock({
         name: "",
-        teacher: "",
+        teacher: { name: "" },
         startTime: new Date(0, 0, 0, 8, 0, 0, 0).toLocaleString(),
         endTime: new Date(0, 0, 0, 8, 0, 0, 0).toLocaleString(),
         zoomLink: "",

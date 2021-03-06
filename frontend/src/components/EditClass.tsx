@@ -3,7 +3,7 @@ import { ClassType } from "../@types/class";
 import AddClass from "./AddClass";
 import ViewClass from "./ViewClass";
 
-const Class = ({
+const EditClass = ({
   block,
   setBlock,
 }: {
@@ -27,4 +27,4 @@ const Class = ({
   );
 };
 
-export default Class;
+export default EditClass;
