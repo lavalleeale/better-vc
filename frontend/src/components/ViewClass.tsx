@@ -6,10 +6,12 @@ const ViewClass = ({
   block,
   teacher,
   setEditing,
+  deleteClass,
 }: {
   block: ClassType;
   teacher: boolean;
   setEditing?: (value: boolean) => void;
+  deleteClass?: () => void;
 }) => {
   function compareTime(startTime: Date, endTime: Date) {
     const currentTime = new Date();
@@ -57,7 +59,7 @@ const ViewClass = ({
           )}
         </>
       )}
-      {setEditing && (
+      {setEditing && deleteClass && (
         <>
           <IconButton
             aria-label="Edit"
@@ -68,7 +70,7 @@ const ViewClass = ({
           </IconButton>
           <IconButton
             aria-label="Edit"
-            onClick={() => setEditing(true)}
+            onClick={deleteClass}
             style={{ float: "right" }}
           >
             <Delete />

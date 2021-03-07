@@ -54,7 +54,7 @@ router.get("/getStudents", async (req: Request, res: Response) => {
   }
   return res.status(401).send("no auth");
 });
-router.get("/getClasses", async (req: Request, res: Response) => {
+router.get("/getAllClasses", async (req: Request, res: Response) => {
   if (typeof req.headers.jwt === "string") {
     const rawToken = req.headers.jwt as string;
     if (rawToken) {
@@ -139,6 +139,31 @@ router.put("/updateClass", async (req: Request, res: Response) => {
   }
   return res.status(401).send("not authed");
 });
+router.delete("/deleteClass", async (req: Request, res: Response) => {
+  if (
+    typeof req.headers.jwt === "string" &&
+    typeof req.headers.name === "string"
+  ) {
+    const rawToken = req.headers.jwt as string;
+    if (rawToken) {
+      const token = jwt.verify(rawToken, process.env.JWT_SECRET) as {
+        teacher: boolean;
+      };
+      if (token.teacher) {
+        try {
+          console.log(req.body);
+          return res.status(200).send(Class.delete({ name: req.headers.name }));
+        } catch (e) {
+          if (e instanceof QueryFailedError) {
+            return res.status(500).send("QueryFailedError");
+          }
+          return res.status(500).end();
+        }
+      }
+    }
+  }
+  return res.status(401).send("not authed");
+});
 router.post("/addUser", async (req: Request, res: Response) => {
   if (typeof req.headers.jwt === "string") {
     const rawToken = req.headers.jwt as string;
@@ -168,6 +193,26 @@ router.post("/addUser", async (req: Request, res: Response) => {
     }
   }
   return res.status(401).send("not authed");
+});
+router.get("/getClasses", async (req: Request, res: Response) => {
+  if (typeof req.headers.jwt === "string") {
+    const rawToken = req.headers.jwt as string;
+    try {
+      const token = jwt.verify(rawToken, process.env.JWT_SECRET) as {
+        email: string;
+        teacher: boolean;
+      };
+      if (token.email && token.teacher) {
+        return res.status(200).send(
+          await Class.find({
+            relations: ["teacher"],
+            where: { teacher: token.email },
+          })
+        );
+      }
+    } catch {}
+  }
+  return res.status(401).send("no auth");
 });
 
 export default router;

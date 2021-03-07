@@ -4,7 +4,6 @@ import React, { lazy, Suspense, useState } from "react";
 import { useCookies } from "react-cookie";
 import { HashRouter as Router, Route, Switch } from "react-router-dom";
 import Header from "./components/Header";
-import jwt_decode from "jwt-decode";
 const AddStudent = lazy(() => import("./components/AddUser"));
 const TeacherDash = lazy(() => import("./components/TeacherDash"));
 const Login = lazy(() => import("./components/Login"));
@@ -44,11 +43,12 @@ function App() {
           <Switch>
             <Route exact path="/">
               <Suspense fallback={<Card className="card">Loading...</Card>}>
-                {jwt_decode<{ teacher: boolean }>(cookies.auth).teacher ? (
-                  <TeacherDash />
-                ) : (
-                  <Schedule />
-                )}
+                <Schedule />
+              </Suspense>
+            </Route>
+            <Route exact path="/dashboard">
+              <Suspense fallback={<Card className="card">Loading...</Card>}>
+                <TeacherDash />
               </Suspense>
             </Route>
             <Route path="/teacher/addClass">

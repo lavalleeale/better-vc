@@ -25,13 +25,21 @@ const Header = () => {
         </Typography>
         {cookies.auth ? (
           <div>
-            <Link style={{ textDecoration: "none" }} to="/">
-              <Button aria-label="go to dashboard" variant="outlined">
-                {jwt_decode<{ teacher: boolean }>(cookies.auth).teacher
-                  ? "Dashboard"
-                  : "Schedule"}
+            <Link
+              style={{ textDecoration: "none", marginRight: "10px" }}
+              to="/"
+            >
+              <Button aria-label="schedule" variant="outlined">
+                Schedule
               </Button>
             </Link>
+            {jwt_decode<{ teacher: boolean }>(cookies.auth).teacher && (
+              <Link style={{ textDecoration: "none" }} to="/dashboard">
+                <Button aria-label="dashboard" variant="outlined">
+                  Dashboard
+                </Button>
+              </Link>
+            )}
             <IconButton
               aria-label="account of current user"
               aria-controls="menu-appbar"

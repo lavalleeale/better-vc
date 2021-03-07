@@ -6,16 +6,23 @@ import ViewClass from "./ViewClass";
 const EditClass = ({
   block,
   setBlock,
+  deleteClass,
 }: {
   block: ClassType;
   setBlock: (value: ClassType) => void;
+  deleteClass: () => void;
 }) => {
   const [editing, setEditing] = useState(false);
 
   return (
     <>
       {!editing ? (
-        <ViewClass block={block} teacher={true} setEditing={setEditing} />
+        <ViewClass
+          deleteClass={deleteClass}
+          block={block}
+          teacher={true}
+          setEditing={setEditing}
+        />
       ) : (
         <AddClass
           initBlock={block}

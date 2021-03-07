@@ -10,7 +10,7 @@ const ManageClasses = () => {
   useEffect(() => {
     async function getData() {
       try {
-        const response = await fetch(`${API_BASE_URL}/teacher/getClasses`, {
+        const response = await fetch(`${API_BASE_URL}/teacher/getAllClasses`, {
           credentials: "omit",
           headers: {
             jwt: cookies.auth,
@@ -31,12 +31,24 @@ const ManageClasses = () => {
       getData();
     }
   }, [cookies.auth, removeCookie]);
+  async function deleteClass(name: string, index: number) {
+    await fetch(`${API_BASE_URL}/teacher/deleteClass`, {
+      credentials: "omit",
+      method: "delete",
+      headers: {
+        jwt: cookies.auth,
+        name,
+      },
+    });
+    setClasses([...classes.slice(0, index), ...classes.slice(index + 1)]);
+  }
   return (
     <ul>
       {classes.map((block: ClassType, index) => {
         return (
           <li key={index}>
             <EditClass
+              deleteClass={() => deleteClass(block.name, index)}
               block={block}
               setBlock={(value) => {
                 setClasses([

@@ -3,6 +3,7 @@ import { useCookies } from "react-cookie";
 import { API_BASE_URL } from "../constants";
 import { ClassType } from "../@types/class";
 import ViewClass from "./ViewClass";
+import jwt_decode from "jwt-decode";
 
 const ManageClasses = () => {
   const [cookies, , removeCookie] = useCookies(["auth"]);
@@ -10,12 +11,22 @@ const ManageClasses = () => {
   useEffect(() => {
     async function getData() {
       try {
-        const response = await fetch(`${API_BASE_URL}/user/getClasses`, {
-          credentials: "omit",
-          headers: {
-            jwt: cookies.auth,
-          },
-        });
+        let response: Response;
+        if (jwt_decode<{ teacher: boolean }>(cookies.auth)) {
+          response = await fetch(`${API_BASE_URL}/teacher/getClasses`, {
+            credentials: "omit",
+            headers: {
+              jwt: cookies.auth,
+            },
+          });
+        } else {
+          response = await fetch(`${API_BASE_URL}/user/getClasses`, {
+            credentials: "omit",
+            headers: {
+              jwt: cookies.auth,
+            },
+          });
+        }
         setClasses(await response.json());
       } catch {
         removeCookie("auth", {
