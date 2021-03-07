@@ -50,7 +50,7 @@ jobs:
         uses: actions/checkout@v2
       - 
         name: Yarn Install
-        run: yarn install --cwd ./frontend --frozen-lockfile
+        run: yarn  --cwd ./frontend install --frozen-lockfile
       - 
         name: Yarn Build
-        run: yarn build --cwd ./frontend
+        run: yarn  --cwd ./frontend build
