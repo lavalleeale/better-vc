@@ -18,7 +18,7 @@ const Header = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const [cookies, , removeCookie] = useCookies(["auth"]);
   return (
-    <AppBar position="fixed" color="inherit" style={{ padding: "10px" }}>
+    <AppBar position="static" color="inherit" style={{ padding: "10px" }}>
       <Toolbar>
         <Typography style={{ flexGrow: 1 }} variant="h3">
           The Better Veracross

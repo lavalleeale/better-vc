@@ -34,7 +34,8 @@ function App() {
     <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
       <CssBaseline />
       <Router>
-        <div className="spacer" />
+        <Header />
+        <br />
         {!cookies.auth ? (
           <Suspense fallback={<Card className="card">Loading...</Card>}>
             <Login />
@@ -78,7 +79,6 @@ function App() {
             </Route>
           </Switch>
         )}
-        <Header />
       </Router>
     </ThemeProvider>
   );
