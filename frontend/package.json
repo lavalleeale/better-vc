@@ -22,11 +22,10 @@
     "typescript": "^4.1.2"
   },
   "scripts": {
+    "build": "react-scripts build",
+    "start": "react-scripts start",
     "predeploy": "yarn build",
     "deploy": "netlify deploy --prod --dir=build",
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "build-local": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "prod": "yarn build;serve build"
