@@ -29,6 +29,17 @@ export class Class extends BaseEntity {
   @ManyToOne(() => User, (user) => user, { eager: true })
   teacher: User;
 
+  @Column("simple-json")
+  days: {
+    Sunday: boolean;
+    Monday: boolean;
+    Tuesday: boolean;
+    Wednesday: boolean;
+    Thursday: boolean;
+    Friday: boolean;
+    Saturday: boolean;
+  };
+
   @ManyToMany(() => User, (user) => user.classes, { eager: true })
   @JoinTable()
   students: User[];

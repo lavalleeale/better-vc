@@ -1,6 +1,9 @@
 import DateFnsUtils from "@date-io/date-fns";
 import {
+  Checkbox,
   FormControl,
+  FormControlLabel,
+  FormGroup,
   InputLabel,
   MenuItem,
   Select,
@@ -9,7 +12,6 @@ import {
 import { MuiPickersUtilsProvider, TimePicker } from "@material-ui/pickers";
 import React, { Dispatch, SetStateAction } from "react";
 import { ClassType } from "../@types/class";
-
 const ImportBlock = ({
   block,
   setBlock,
@@ -21,6 +23,14 @@ const ImportBlock = ({
   teachers: Array<{ name: string }>;
   students: Array<{ name: string }>;
 }) => {
+  function isValidUrl(url: string) {
+    try {
+      new URL(url);
+    } catch {
+      return false || url === "";
+    }
+    return true;
+  }
   return (
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
       <TextField
@@ -43,7 +53,6 @@ const ImportBlock = ({
       >
         <InputLabel>Teacher Name</InputLabel>
         <Select
-          label="Teacher Name"
           required
           value={block.teacher.name}
           onChange={(e) => {
@@ -66,6 +75,8 @@ const ImportBlock = ({
         id="Zoom Link"
         value={block.zoomLink}
         style={{ marginTop: "10px" }}
+        error={!isValidUrl(block.zoomLink)}
+        helperText={isValidUrl(block.zoomLink) ? "" : "Must be valid URL"}
         className="longText"
         onChange={(e) => {
           setBlock({
@@ -109,44 +120,77 @@ const ImportBlock = ({
       <ul>
         {[...block.students, { name: "" }].map((student, index) => (
           <li key={student.name}>
-            <Select
+            <FormControl
               className="longText"
-              style={{ marginTop: "10px" }}
-              label="Teacher Name"
-              value={block.students[index] ? block.students[index].name : ""}
-              onChange={(e) => {
-                if (e.target.value) {
-                  setBlock({
-                    ...block,
-                    students: [
-                      ...block.students.slice(0, index),
-                      { name: e.target.value as string },
-                      ...block.students.slice(index + 1),
-                    ],
-                  });
-                } else {
-                  setBlock({
-                    ...block,
-                    students: [
-                      ...block.students.slice(0, index),
-                      ...block.students.slice(index + 1),
-                    ],
-                  });
-                }
-              }}
+              style={{ marginTop: "10px", padding: "10px" }}
             >
-              <MenuItem key="None" value="">
-                None
-              </MenuItem>
-              {students.map((student) => (
-                <MenuItem key={student.name} value={student.name}>
-                  {student.name}
+              <InputLabel>Student {index + 1}</InputLabel>
+              <Select
+                className="longText"
+                value={block.students[index] ? block.students[index].name : ""}
+                onChange={(e) => {
+                  if (e.target.value) {
+                    setBlock({
+                      ...block,
+                      students: [
+                        ...block.students.slice(0, index),
+                        { name: e.target.value as string },
+                        ...block.students.slice(index + 1),
+                      ],
+                    });
+                  } else {
+                    setBlock({
+                      ...block,
+                      students: [
+                        ...block.students.slice(0, index),
+                        ...block.students.slice(index + 1),
+                      ],
+                    });
+                  }
+                }}
+              >
+                <MenuItem key="Empty" value="">
+                  Empty
                 </MenuItem>
-              ))}
-            </Select>
+                {students.map((student) => (
+                  <MenuItem key={student.name} value={student.name}>
+                    {student.name}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
           </li>
         ))}
       </ul>
+      <FormGroup row>
+        <ul>
+          {(Object.keys(block.days) as Array<keyof typeof block.days>).map(
+            (day) => (
+              <li
+                key={day}
+                style={{
+                  display: "inline",
+                }}
+              >
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={block.days[day]}
+                      onChange={() => {
+                        setBlock({
+                          ...block,
+                          days: { ...block.days, [day]: !block.days[day] },
+                        });
+                      }}
+                    />
+                  }
+                  label={day}
+                />
+              </li>
+            )
+          )}
+        </ul>
+      </FormGroup>
     </MuiPickersUtilsProvider>
   );
 };
