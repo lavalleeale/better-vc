@@ -1,4 +1,4 @@
-name: Publish Docker Image
+name: Publish
 
 on:  
   push:
@@ -6,7 +6,7 @@ on:
       - v*
 
 jobs:
-  push:
+  backend:
     runs-on: ubuntu-latest
     steps:
       -
@@ -50,3 +50,28 @@ jobs:
         run: |
           rm -rf /tmp/.buildx-cache
           mv /tmp/.buildx-cache-new /tmp/.buildx-cache
+  frontend:
+    runs-on: ubuntu-latest
+    steps:
+      - 
+        name: Yarn Install
+        run: yarn install --cwd ./frontend --frozen-lockfile
+      - 
+        name: Yarn Build
+        run: yarn build --cwd ./frontend
+      - 
+        name: Deploy to Netlify
+        uses: nwtgck/actions-netlify@v1.1
+        with:
+          publish-dir: './frontend/dist'
+          production-branch: master
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          deploy-message: "Deploy from GitHub Actions"
+          enable-pull-request-comment: false
+          enable-commit-comment: true
+          production-deploy: true
+          overwrites-pull-request-comment: true
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+        timeout-minutes: 1
