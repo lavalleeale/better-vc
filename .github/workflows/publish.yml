@@ -53,6 +53,9 @@ jobs:
   frontend:
     runs-on: ubuntu-latest
     steps:
+      -
+        name: Checkout
+        uses: actions/checkout@v2
       - 
         name: Yarn Install
         run: yarn install --cwd ./frontend --frozen-lockfile
