@@ -23,5 +23,7 @@ COPY --from=build /usr/src/app/ ./
 
 RUN yarn install --prod --frozen-lockfile
 
+ENV NODE_ENV=production
+
 # Run the web service on container startup.
 CMD ["node", "dist/index.js"]
