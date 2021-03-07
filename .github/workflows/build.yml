@@ -49,6 +49,13 @@ jobs:
         name: Checkout
         uses: actions/checkout@v2
       - 
+        name: Cache
+        uses: actions/cache@v2
+        with:
+          path: './frontend/node_modules'
+          key: ${{ runner.os }}-modules-${{ hashFiles('./frontend/yarn.lock') }}
+
+      - 
         name: Yarn Install
         run: yarn  --cwd ./frontend install --frozen-lockfile
       - 
