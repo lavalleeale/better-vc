@@ -114,7 +114,7 @@ router.put("/updateClass", async (req: Request, res: Response) => {
       if (token.teacher) {
         try {
           let teacher = await User.findOne({
-            where: { name: req.body.block.teacher },
+            where: { name: req.body.block.teacher.name },
           });
           return res.status(200).send({
             ...(await Class.save({
