@@ -1,4 +1,10 @@
-import { Card, createMuiTheme, CssBaseline } from "@material-ui/core";
+import {
+  Card,
+  CircularProgress,
+  createMuiTheme,
+  CssBaseline,
+  Typography,
+} from "@material-ui/core";
 import { ThemeProvider } from "@material-ui/styles";
 import React, { lazy, Suspense, useState } from "react";
 import { useCookies } from "react-cookie";
@@ -8,9 +14,9 @@ const AddStudent = lazy(() => import("./components/AddUser"));
 const TeacherDash = lazy(() => import("./components/TeacherDash"));
 const Login = lazy(() => import("./components/Login"));
 const Profile = lazy(() => import("./components/Profile"));
-const Schedule = lazy(() => import("./components/Schedule"));
 const AddClass = lazy(() => import("./components/AddClass"));
 const ManageClasses = lazy(() => import("./components/ManageClasses"));
+const Schedule = lazy(() => import("./components/Schedule"));
 
 const darkThemeMq = window.matchMedia("(prefers-color-scheme: dark)");
 let darkTheme = createMuiTheme({
@@ -24,6 +30,14 @@ let lightTheme = createMuiTheme({
   },
 });
 
+function Loading() {
+  return (
+    <Card className="card" style={{ textAlign: "center" }}>
+      <Typography variant="h3">Loading...</Typography>
+      <CircularProgress style={{ width: "10%", height: "10%" }} />
+    </Card>
+  );
+}
 function App() {
   const [darkMode, setDarkMode] = useState(darkThemeMq.matches);
   darkThemeMq.addEventListener("change", function (evt) {
@@ -37,43 +51,43 @@ function App() {
         <Header />
         <br />
         {!cookies.auth ? (
-          <Suspense fallback={<Card className="card">Loading...</Card>}>
+          <Suspense fallback={<Loading />}>
             <Login />
           </Suspense>
         ) : (
           <Switch>
             <Route exact path="/">
-              <Suspense fallback={<Card className="card">Loading...</Card>}>
+              <Suspense fallback={<Loading />}>
                 <Schedule />
               </Suspense>
             </Route>
             <Route exact path="/dashboard">
-              <Suspense fallback={<Card className="card">Loading...</Card>}>
+              <Suspense fallback={<Loading />}>
                 <TeacherDash />
               </Suspense>
             </Route>
             <Route path="/teacher/addClass">
-              <Suspense fallback={<Card className="card">Loading...</Card>}>
+              <Suspense fallback={<Loading />}>
                 <AddClass />
               </Suspense>
             </Route>
             <Route path="/profile">
-              <Suspense fallback={<Card className="card">Loading...</Card>}>
+              <Suspense fallback={<Loading />}>
                 <Profile />
               </Suspense>
             </Route>
             <Route path="/teacher/addTeacher">
-              <Suspense fallback={<Card className="card">Loading...</Card>}>
+              <Suspense fallback={<Loading />}>
                 <AddStudent teacher={true} />
               </Suspense>
             </Route>
             <Route path="/teacher/addStudent">
-              <Suspense fallback={<Card className="card">Loading...</Card>}>
+              <Suspense fallback={<Loading />}>
                 <AddStudent teacher={false} />
               </Suspense>
             </Route>
             <Route path="/teacher/manageClasses">
-              <Suspense fallback={<Card className="card">Loading...</Card>}>
+              <Suspense fallback={<Loading />}>
                 <ManageClasses />
               </Suspense>
             </Route>
