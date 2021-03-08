@@ -17,11 +17,11 @@ export class Class extends BaseEntity {
   @Column("text", { unique: true })
   name: string;
 
-  @Column("text")
-  startTime: string;
+  @Column("int")
+  startTime: number;
 
-  @Column("text")
-  endTime: string;
+  @Column("int")
+  endTime: number;
 
   @Column("text", { nullable: true })
   zoomLink!: string;

@@ -26,8 +26,8 @@ const AddClass = ({
       setBlock({
         name: "",
         teacher: { name: "" },
-        startTime: new Date(0, 0, 0, 8, 0, 0, 0).toLocaleString(),
-        endTime: new Date(0, 0, 0, 8, 0, 0, 0).toLocaleString(),
+        startTime: 480,
+        endTime: 480,
         zoomLink: "",
         classroomLink: "",
         students: [],
@@ -58,8 +58,8 @@ const AddClass = ({
       setBlock({
         name: "",
         teacher: { name: "" },
-        startTime: new Date(0, 0, 0, 8, 0, 0, 0).toLocaleString(),
-        endTime: new Date(0, 0, 0, 8, 0, 0, 0).toLocaleString(),
+        startTime: 480,
+        endTime: 480,
         zoomLink: "",
         classroomLink: "",
         students: [],

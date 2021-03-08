@@ -92,12 +92,22 @@ const ImportBlock = ({
         label="Start Time"
         required
         style={{ marginTop: "10px" }}
-        value={block.startTime}
+        value={
+          new Date(
+            0,
+            0,
+            0,
+            Math.floor(block.startTime / 60),
+            block.startTime % 60,
+            0,
+            0
+          )
+        }
         onChange={(e) => {
           if (e) {
             setBlock({
               ...block,
-              startTime: e.toLocaleString(),
+              startTime: e.getHours() * 60 + e.getMinutes(),
             });
           }
         }}
@@ -107,12 +117,22 @@ const ImportBlock = ({
         label="End Time"
         required
         style={{ marginTop: "10px", marginLeft: "10px" }}
-        value={block.endTime}
+        value={
+          new Date(
+            0,
+            0,
+            0,
+            Math.floor(block.endTime / 60),
+            block.endTime % 60,
+            0,
+            0
+          )
+        }
         onChange={(e) => {
           if (e) {
             setBlock({
               ...block,
-              endTime: e.toLocaleString(),
+              endTime: e.getHours() * 60 + e.getMinutes(),
             });
           }
         }}

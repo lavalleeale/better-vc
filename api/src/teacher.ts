@@ -203,6 +203,7 @@ router.get("/getClasses", async (req: Request, res: Response) => {
         return res.status(200).send(
           await Class.find({
             relations: ["teacher"],
+            order: { startTime: "ASC" },
             where: { teacher: token.email },
           })
         );

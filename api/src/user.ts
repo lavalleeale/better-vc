@@ -76,7 +76,7 @@ router.get("/getClasses", async (req: Request, res: Response) => {
         return res.status(200).send(
           (await User.findOne(token.email, {
             relations: ["classes"],
-          }))!.classes
+          }))!.classes.sort((a, b) => a.startTime - b.startTime)
         );
       }
     } catch {}

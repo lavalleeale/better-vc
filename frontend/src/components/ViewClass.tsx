@@ -54,8 +54,24 @@ const ViewClass = ({
         <Card
           className={
             compareTime(
-              new Date(block.startTime),
-              new Date(block.endTime),
+              new Date(
+                0,
+                0,
+                0,
+                Math.floor(block.startTime / 60),
+                block.startTime % 60,
+                0,
+                0
+              ),
+              new Date(
+                0,
+                0,
+                0,
+                Math.floor(block.endTime / 60),
+                block.endTime % 60,
+                0,
+                0
+              ),
               block.days
             )
               ? "selected"
@@ -142,10 +158,28 @@ const ViewClass = ({
           <Typography>Name: {block.name}</Typography>
           <Typography>Teacher: {block.teacher.name}</Typography>
           <Typography>
-            Start Time: {new Date(block.startTime).toLocaleTimeString()}
+            Start Time:{" "}
+            {new Date(
+              0,
+              0,
+              0,
+              Math.floor(block.startTime / 60),
+              block.startTime % 60,
+              0,
+              0
+            ).toLocaleTimeString()}
           </Typography>
           <Typography>
-            End Time: {new Date(block.endTime).toLocaleTimeString()}
+            End Time:{" "}
+            {new Date(
+              0,
+              0,
+              0,
+              Math.floor(block.endTime / 60),
+              block.endTime % 60,
+              0,
+              0
+            ).toLocaleTimeString()}
           </Typography>
           {teacher && (
             <Typography>Zoom Link: {block.zoomLink || "none"}</Typography>
