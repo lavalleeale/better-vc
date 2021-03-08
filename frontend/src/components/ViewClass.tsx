@@ -135,16 +135,18 @@ const ViewClass = ({
               </ul>
             </FormGroup>
           )}
-          <Typography>Students:</Typography>
-          <ul style={{ listStyle: "inside" }}>
-            {block.students.map((student) => (
-              <li key={student.name}>
-                <Typography style={{ display: "inline" }}>
-                  {student.name}
-                </Typography>
-              </li>
-            ))}
-          </ul>
+          {!!block.students.length && (
+            <ul style={{ listStyle: "inside" }}>
+              <Typography>Students:</Typography>
+              {block.students.map((student) => (
+                <li key={student.name}>
+                  <Typography style={{ display: "inline" }}>
+                    {student.name}
+                  </Typography>
+                </li>
+              ))}
+            </ul>
+          )}
         </Card>
       )}
     </>

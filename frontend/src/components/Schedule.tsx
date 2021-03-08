@@ -12,7 +12,7 @@ const ManageClasses = () => {
     async function getData() {
       try {
         let response: Response;
-        if (jwt_decode<{ teacher: boolean }>(cookies.auth)) {
+        if (jwt_decode<{ teacher: boolean }>(cookies.auth).teacher) {
           response = await fetch(`${API_BASE_URL}/teacher/getClasses`, {
             credentials: "omit",
             headers: {
