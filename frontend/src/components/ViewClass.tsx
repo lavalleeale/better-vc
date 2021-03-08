@@ -57,7 +57,7 @@ const ViewClass = ({
               block.days
             )
               ? "selected"
-              : "notSelected"
+              : "card"
           }
         >
           {!teacher && (
@@ -127,7 +127,13 @@ const ViewClass = ({
                     }}
                   >
                     <FormControlLabel
-                      control={<Checkbox checked={block.days[day]} disabled />}
+                      control={
+                        <Checkbox
+                          disabled
+                          color="primary"
+                          checked={block.days[day]}
+                        />
+                      }
                       label={day}
                     />
                   </li>
