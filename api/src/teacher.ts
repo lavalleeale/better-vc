@@ -175,7 +175,7 @@ router.post("/addUser", async (req: Request, res: Response) => {
         try {
           const block = await User.create({
             name: req.body.name,
-            email: req.body.email,
+            email: req.body.email.toLowerCase(),
             nickname: req.body.nickname,
             teacher: req.body.teacher,
           }).save();
