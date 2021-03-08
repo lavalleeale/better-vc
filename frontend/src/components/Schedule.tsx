@@ -4,10 +4,12 @@ import { API_BASE_URL } from "../constants";
 import { ClassType } from "../@types/class";
 import ViewClass from "./ViewClass";
 import jwt_decode from "jwt-decode";
+import DayPicker from "./DayPicker";
 
 const ManageClasses = () => {
   const [cookies, , removeCookie] = useCookies(["auth"]);
   const [classes, setClasses] = useState<ClassType[]>([]);
+  const [day, setDay] = useState(new Date().getDay());
   useEffect(() => {
     async function getData() {
       try {
@@ -44,14 +46,11 @@ const ManageClasses = () => {
   }, [cookies.auth, removeCookie]);
   return (
     <ul>
+      <DayPicker day={day} setDay={(day: number) => setDay(day)} />
       {classes.map((block: ClassType, index) => {
         return (
           <li key={index}>
-            <ViewClass
-              day={new Date().getDay()}
-              teacher={false}
-              block={block}
-            />
+            <ViewClass day={day} teacher={false} block={block} />
           </li>
         );
       })}
