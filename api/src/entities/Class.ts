@@ -17,10 +17,10 @@ export class Class extends BaseEntity {
   @Column("text", { unique: true })
   name: string;
 
-  @Column("int")
+  @Column("smallint")
   startTime: number;
 
-  @Column("int")
+  @Column("smallint")
   endTime: number;
 
   @Column("text", { nullable: true })

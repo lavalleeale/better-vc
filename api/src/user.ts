@@ -55,11 +55,7 @@ router.get("/getInfo", async (req: Request, res: Response) => {
       if (token.email) {
         return res
           .status(200)
-          .send(
-            JSON.stringify(
-              await User.findOne({ where: { email: token.email } })
-            )
-          );
+          .send(JSON.stringify(await User.findOne(token.email)));
       }
     } catch {}
   }
