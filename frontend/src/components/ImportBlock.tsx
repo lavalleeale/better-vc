@@ -12,6 +12,17 @@ import {
 import { MuiPickersUtilsProvider, TimePicker } from "@material-ui/pickers";
 import React, { Dispatch, SetStateAction } from "react";
 import { ClassType } from "../@types/class";
+
+const days = [
+  "Sunday",
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+];
+
 const ImportBlock = ({
   block,
   setBlock,
@@ -184,31 +195,33 @@ const ImportBlock = ({
       </ul>
       <FormGroup row>
         <ul>
-          {(Object.keys(block.days) as Array<keyof typeof block.days>).map(
-            (day) => (
-              <li
-                key={day}
-                style={{
-                  display: "inline",
-                }}
-              >
-                <FormControlLabel
-                  control={
-                    <Checkbox
-                      checked={block.days[day]}
-                      onChange={() => {
-                        setBlock({
-                          ...block,
-                          days: { ...block.days, [day]: !block.days[day] },
-                        });
-                      }}
-                    />
-                  }
-                  label={day}
-                />
-              </li>
-            )
-          )}
+          {block.days.map((day, index) => (
+            <li
+              key={index}
+              style={{
+                display: "inline",
+              }}
+            >
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={day}
+                    onChange={() => {
+                      setBlock({
+                        ...block,
+                        days: [
+                          ...block.days.slice(0, index),
+                          !day,
+                          ...block.days.slice(index + 1),
+                        ],
+                      });
+                    }}
+                  />
+                }
+                label={days[index]}
+              />
+            </li>
+          ))}
         </ul>
       </FormGroup>
     </MuiPickersUtilsProvider>

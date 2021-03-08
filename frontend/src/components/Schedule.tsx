@@ -47,7 +47,11 @@ const ManageClasses = () => {
       {classes.map((block: ClassType, index) => {
         return (
           <li key={index}>
-            <ViewClass teacher={false} block={block} />
+            <ViewClass
+              day={new Date().getDay()}
+              teacher={false}
+              block={block}
+            />
           </li>
         );
       })}

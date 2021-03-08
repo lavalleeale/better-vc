@@ -30,15 +30,7 @@ export class Class extends BaseEntity {
   teacher: User;
 
   @Column("simple-json")
-  days: {
-    Sunday: boolean;
-    Monday: boolean;
-    Tuesday: boolean;
-    Wednesday: boolean;
-    Thursday: boolean;
-    Friday: boolean;
-    Saturday: boolean;
-  };
+  days: Array<boolean>;
 
   @ManyToMany(() => User, (user) => user.classes, { eager: true })
   @JoinTable()

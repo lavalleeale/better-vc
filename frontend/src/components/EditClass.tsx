@@ -18,6 +18,7 @@ const EditClass = ({
     <>
       {!editing ? (
         <ViewClass
+          day={new Date().getDay()}
           deleteClass={deleteClass}
           block={block}
           teacher={true}

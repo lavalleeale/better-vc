@@ -12,40 +12,39 @@ import { ClassType } from "../@types/class";
 import { Edit, Delete } from "@material-ui/icons";
 import React, { useState } from "react";
 
+const days = [
+  "Sunday",
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+];
+
 const ViewClass = ({
   block,
   teacher,
   setEditing,
   deleteClass,
+  day,
 }: {
   block: ClassType;
   teacher: boolean;
   setEditing?: (value: boolean) => void;
   deleteClass?: () => void;
+  day: number;
 }) => {
   function compareTime(
-    startTime: Date,
-    endTime: Date,
+    startTime: number,
+    endTime: number,
     days: ClassType["days"]
   ) {
-    const currentTime = new Date();
-    return (
-      isToday(days) &&
-      removeDate(startTime) <= removeDate(currentTime) &&
-      removeDate(currentTime) < removeDate(endTime)
-    );
-  }
-  function removeDate(date: Date) {
-    return new Date(
-      Date.UTC(0, 0, 0, date.getUTCHours(), date.getUTCMinutes())
-    ).getTime();
+    const currentTime = new Date().getHours() * 60 + new Date().getMinutes();
+    return isToday(days) && startTime <= currentTime && currentTime < endTime;
   }
   function isToday(days: ClassType["days"]) {
-    return days[
-      new Date().toLocaleString("en-us", {
-        weekday: "long",
-      }) as keyof typeof block.days
-    ];
+    return days[day];
   }
   const [open, setOpen] = useState(false);
   return (
@@ -53,27 +52,7 @@ const ViewClass = ({
       {(teacher || isToday(block.days)) && (
         <Card
           className={
-            compareTime(
-              new Date(
-                0,
-                0,
-                0,
-                Math.floor(block.startTime / 60),
-                block.startTime % 60,
-                0,
-                0
-              ),
-              new Date(
-                0,
-                0,
-                0,
-                Math.floor(block.endTime / 60),
-                block.endTime % 60,
-                0,
-                0
-              ),
-              block.days
-            )
+            compareTime(block.startTime, block.endTime, block.days)
               ? "selected"
               : "card"
           }
@@ -187,11 +166,9 @@ const ViewClass = ({
           {teacher && (
             <FormGroup row>
               <ul>
-                {(Object.keys(block.days) as Array<
-                  keyof typeof block.days
-                >).map((day) => (
+                {block.days.map((day, index) => (
                   <li
-                    key={day}
+                    key={index}
                     style={{
                       display: "inline",
                     }}
@@ -201,10 +178,10 @@ const ViewClass = ({
                         <Checkbox
                           disabled
                           color="primary"
-                          checked={block.days[day]}
+                          checked={block.days[index]}
                         />
                       }
-                      label={day}
+                      label={days[index]}
                     />
                   </li>
                 ))}

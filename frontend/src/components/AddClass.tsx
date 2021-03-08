@@ -31,15 +31,7 @@ const AddClass = ({
         zoomLink: "",
         classroomLink: "",
         students: [],
-        days: {
-          Sunday: false,
-          Monday: false,
-          Tuesday: false,
-          Wednesday: false,
-          Thursday: false,
-          Friday: false,
-          Saturday: false,
-        },
+        days: [false, false, false, false, false, false, false],
       });
     }
   }
@@ -63,15 +55,7 @@ const AddClass = ({
         zoomLink: "",
         classroomLink: "",
         students: [],
-        days: {
-          Sunday: false,
-          Monday: false,
-          Tuesday: false,
-          Wednesday: false,
-          Thursday: false,
-          Friday: false,
-          Saturday: false,
-        },
+        days: [false, false, false, false, false, false, false],
       });
     } else {
       setError(await response.text());
