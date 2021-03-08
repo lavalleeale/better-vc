@@ -7,9 +7,10 @@ import {
   IconButton,
   Typography,
 } from "@material-ui/core";
+import Popup from "reactjs-popup";
 import { ClassType } from "../@types/class";
 import { Edit, Delete } from "@material-ui/icons";
-import React from "react";
+import React, { useState } from "react";
 
 const ViewClass = ({
   block,
@@ -46,6 +47,7 @@ const ViewClass = ({
       }) as keyof typeof block.days
     ];
   }
+  const [open, setOpen] = useState(false);
   return (
     <>
       {(teacher || isToday(block.days)) && (
@@ -96,11 +98,45 @@ const ViewClass = ({
               </IconButton>
               <IconButton
                 aria-label="Edit"
-                onClick={deleteClass}
+                onClick={() => setOpen(true)}
                 style={{ float: "right" }}
               >
                 <Delete />
               </IconButton>
+              <Popup
+                modal
+                contentStyle={{
+                  width: "50%",
+                  height: "50%",
+                  textAlign: "center",
+                }}
+                open={open}
+                position="right center"
+              >
+                <Card style={{ width: "100%", height: "100%" }}>
+                  <Typography variant="h3">
+                    Are you sure you want to delete
+                  </Typography>
+                  <Typography variant="h2">{block.name}?</Typography>
+                  <Button
+                    style={{ margin: "10px" }}
+                    variant="outlined"
+                    onClick={() => {
+                      deleteClass();
+                      setOpen(false);
+                    }}
+                  >
+                    Delete
+                  </Button>
+                  <Button
+                    style={{ margin: "10px" }}
+                    variant="outlined"
+                    onClick={() => setOpen(false)}
+                  >
+                    Cancel
+                  </Button>
+                </Card>
+              </Popup>
             </>
           )}
           <Typography>Name: {block.name}</Typography>
