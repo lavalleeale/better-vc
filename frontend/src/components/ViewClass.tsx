@@ -99,16 +99,15 @@ const ViewClass = ({
                 <Delete />
               </IconButton>
               <Popup
+                onClose={() => setOpen(false)}
                 modal
                 contentStyle={{
-                  width: "50%",
-                  height: "50%",
                   textAlign: "center",
                 }}
                 open={open}
-                position="right center"
+                position="top center"
               >
-                <Card style={{ width: "100%", height: "100%" }}>
+                <Card className="card">
                   <Typography variant="h3">
                     Are you sure you want to delete
                   </Typography>
@@ -189,16 +188,18 @@ const ViewClass = ({
             </FormGroup>
           )}
           {!!block.students.length && (
-            <ul style={{ listStyle: "inside" }}>
+            <div>
               <Typography>Students:</Typography>
-              {block.students.map((student) => (
-                <li key={student.name}>
-                  <Typography style={{ display: "inline" }}>
-                    {student.name}
-                  </Typography>
-                </li>
-              ))}
-            </ul>
+              <ul style={{ listStyle: "inside" }}>
+                {block.students.map((student) => (
+                  <li key={student.name}>
+                    <Typography style={{ display: "inline" }}>
+                      {student.name}
+                    </Typography>
+                  </li>
+                ))}
+              </ul>
+            </div>
           )}
         </Card>
       )}
