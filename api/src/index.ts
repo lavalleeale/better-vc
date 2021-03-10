@@ -59,7 +59,7 @@ async function main() {
           user.name = profile.displayName;
           await user.save();
         } else if (__prod__) {
-          return cb();
+          return cb("Email not Found", {});
         } else {
           user = await User.create({
             name: profile.displayName,
