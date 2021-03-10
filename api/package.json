@@ -4,6 +4,7 @@
   "description": "",
   "main": "src/index.ts",
   "scripts": {
+    "start:database": "docker-compose up -d",
     "compile": "tsc",
     "watch": "tsc -w",
     "start": "concurrently \"yarn watch\" \"nodemon dist\"",

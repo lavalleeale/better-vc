@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 
 const TeacherDash = () => {
   return (
-    <Card className="card">
+    <Card className="card" style={{ textAlign: "center" }}>
       <Typography variant="h3">Teacher Dashboard</Typography>
       <Link
         to="/teacher/addTeacher"

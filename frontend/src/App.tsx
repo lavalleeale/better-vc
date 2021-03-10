@@ -10,6 +10,7 @@ import React, { lazy, Suspense, useState } from "react";
 import { useCookies } from "react-cookie";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Header from "./components/Header";
+import User from "./components/User";
 const AddStudent = lazy(() => import("./components/AddUser"));
 const TeacherDash = lazy(() => import("./components/TeacherDash"));
 const Login = lazy(() => import("./components/Login"));
@@ -66,14 +67,19 @@ function App() {
                 <TeacherDash />
               </Suspense>
             </Route>
-            <Route path="/teacher/addClass">
-              <Suspense fallback={<Loading />}>
-                <AddClass />
-              </Suspense>
-            </Route>
             <Route path="/profile">
               <Suspense fallback={<Loading />}>
                 <Profile />
+              </Suspense>
+            </Route>
+            <Route path="/user/:name">
+              <Suspense fallback={<Loading />}>
+                <User />
+              </Suspense>
+            </Route>
+            <Route path="/teacher/addClass">
+              <Suspense fallback={<Loading />}>
+                <AddClass />
               </Suspense>
             </Route>
             <Route path="/teacher/addTeacher">

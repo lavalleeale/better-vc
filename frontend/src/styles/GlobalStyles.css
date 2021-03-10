@@ -11,6 +11,10 @@
 .longText {
   width: 100%;
 }
+a {
+  text-decoration: none;
+  color: inherit;
+}
 li {
   margin-left: none;
 }
