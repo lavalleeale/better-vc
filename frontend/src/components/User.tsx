@@ -40,6 +40,7 @@ const User = () => {
       getData();
     }
   }, [cookies.auth, removeCookie, name]);
+  console.log("test");
   return (
     <Card className="card">
       <img

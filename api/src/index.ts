@@ -36,14 +36,13 @@ async function main() {
   });
   app.use(cors({ origin: `${process.env.FRONTEND_URL}`, credentials: true }));
   app.use(passport.initialize());
-  app.use(express.json());
+  app.use(express.json({ limit: "10MB" }));
   app.use(cookieParser());
   const authLimiter = rateLimit({
     windowMs: 15 * 60 * 1000, // 15 minutes
     max: 100,
   });
 
-  // only apply to requests that begin with /api/
   app.use("/auth/", authLimiter);
   passport.use(
     new GoogleStrategy(

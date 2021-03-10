@@ -1,11 +1,19 @@
-import { Button, Card, TextField } from "@material-ui/core";
+import {
+  Button,
+  Card,
+  LinearProgress,
+  TextField,
+  Typography,
+} from "@material-ui/core";
 import React, { FormEvent, useState } from "react";
 import useCookies from "react-cookie/cjs/useCookies";
+import Popup from "reactjs-popup";
 import { API_BASE_URL } from "../constants";
 
 const AddUser = ({ teacher }: { teacher: boolean }) => {
   const [student, setStudent] = useState({ name: "", nickname: "", email: "" });
   const [image, setImage] = useState("");
+  const [showProgress, setShowProgress] = useState(false);
   const [cookies] = useCookies();
 
   function validateEmail(inputText: string) {
@@ -15,21 +23,26 @@ const AddUser = ({ teacher }: { teacher: boolean }) => {
 
   async function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
-    const response = await fetch(`${API_BASE_URL}/teacher/addUser`, {
-      method: "POST",
-      credentials: "omit",
-      headers: {
-        jwt: cookies.auth,
-        "content-type": "application/json",
-      },
-      body: JSON.stringify({
-        ...student,
-        teacher: teacher,
-        image: image,
+    setShowProgress(true);
+    const response = await Promise.all([
+      fetch(`${API_BASE_URL}/teacher/addUser`, {
+        method: "POST",
+        credentials: "omit",
+        headers: {
+          jwt: cookies.auth,
+          "content-type": "application/json",
+        },
+        body: JSON.stringify({
+          ...student,
+          teacher: teacher,
+          image: image,
+        }),
       }),
-    });
-    if (response.ok) {
+      setTimeout(() => {}, 3000),
+    ]);
+    if (response[0].ok) {
       setStudent({ name: "", nickname: "", email: "" });
+      setShowProgress(false);
     }
   }
   return (
@@ -80,7 +93,6 @@ const AddUser = ({ teacher }: { teacher: boolean }) => {
           variant="outlined"
         />
         <input
-          required
           style={{ display: "none" }}
           accept="image/*"
           id="image-upload"
@@ -95,11 +107,6 @@ const AddUser = ({ teacher }: { teacher: boolean }) => {
             }
           }}
         />
-        <label htmlFor="image-upload">
-          <Button variant="contained" color="primary" component="span">
-            Upload Profile Picture
-          </Button>
-        </label>
         <Button
           aria-label="Add"
           type="submit"
@@ -108,7 +115,32 @@ const AddUser = ({ teacher }: { teacher: boolean }) => {
         >
           Add
         </Button>
+        <label htmlFor="image-upload">
+          <Button
+            variant="outlined"
+            component="span"
+            style={{ marginTop: "10px" }}
+          >
+            Upload Profile Picture
+          </Button>
+        </label>
       </form>
+      <Popup
+        modal
+        closeOnDocumentClick={false}
+        closeOnEscape={false}
+        open={showProgress}
+        onClose={() => setShowProgress(false)}
+      >
+        <Card
+          className="card"
+          variant="outlined"
+          style={{ textAlign: "center" }}
+        >
+          <Typography variant="h3">Creating User...</Typography>
+          <LinearProgress style={{ marginTop: "10px", width: "500px" }} />
+        </Card>
+      </Popup>
     </Card>
   );
 };

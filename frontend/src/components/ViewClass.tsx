@@ -135,7 +135,7 @@ const ViewClass = ({
             </>
           )}
           <Typography>Name: {block.name}</Typography>
-          <Link to={`user/${block.teacher.email}`}>
+          <Link to={`/user/${block.teacher.email}`}>
             <Typography style={{ display: "inline" }}>
               {block.teacher.name}
             </Typography>
@@ -198,7 +198,7 @@ const ViewClass = ({
               <ul style={{ listStyle: "inside" }}>
                 {block.students.map((student) => (
                   <li key={student.name}>
-                    <Link to={`user/${student.email}`}>
+                    <Link to={`/user/${student.email}`}>
                       <Typography style={{ display: "inline" }}>
                         {student.name}
                       </Typography>
