@@ -4,11 +4,7 @@ import { User } from "./entities/User";
 import jwt from "jsonwebtoken";
 import { Class } from "./entities/Class";
 import { QueryFailedError } from "typeorm";
-import {
-  UploadApiErrorResponse,
-  UploadApiResponse,
-  v2 as cloudinary,
-} from "cloudinary";
+import { v2 as cloudinary } from "cloudinary";
 
 var router = express.Router();
 
