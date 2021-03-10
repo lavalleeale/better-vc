@@ -5,6 +5,6 @@ export type ClassType = {
   endTime: number;
   zoomLink: string;
   classroomLink;
-  students: Array<{ name: string }>;
+  students: Array<{ name: string; email: string }>;
   days: Array<boolean>;
 };

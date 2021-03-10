@@ -4,6 +4,11 @@ import { User } from "./entities/User";
 import jwt from "jsonwebtoken";
 import { Class } from "./entities/Class";
 import { QueryFailedError } from "typeorm";
+import {
+  UploadApiErrorResponse,
+  UploadApiResponse,
+  v2 as cloudinary,
+} from "cloudinary";
 
 var router = express.Router();
 
@@ -173,11 +178,15 @@ router.post("/addUser", async (req: Request, res: Response) => {
           req.body.nickname = req.body.name.split(" ")[0];
         }
         try {
+          let imageUrl = (await cloudinary.uploader.upload(req.body.image))
+            .secure_url;
+          console.log(imageUrl);
           const block = await User.create({
             name: req.body.name,
             email: req.body.email.toLowerCase(),
             nickname: req.body.nickname,
             teacher: req.body.teacher,
+            image: imageUrl,
           }).save();
           return res.status(200).send(block);
         } catch (e) {

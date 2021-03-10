@@ -5,6 +5,7 @@ import { API_BASE_URL } from "../constants";
 
 const AddUser = ({ teacher }: { teacher: boolean }) => {
   const [student, setStudent] = useState({ name: "", nickname: "", email: "" });
+  const [image, setImage] = useState("");
   const [cookies] = useCookies();
 
   function validateEmail(inputText: string) {
@@ -21,7 +22,11 @@ const AddUser = ({ teacher }: { teacher: boolean }) => {
         jwt: cookies.auth,
         "content-type": "application/json",
       },
-      body: JSON.stringify({ ...student, teacher: teacher }),
+      body: JSON.stringify({
+        ...student,
+        teacher: teacher,
+        image: image,
+      }),
     });
     if (response.ok) {
       setStudent({ name: "", nickname: "", email: "" });
@@ -74,6 +79,27 @@ const AddUser = ({ teacher }: { teacher: boolean }) => {
           label="Email"
           variant="outlined"
         />
+        <input
+          required
+          style={{ display: "none" }}
+          accept="image/*"
+          id="image-upload"
+          type="file"
+          onChange={(e) => {
+            const reader = new FileReader();
+            if (e.target.files) {
+              reader.readAsDataURL(e.target.files[0]);
+              reader.addEventListener("load", () => {
+                setImage(reader.result as string);
+              });
+            }
+          }}
+        />
+        <label htmlFor="image-upload">
+          <Button variant="contained" color="primary" component="span">
+            Upload Profile Picture
+          </Button>
+        </label>
         <Button
           aria-label="Add"
           type="submit"

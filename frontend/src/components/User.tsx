@@ -7,7 +7,13 @@ import { API_BASE_URL } from "../constants";
 const User = () => {
   const { name } = useParams<{ name: string }>();
   const [user, setUser] = useState(
-    {} as { name: string; nickname: string; email: string; teacher: boolean }
+    {} as {
+      name: string;
+      nickname: string;
+      email: string;
+      teacher: boolean;
+      image: string;
+    }
   );
   const [cookies, , removeCookie] = useCookies(["auth"]);
   useEffect(() => {
@@ -36,6 +42,11 @@ const User = () => {
   }, [cookies.auth, removeCookie, name]);
   return (
     <Card className="card">
+      <img
+        style={{ width: "100px", height: "100px", float: "right" }}
+        alt="profile"
+        src={user.image}
+      />
       <Typography>{user.teacher ? "Teacher" : "Student"}</Typography>
       <Typography>
         Name: {user.name} ({user.nickname})

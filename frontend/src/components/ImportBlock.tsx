@@ -165,7 +165,7 @@ const ImportBlock = ({
                       ...block,
                       students: [
                         ...block.students.slice(0, index),
-                        { name: e.target.value as string },
+                        { name: e.target.value as string, email: "" },
                         ...block.students.slice(index + 1),
                       ],
                     });

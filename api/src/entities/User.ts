@@ -3,17 +3,20 @@ import { Class } from "./Class";
 
 @Entity()
 export class User extends BaseEntity {
+  @PrimaryColumn("text", { unique: true })
+  email: string;
+
   @Column("text", { nullable: true })
-  name!: string;
+  name: string;
 
   @Column("text")
-  nickname!: string;
+  nickname: string;
 
-  @PrimaryColumn("text", { unique: true })
-  email!: string;
+  @Column("text", { nullable: true })
+  image: string;
 
   @Column("boolean", { nullable: true })
-  teacher!: boolean;
+  teacher: boolean;
 
   @ManyToMany(() => Class, (block) => block.students)
   classes: Class[];

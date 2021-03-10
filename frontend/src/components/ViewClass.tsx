@@ -11,6 +11,7 @@ import Popup from "reactjs-popup";
 import { ClassType } from "../@types/class";
 import { Edit, Delete } from "@material-ui/icons";
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 const days = [
   "Sunday",
@@ -134,7 +135,11 @@ const ViewClass = ({
             </>
           )}
           <Typography>Name: {block.name}</Typography>
-          <Typography>Teacher: {block.teacher.name}</Typography>
+          <Link to={`user/${block.teacher.email}`}>
+            <Typography style={{ display: "inline" }}>
+              {block.teacher.name}
+            </Typography>
+          </Link>
           <Typography>
             Start Time:{" "}
             {new Date(
@@ -193,9 +198,11 @@ const ViewClass = ({
               <ul style={{ listStyle: "inside" }}>
                 {block.students.map((student) => (
                   <li key={student.name}>
-                    <Typography style={{ display: "inline" }}>
-                      {student.name}
-                    </Typography>
+                    <Link to={`user/${student.email}`}>
+                      <Typography style={{ display: "inline" }}>
+                        {student.name}
+                      </Typography>
+                    </Link>
                   </li>
                 ))}
               </ul>
