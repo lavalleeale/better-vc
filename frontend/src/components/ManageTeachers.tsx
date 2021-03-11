@@ -4,9 +4,9 @@ import { API_BASE_URL } from "../constants";
 import PageSelect from "./PageSelect";
 import User from "./User";
 
-const ManageStudents = () => {
+const ManageTeachers = () => {
   const [cookies, , removeCookie] = useCookies(["auth"]);
-  const [students, setStudents] = useState<
+  const [teachers, setTeachers] = useState<
     {
       name: string;
       nickname: string;
@@ -20,13 +20,13 @@ const ManageStudents = () => {
   useEffect(() => {
     async function getData() {
       try {
-        const response = await fetch(`${API_BASE_URL}/teacher/getStudents`, {
+        const response = await fetch(`${API_BASE_URL}/teacher/getTeachers`, {
           credentials: "omit",
           headers: {
             jwt: cookies.auth,
           },
         });
-        setStudents(await response.json());
+        setTeachers(await response.json());
       } catch {
         removeCookie("auth", {
           path: "/",
@@ -48,13 +48,13 @@ const ManageStudents = () => {
         setSkip={setSkip}
         start={start}
         setStart={setStart}
-        end={students.length}
+        end={teachers.length}
       />
       <ul>
-        {students.slice(start, start + skip).map((student, index) => {
+        {teachers.slice(start, start + skip).map((teacher, index) => {
           return (
             <li key={index}>
-              <User userProp={student} />
+              <User userProp={teacher} />
             </li>
           );
         })}
@@ -63,4 +63,4 @@ const ManageStudents = () => {
   );
 };
 
-export default ManageStudents;
+export default ManageTeachers;

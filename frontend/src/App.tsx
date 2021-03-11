@@ -11,6 +11,7 @@ import { useCookies } from "react-cookie";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Header from "./components/Header";
 import ManageStudents from "./components/ManageStudents";
+import ManageTeachers from "./components/ManageTeachers";
 import User from "./components/User";
 const AddStudent = lazy(() => import("./components/AddUser"));
 const TeacherDash = lazy(() => import("./components/TeacherDash"));
@@ -101,6 +102,11 @@ function App() {
             <Route path="/teacher/manageStudents">
               <Suspense fallback={<Loading />}>
                 <ManageStudents />
+              </Suspense>
+            </Route>
+            <Route path="/teacher/manageTeachers">
+              <Suspense fallback={<Loading />}>
+                <ManageTeachers />
               </Suspense>
             </Route>
           </Switch>

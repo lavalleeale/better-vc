@@ -66,6 +66,18 @@ const TeacherDash = () => {
           <Typography>Manage Students</Typography>
         </Button>
       </Link>
+      <Link
+        to="/teacher/manageTeachers"
+        style={{ textDecoration: "none", color: "inherit" }}
+      >
+        <Button
+          aria-label="Manage Students"
+          variant="outlined"
+          style={{ width: "100%", padding: "10px", marginTop: "10px" }}
+        >
+          <Typography>Manage Teachers</Typography>
+        </Button>
+      </Link>
     </Card>
   );
 };
