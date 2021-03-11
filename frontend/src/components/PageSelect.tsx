@@ -54,18 +54,18 @@ const PageSelect = ({
       >
         <KeyboardArrowRight />
       </IconButton>
-      <FormControl style={{ float: "right", width: "150px" }}>
-        <InputLabel>Items Per Page</InputLabel>
+      <FormControl style={{ float: "right", width: "100px" }}>
+        <InputLabel>Per Page</InputLabel>
         <Select
           value={skip}
           onChange={(e) => setSkip(e.target.value as number)}
         >
-          <MenuItem value={10}>Ten</MenuItem>
+          <MenuItem value={10}>10</MenuItem>
           <MenuItem disabled={end < 20} value={20}>
-            Twenty
+            20
           </MenuItem>
           <MenuItem disabled={end < 30} value={30}>
-            Thirty
+            30
           </MenuItem>
           <MenuItem value={end}>All</MenuItem>
         </Select>
