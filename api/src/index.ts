@@ -35,6 +35,14 @@ async function main() {
     done(null, user.accessToken);
   });
   app.use(cors({ origin: `${process.env.FRONTEND_URL}`, credentials: true }));
+  app.options(
+    "*",
+    cors({
+      origin: `${process.env.FRONTEND_URL}`,
+      credentials: true,
+      methods: ["POST", "GET", "DELETE", "PUT", "OPTIONS"],
+    })
+  );
   app.use(passport.initialize());
   app.use(express.json({ limit: "10MB" }));
   app.use(cookieParser());

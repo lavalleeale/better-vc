@@ -1,4 +1,12 @@
-import { Card, IconButton, TextField, Typography } from "@material-ui/core";
+import {
+  Card,
+  FormControl,
+  IconButton,
+  InputLabel,
+  MenuItem,
+  Select,
+  Typography,
+} from "@material-ui/core";
 import { KeyboardArrowLeft, KeyboardArrowRight } from "@material-ui/icons";
 import React from "react";
 
@@ -31,7 +39,7 @@ const PageSelect = ({
         <KeyboardArrowLeft />
       </IconButton>
       <Typography style={{ display: "inline" }}>
-        Showing {start} through {start + skip}
+        Showing {start + 1} through {start + skip}
       </Typography>
       <IconButton
         onClick={() => {
@@ -41,26 +49,27 @@ const PageSelect = ({
             setStart(start + skip);
           }
         }}
-        disabled={start + skip === end}
+        disabled={start + skip > end}
         style={{ marginLeft: "10px" }}
       >
         <KeyboardArrowRight />
       </IconButton>
-      <TextField
-        variant="outlined"
-        value={skip}
-        type="number"
-        onChange={(e) => {
-          if (
-            parseInt(e.target.value, 10) <= end ||
-            parseInt(e.target.value, 10) === 0
-          ) {
-            setSkip(parseInt(e.target.value, 10));
-          }
-        }}
-        style={{ float: "right" }}
-        label="Classes Per Page"
-      />
+      <FormControl style={{ float: "right", width: "150px" }}>
+        <InputLabel>Items Per Page</InputLabel>
+        <Select
+          value={skip}
+          onChange={(e) => setSkip(e.target.value as number)}
+        >
+          <MenuItem value={10}>Ten</MenuItem>
+          <MenuItem disabled={end < 20} value={20}>
+            Twenty
+          </MenuItem>
+          <MenuItem disabled={end < 30} value={30}>
+            Thirty
+          </MenuItem>
+          <MenuItem value={end}>All</MenuItem>
+        </Select>
+      </FormControl>
     </Card>
   );
 };

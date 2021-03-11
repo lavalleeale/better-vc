@@ -4,9 +4,25 @@ import { useCookies } from "react-cookie";
 import { useParams } from "react-router-dom";
 import { API_BASE_URL } from "../constants";
 
-const User = () => {
+const User = ({
+  userProp,
+}: {
+  userProp?: {
+    name: string;
+    nickname: string;
+    email: string;
+    teacher: boolean;
+    image: string;
+  };
+}) => {
   const { name } = useParams<{ name: string }>();
-  const [user, setUser] = useState(
+  const [user, setUser] = useState<{
+    name: string;
+    nickname: string;
+    email: string;
+    teacher: boolean;
+    image: string;
+  }>(
     {} as {
       name: string;
       nickname: string;
@@ -37,17 +53,22 @@ const User = () => {
       }
     }
     if (cookies.auth) {
-      getData();
+      if (userProp) {
+        setUser(userProp);
+      } else {
+        getData();
+      }
     }
-  }, [cookies.auth, removeCookie, name]);
-  console.log("test");
+  }, [cookies.auth, removeCookie, name, userProp]);
   return (
     <Card className="card">
-      <img
-        style={{ width: "100px", height: "100px", float: "right" }}
-        alt="profile"
-        src={user.image}
-      />
+      {user.image && (
+        <img
+          style={{ width: "100px", height: "100px", float: "right" }}
+          alt="profile"
+          src={user.image}
+        />
+      )}
       <Typography>{user.teacher ? "Teacher" : "Student"}</Typography>
       <Typography>
         Name: {user.name} ({user.nickname})

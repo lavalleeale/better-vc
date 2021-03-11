@@ -38,7 +38,7 @@ const AddUser = ({ teacher }: { teacher: boolean }) => {
           image: image,
         }),
       }),
-      setTimeout(() => {}, 3000),
+      setTimeout(() => {}, 1000),
     ]);
     if (response[0].ok) {
       setStudent({ name: "", nickname: "", email: "" });
@@ -94,7 +94,7 @@ const AddUser = ({ teacher }: { teacher: boolean }) => {
         />
         <input
           style={{ display: "none" }}
-          accept="image/*"
+          accept="image/png image/jpeg image/jpg"
           id="image-upload"
           type="file"
           onChange={(e) => {
