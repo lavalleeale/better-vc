@@ -69,7 +69,7 @@ const User = ({
           src={user.image}
         />
       )}
-      <Typography>{user.teacher ? "Teacher" : "Student"}</Typography>
+      <Typography>Role: {user.teacher ? "Teacher" : "Student"}</Typography>
       <Typography>
         Name: {user.name} ({user.nickname})
       </Typography>
