@@ -45,16 +45,18 @@ const ManageClasses = () => {
     }
   }, [cookies.auth, removeCookie]);
   return (
-    <ul>
+    <div>
       <DayPicker day={day} setDay={(day: number) => setDay(day)} />
-      {classes.map((block: ClassType, index) => {
-        return (
-          <li key={index}>
-            <ViewClass day={day} teacher={false} block={block} />
-          </li>
-        );
-      })}
-    </ul>
+      <ul>
+        {classes.map((block: ClassType, index) => {
+          return (
+            <li key={index}>
+              <ViewClass day={day} teacher={false} block={block} />
+            </li>
+          );
+        })}
+      </ul>
+    </div>
   );
 };
 

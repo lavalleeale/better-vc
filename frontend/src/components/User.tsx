@@ -73,7 +73,11 @@ const User = ({
         />
       )}
       {deleteUser && (
-        <IconButton style={{ float: "right" }} onClick={deleteUser}>
+        <IconButton
+          aria-label="Delete User"
+          style={{ float: "right" }}
+          onClick={deleteUser}
+        >
           <Delete />
         </IconButton>
       )}

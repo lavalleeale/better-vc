@@ -26,6 +26,7 @@ const PageSelect = ({
   return (
     <Card className="card" style={{ textAlign: "center" }}>
       <IconButton
+        aria-label="Previous Day"
         onClick={() => {
           if (start - skip < 0) {
             setStart(0);
@@ -42,6 +43,7 @@ const PageSelect = ({
         Showing {start + 1} through {start + skip}
       </Typography>
       <IconButton
+        aria-label="Next Day"
         onClick={() => {
           if (start + 20 > end) {
             setStart(end - skip);

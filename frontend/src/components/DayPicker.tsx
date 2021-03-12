@@ -21,6 +21,7 @@ const DayPicker = ({
   return (
     <Card className="card" style={{ textAlign: "center" }}>
       <IconButton
+        aria-label="Previous Day"
         onClick={() => {
           if (day === 0) {
             setDay(6);
@@ -36,6 +37,7 @@ const DayPicker = ({
         {days[Math.abs(day)]}
       </Typography>
       <IconButton
+        aria-label="Next Day"
         onClick={() => {
           if (day === 6) {
             setDay(0);
