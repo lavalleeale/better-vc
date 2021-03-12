@@ -174,23 +174,24 @@ router.post("/addUser", async (req: Request, res: Response) => {
           req.body.nickname = req.body.name.split(" ")[0];
         }
         try {
-          let imageUrl;
+          let imageId;
           if (req.body.image) {
-            imageUrl = (
+            imageId = (
               await cloudinary.uploader.upload(req.body.image, {
                 format: "png",
                 width: 100,
                 height: 100,
                 crop: "limit",
               })
-            ).secure_url;
+            ).public_id;
           }
           const block = await User.create({
             name: req.body.name,
             email: req.body.email.toLowerCase(),
             nickname: req.body.nickname,
             teacher: req.body.teacher,
-            image: imageUrl,
+            image: cloudinary.url(imageId as string, { secure: true }),
+            imageId: imageId,
           }).save();
           return res.status(200).send(block);
         } catch (e) {

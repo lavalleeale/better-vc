@@ -15,6 +15,9 @@ export class User extends BaseEntity {
   @Column("text", { nullable: true })
   image: string;
 
+  @Column("text", { nullable: true })
+  imageId: string;
+
   @Column("boolean", { nullable: true })
   teacher: boolean;
 
