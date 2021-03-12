@@ -174,9 +174,11 @@ router.delete("/deleteUser", async (req: Request, res: Response) => {
       };
       if (token.teacher) {
         try {
-          return res
-            .status(200)
-            .send(User.delete({ email: req.headers.email }));
+          const user = (await User.findOne({
+            email: req.headers.email,
+          })) as User;
+          cloudinary.uploader.destroy(user.imageId);
+          return res.status(200).send(User.remove(user));
         } catch (e) {
           if (e instanceof QueryFailedError) {
             return res.status(500).send("QueryFailedError");
