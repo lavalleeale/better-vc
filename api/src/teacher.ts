@@ -162,6 +162,32 @@ router.delete("/deleteClass", async (req: Request, res: Response) => {
   }
   return res.status(401).send("not authed");
 });
+router.delete("/deleteUser", async (req: Request, res: Response) => {
+  if (
+    typeof req.headers.jwt === "string" &&
+    typeof req.headers.email === "string"
+  ) {
+    const rawToken = req.headers.jwt as string;
+    if (rawToken) {
+      const token = jwt.verify(rawToken, process.env.JWT_SECRET) as {
+        teacher: boolean;
+      };
+      if (token.teacher) {
+        try {
+          return res
+            .status(200)
+            .send(User.delete({ email: req.headers.email }));
+        } catch (e) {
+          if (e instanceof QueryFailedError) {
+            return res.status(500).send("QueryFailedError");
+          }
+          return res.status(500).end();
+        }
+      }
+    }
+  }
+  return res.status(401).send("not authed");
+});
 router.post("/addUser", async (req: Request, res: Response) => {
   if (typeof req.headers.jwt === "string") {
     const rawToken = req.headers.jwt as string;

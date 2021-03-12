@@ -1,4 +1,5 @@
-import { Card, Typography } from "@material-ui/core";
+import { Card, IconButton, Typography } from "@material-ui/core";
+import { Delete } from "@material-ui/icons";
 import React, { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import { useParams } from "react-router-dom";
@@ -6,6 +7,7 @@ import { API_BASE_URL } from "../constants";
 
 const User = ({
   userProp,
+  deleteUser,
 }: {
   userProp?: {
     name: string;
@@ -14,6 +16,7 @@ const User = ({
     teacher: boolean;
     image: string;
   };
+  deleteUser?(): void;
 }) => {
   const { name } = useParams<{ name: string }>();
   const [user, setUser] = useState<{
@@ -68,6 +71,11 @@ const User = ({
           alt="profile"
           src={user.image}
         />
+      )}
+      {deleteUser && (
+        <IconButton style={{ float: "right" }} onClick={deleteUser}>
+          <Delete />
+        </IconButton>
       )}
       <Typography>Role: {user.teacher ? "Teacher" : "Student"}</Typography>
       <Typography>

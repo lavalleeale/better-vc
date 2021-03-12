@@ -55,7 +55,7 @@ const TeacherDash = () => {
         </Button>
       </Link>
       <Link
-        to="/teacher/manageStudents"
+        to="/teacher/manage/Students"
         style={{ textDecoration: "none", color: "inherit" }}
       >
         <Button
@@ -67,7 +67,7 @@ const TeacherDash = () => {
         </Button>
       </Link>
       <Link
-        to="/teacher/manageTeachers"
+        to="/teacher/manage/Teachers"
         style={{ textDecoration: "none", color: "inherit" }}
       >
         <Button

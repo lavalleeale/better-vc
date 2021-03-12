@@ -10,8 +10,7 @@ import React, { lazy, Suspense, useState } from "react";
 import { useCookies } from "react-cookie";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Header from "./components/Header";
-import ManageStudents from "./components/ManageStudents";
-import ManageTeachers from "./components/ManageTeachers";
+import ManageUsers from "./components/ManageUsers";
 import User from "./components/User";
 const AddStudent = lazy(() => import("./components/AddUser"));
 const TeacherDash = lazy(() => import("./components/TeacherDash"));
@@ -99,14 +98,9 @@ function App() {
                 <ManageClasses />
               </Suspense>
             </Route>
-            <Route path="/teacher/manageStudents">
+            <Route path="/teacher/manage/:userType">
               <Suspense fallback={<Loading />}>
-                <ManageStudents />
-              </Suspense>
-            </Route>
-            <Route path="/teacher/manageTeachers">
-              <Suspense fallback={<Loading />}>
-                <ManageTeachers />
+                <ManageUsers />
               </Suspense>
             </Route>
           </Switch>

@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
+import { useParams } from "react-router-dom";
 import { API_BASE_URL } from "../constants";
 import PageSelect from "./PageSelect";
 import User from "./User";
 
-const ManageTeachers = () => {
+const ManageUsers = () => {
   const [cookies, , removeCookie] = useCookies(["auth"]);
-  const [teachers, setTeachers] = useState<
+  const { userType } = useParams<{ userType: string }>();
+  const [users, setUsers] = useState<
     {
       name: string;
       nickname: string;
@@ -20,13 +22,13 @@ const ManageTeachers = () => {
   useEffect(() => {
     async function getData() {
       try {
-        const response = await fetch(`${API_BASE_URL}/teacher/getTeachers`, {
+        const response = await fetch(`${API_BASE_URL}/teacher/get${userType}`, {
           credentials: "omit",
           headers: {
             jwt: cookies.auth,
           },
         });
-        setTeachers(await response.json());
+        setUsers(await response.json());
       } catch {
         removeCookie("auth", {
           path: "/",
@@ -40,7 +42,18 @@ const ManageTeachers = () => {
     if (cookies.auth) {
       getData();
     }
-  }, [cookies.auth, removeCookie]);
+  }, [cookies.auth, removeCookie, userType]);
+  async function deleteUser(email: string, index: number) {
+    await fetch(`${API_BASE_URL}/teacher/deleteUser`, {
+      credentials: "omit",
+      method: "delete",
+      headers: {
+        jwt: cookies.auth,
+        email,
+      },
+    });
+    setUsers([...users.slice(0, index), ...users.slice(index + 1)]);
+  }
   return (
     <div>
       <PageSelect
@@ -48,13 +61,16 @@ const ManageTeachers = () => {
         setSkip={setSkip}
         start={start}
         setStart={setStart}
-        end={teachers.length}
+        end={users.length}
       />
       <ul>
-        {teachers.slice(start, start + skip).map((teacher, index) => {
+        {users.slice(start, start + skip).map((student, index) => {
           return (
             <li key={index}>
-              <User userProp={teacher} />
+              <User
+                userProp={student}
+                deleteUser={() => deleteUser(student.email, index)}
+              />
             </li>
           );
         })}
@@ -63,4 +79,4 @@ const ManageTeachers = () => {
   );
 };
 
-export default ManageTeachers;
+export default ManageUsers;

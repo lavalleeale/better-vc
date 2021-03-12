@@ -87,17 +87,17 @@ const ViewClass = ({
             <>
               <IconButton
                 aria-label="Edit"
-                onClick={() => setEditing(true)}
-                style={{ float: "right" }}
-              >
-                <Edit />
-              </IconButton>
-              <IconButton
-                aria-label="Edit"
                 onClick={() => setOpen(true)}
                 style={{ float: "right" }}
               >
                 <Delete />
+              </IconButton>
+              <IconButton
+                aria-label="Edit"
+                onClick={() => setEditing(true)}
+                style={{ float: "right" }}
+              >
+                <Edit />
               </IconButton>
               <Popup
                 onClose={() => setOpen(false)}
