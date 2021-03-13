@@ -4,7 +4,35 @@ on:
   push:
 
 jobs:
+  LintBackend:
+    runs-on: ubuntu-latest
+    name: "Lint Backend"
+    steps:
+      -
+        name: Checkout
+        uses: actions/checkout@v2
+      - 
+        name: Yarn Install
+        run: yarn  --cwd api install --frozen-lockfile
+      - 
+        name: Lint
+        run: yarn --cwd api run eslint --ext .ts src
+  LintFrontend:
+    runs-on: ubuntu-latest
+    name: "Lint Frontend"
+    steps:
+      -
+        name: Checkout
+        uses: actions/checkout@v2
+      - 
+        name: Yarn Install
+        run: yarn  --cwd frontend install --frozen-lockfile
+      - 
+        name: Lint
+        run: yarn --cwd frontend run eslint --ext .ts,.tsx src
+
   backend:
+    needs: LintBackend
     runs-on: ubuntu-latest
     steps:
       -
@@ -43,6 +71,7 @@ jobs:
           rm -rf /tmp/.buildx-cache
           mv /tmp/.buildx-cache-new /tmp/.buildx-cache
   frontend:
+    needs: LintFrontend
     runs-on: ubuntu-latest
     steps:
       -
