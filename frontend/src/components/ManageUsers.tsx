@@ -1,7 +1,9 @@
-import React, { useEffect, useState } from "react";
+/* eslint-disable import/extensions */
+/* eslint-disable import/no-unresolved */
+import { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import { useParams } from "react-router-dom";
-import { API_BASE_URL } from "../constants";
+import API_BASE_URL from "../constants";
 import PageSelect from "./PageSelect";
 import User from "./User";
 
@@ -66,7 +68,7 @@ const ManageUsers = () => {
       <ul>
         {users.slice(start, start + skip).map((student, index) => {
           return (
-            <li key={index}>
+            <li key={student.name}>
               <User
                 userProp={student}
                 deleteUser={() => deleteUser(student.email, index)}

@@ -1,6 +1,8 @@
-import React, { useEffect, useState } from "react";
+/* eslint-disable import/extensions */
+/* eslint-disable import/no-unresolved */
+import { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
-import { API_BASE_URL } from "../constants";
+import API_BASE_URL from "../constants";
 import { ClassType } from "../@types/class";
 import EditClass from "./EditClass";
 import PageSelect from "./PageSelect";
@@ -57,7 +59,7 @@ const ManageClasses = () => {
       <ul>
         {classes.slice(start, start + skip).map((block: ClassType, index) => {
           return (
-            <li key={index}>
+            <li key={block.name}>
               <EditClass
                 deleteClass={() => deleteClass(block.name, index)}
                 block={block}

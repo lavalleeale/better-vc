@@ -1,3 +1,6 @@
+/* eslint-disable react/require-default-props */
+/* eslint-disable import/extensions */
+/* eslint-disable import/no-unresolved */
 import {
   Button,
   Card,
@@ -8,10 +11,10 @@ import {
   Typography,
 } from "@material-ui/core";
 import Popup from "reactjs-popup";
-import { ClassType } from "../@types/class";
 import { Edit, Delete } from "@material-ui/icons";
-import React, { useState } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
+import { ClassType } from "../@types/class";
 
 const days = [
   "Sunday",
@@ -32,6 +35,7 @@ const ViewClass = ({
 }: {
   block: ClassType;
   teacher: boolean;
+  // eslint-disable-next-line no-unused-vars
   setEditing?: (value: boolean) => void;
   deleteClass?: () => void;
   day: number;
@@ -39,18 +43,15 @@ const ViewClass = ({
   function compareTime(
     startTime: number,
     endTime: number,
-    days: ClassType["days"]
+    classDays: ClassType["days"]
   ) {
     const currentTime = new Date().getHours() * 60 + new Date().getMinutes();
-    return isToday(days) && startTime <= currentTime && currentTime < endTime;
-  }
-  function isToday(days: ClassType["days"]) {
-    return days[day];
+    return classDays[day] && startTime <= currentTime && currentTime < endTime;
   }
   const [open, setOpen] = useState(false);
   return (
     <>
-      {(teacher || isToday(block.days)) && (
+      {(teacher || block.days[day]) && (
         <Card
           className={
             compareTime(block.startTime, block.endTime, block.days)
@@ -170,8 +171,9 @@ const ViewClass = ({
           {teacher && (
             <FormGroup row>
               <ul>
-                {block.days.map((day, index) => (
+                {block.days.map((_, index) => (
                   <li
+                    // eslint-disable-next-line react/no-array-index-key
                     key={index}
                     style={{
                       display: "inline",

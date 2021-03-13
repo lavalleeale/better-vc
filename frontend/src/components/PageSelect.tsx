@@ -8,7 +8,6 @@ import {
   Typography,
 } from "@material-ui/core";
 import { KeyboardArrowLeft, KeyboardArrowRight } from "@material-ui/icons";
-import React from "react";
 
 const PageSelect = ({
   end,
@@ -19,8 +18,10 @@ const PageSelect = ({
 }: {
   end: number;
   start: number;
+  // eslint-disable-next-line no-unused-vars
   setStart(value: number): void;
   skip: number;
+  // eslint-disable-next-line no-unused-vars
   setSkip(value: number): void;
 }) => {
   return (

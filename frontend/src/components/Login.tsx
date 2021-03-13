@@ -1,6 +1,7 @@
+/* eslint-disable import/extensions */
+/* eslint-disable import/no-unresolved */
 import { Button, Card, Typography } from "@material-ui/core";
-import React from "react";
-import { API_BASE_URL } from "../constants";
+import API_BASE_URL from "../constants";
 
 const Login = () => {
   return (

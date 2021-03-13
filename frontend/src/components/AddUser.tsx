@@ -1,3 +1,6 @@
+/* eslint-disable react/require-default-props */
+/* eslint-disable import/extensions */
+/* eslint-disable import/no-unresolved */
 import {
   Button,
   Card,
@@ -5,10 +8,10 @@ import {
   TextField,
   Typography,
 } from "@material-ui/core";
-import React, { FormEvent, useState } from "react";
+import { FormEvent, useState } from "react";
 import useCookies from "react-cookie/cjs/useCookies";
 import Popup from "reactjs-popup";
-import { API_BASE_URL } from "../constants";
+import API_BASE_URL from "../constants";
 
 const AddUser = ({ teacher }: { teacher: boolean }) => {
   const [student, setStudent] = useState({ name: "", nickname: "", email: "" });
@@ -17,7 +20,7 @@ const AddUser = ({ teacher }: { teacher: boolean }) => {
   const [cookies] = useCookies();
 
   function validateEmail(inputText: string) {
-    var mailformat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+    const mailformat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
     return !!inputText.match(mailformat) || inputText === "";
   }
 
@@ -34,8 +37,8 @@ const AddUser = ({ teacher }: { teacher: boolean }) => {
         },
         body: JSON.stringify({
           ...student,
-          teacher: teacher,
-          image: image,
+          teacher,
+          image,
         }),
       }),
       setTimeout(() => {}, 1000),
@@ -92,21 +95,6 @@ const AddUser = ({ teacher }: { teacher: boolean }) => {
           label="Email"
           variant="outlined"
         />
-        <input
-          style={{ display: "none" }}
-          accept="image/png image/jpeg image/jpg"
-          id="image-upload"
-          type="file"
-          onChange={(e) => {
-            const reader = new FileReader();
-            if (e.target.files) {
-              reader.readAsDataURL(e.target.files[0]);
-              reader.addEventListener("load", () => {
-                setImage(reader.result as string);
-              });
-            }
-          }}
-        />
         <Button
           aria-label="Add"
           type="submit"
@@ -123,6 +111,21 @@ const AddUser = ({ teacher }: { teacher: boolean }) => {
           >
             Upload Profile Picture
           </Button>
+          <input
+            style={{ display: "none" }}
+            accept="image/png image/jpeg image/jpg"
+            id="image-upload"
+            type="file"
+            onChange={(e) => {
+              const reader = new FileReader();
+              if (e.target.files) {
+                reader.readAsDataURL(e.target.files[0]);
+                reader.addEventListener("load", () => {
+                  setImage(reader.result as string);
+                });
+              }
+            }}
+          />
         </label>
       </form>
       <Popup

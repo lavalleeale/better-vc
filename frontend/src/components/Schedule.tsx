@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from "react";
+/* eslint-disable import/extensions */
+/* eslint-disable import/no-unresolved */
+import { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
-import { API_BASE_URL } from "../constants";
+import jwtDecode from "jwt-decode";
+import API_BASE_URL from "../constants";
 import { ClassType } from "../@types/class";
 import ViewClass from "./ViewClass";
-import jwt_decode from "jwt-decode";
 import DayPicker from "./DayPicker";
 
 const ManageClasses = () => {
@@ -14,7 +16,7 @@ const ManageClasses = () => {
     async function getData() {
       try {
         let response: Response;
-        if (jwt_decode<{ teacher: boolean }>(cookies.auth).teacher) {
+        if (jwtDecode<{ teacher: boolean }>(cookies.auth).teacher) {
           response = await fetch(`${API_BASE_URL}/teacher/getClasses`, {
             credentials: "omit",
             headers: {
@@ -46,11 +48,11 @@ const ManageClasses = () => {
   }, [cookies.auth, removeCookie]);
   return (
     <div>
-      <DayPicker day={day} setDay={(day: number) => setDay(day)} />
+      <DayPicker day={day} setDay={(value: number) => setDay(value)} />
       <ul>
-        {classes.map((block: ClassType, index) => {
+        {classes.map((block: ClassType) => {
           return (
-            <li key={index}>
+            <li key={block.name}>
               <ViewClass day={day} teacher={false} block={block} />
             </li>
           );

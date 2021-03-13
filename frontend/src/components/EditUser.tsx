@@ -1,8 +1,7 @@
 import { Card } from "@material-ui/core";
-import React from "react";
 
 const EditUser = ({ user }: { user: { name: string; nickname: string } }) => {
-  return <Card className="card"></Card>;
+  return <Card className="card">{user.name}</Card>;
 };
 
 export default EditUser;

@@ -1,3 +1,6 @@
+/* eslint-disable react/require-default-props */
+/* eslint-disable import/extensions */
+/* eslint-disable import/no-unresolved */
 import DateFnsUtils from "@date-io/date-fns";
 import {
   Checkbox,
@@ -10,7 +13,7 @@ import {
   TextField,
 } from "@material-ui/core";
 import { MuiPickersUtilsProvider, TimePicker } from "@material-ui/pickers";
-import React, { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction } from "react";
 import { ClassType } from "../@types/class";
 
 const days = [
@@ -35,12 +38,13 @@ const ImportBlock = ({
   students: Array<{ name: string }>;
 }) => {
   function isValidUrl(url: string) {
+    let validUrl;
     try {
-      new URL(url);
+      validUrl = new URL(url);
     } catch {
-      return false || url === "";
+      return url === "";
     }
-    return true;
+    return !!validUrl;
   }
   return (
     <MuiPickersUtilsProvider utils={DateFnsUtils}>
@@ -183,9 +187,9 @@ const ImportBlock = ({
                 <MenuItem key="Empty" value="">
                   Empty
                 </MenuItem>
-                {students.map((student) => (
-                  <MenuItem key={student.name} value={student.name}>
-                    {student.name}
+                {students.map((user) => (
+                  <MenuItem key={user.name} value={user.name}>
+                    {user.name}
                   </MenuItem>
                 ))}
               </Select>
@@ -197,6 +201,7 @@ const ImportBlock = ({
         <ul>
           {block.days.map((day, index) => (
             <li
+              // eslint-disable-next-line react/no-array-index-key
               key={index}
               style={{
                 display: "inline",

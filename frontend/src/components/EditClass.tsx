@@ -1,3 +1,6 @@
+/* eslint-disable react/require-default-props */
+/* eslint-disable import/extensions */
+/* eslint-disable import/no-unresolved */
 import { useState } from "react";
 import { ClassType } from "../@types/class";
 import AddClass from "./AddClass";
@@ -9,6 +12,7 @@ const EditClass = ({
   deleteClass,
 }: {
   block: ClassType;
+  // eslint-disable-next-line no-unused-vars
   setBlock: (value: ClassType) => void;
   deleteClass: () => void;
 }) => {
@@ -21,7 +25,7 @@ const EditClass = ({
           day={new Date().getDay()}
           deleteClass={deleteClass}
           block={block}
-          teacher={true}
+          teacher
           setEditing={setEditing}
         />
       ) : (

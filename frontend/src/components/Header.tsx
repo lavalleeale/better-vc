@@ -1,3 +1,5 @@
+/* eslint-disable import/extensions */
+/* eslint-disable import/no-unresolved */
 import {
   AppBar,
   Button,
@@ -8,11 +10,11 @@ import {
   Typography,
 } from "@material-ui/core";
 import { AccountCircle } from "@material-ui/icons";
-import jwt_decode from "jwt-decode";
-import React, { useState } from "react";
+import jwtDecode from "jwt-decode";
+import { useState } from "react";
 import { useCookies } from "react-cookie";
 import { Link } from "react-router-dom";
-import { API_BASE_URL } from "../constants";
+import API_BASE_URL from "../constants";
 
 const Header = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -33,7 +35,7 @@ const Header = () => {
                 Schedule
               </Button>
             </Link>
-            {jwt_decode<{ teacher: boolean }>(cookies.auth).teacher && (
+            {jwtDecode<{ teacher: boolean }>(cookies.auth).teacher && (
               <Link style={{ textDecoration: "none" }} to="/dashboard">
                 <Button aria-label="dashboard" variant="outlined">
                   Dashboard
@@ -72,7 +74,7 @@ const Header = () => {
                 onClick={() => setAnchorEl(null)}
               >
                 <MenuItem onClick={() => setAnchorEl(null)}>
-                  {jwt_decode<{ nickname: string }>(cookies.auth).nickname}
+                  {jwtDecode<{ nickname: string }>(cookies.auth).nickname}
                 </MenuItem>
               </Link>
               <MenuItem

@@ -1,8 +1,11 @@
+/* eslint-disable react/require-default-props */
+/* eslint-disable import/extensions */
+/* eslint-disable import/no-unresolved */
 import { Button, Card, Typography } from "@material-ui/core";
-import React, { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import { ClassType } from "../@types/class";
-import { API_BASE_URL } from "../constants";
+import API_BASE_URL from "../constants";
 import ImportBlock from "./ImportBlock";
 
 const AddClass = ({
@@ -11,8 +14,10 @@ const AddClass = ({
   setEditing,
 }: {
   initBlock?: ClassType;
-  setInitBlock?: (value: ClassType) => void;
-  setEditing?: (value: boolean) => void;
+  // eslint-disable-next-line no-unused-vars
+  setInitBlock?(value: ClassType): void;
+  // eslint-disable-next-line no-unused-vars
+  setEditing?(value: boolean): void;
 }) => {
   const [cookies] = useCookies();
   const [teachers, setTeachers] = useState([]);

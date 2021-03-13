@@ -1,14 +1,17 @@
-import { Response, Request } from "express";
-var express = require("express");
-import { User } from "./entities/User";
-import jwt from "jsonwebtoken";
+/* eslint-disable import/no-unresolved */
+/* eslint-disable import/extensions */
+import { Response, Request } from 'express';
+import jwt from 'jsonwebtoken';
+import User from './entities/User';
 
-const __prod__ = process.env.NODE_ENV === "production";
+const express = require('express');
 
-var router = express.Router();
+const prod = process.env.NODE_ENV === 'production';
 
-router.put("/updateNickname", async (req: Request, res: Response) => {
-  if (typeof req.headers.jwt === "string") {
+const router = express.Router();
+
+router.put('/updateNickname', async (req: Request, res: Response) => {
+  if (typeof req.headers.jwt === 'string') {
     const rawToken = req.headers.jwt as string;
     const token = jwt.verify(rawToken, process.env.JWT_SECRET) as {
       email: string;
@@ -17,12 +20,12 @@ router.put("/updateNickname", async (req: Request, res: Response) => {
     if (token.email) {
       await User.update(
         { email: token.email },
-        { nickname: req.body.nickname }
+        { nickname: req.body.nickname },
       );
       return res
         .status(204)
         .cookie(
-          "auth",
+          'auth',
           jwt.sign(
             {
               email: token.email,
@@ -31,22 +34,22 @@ router.put("/updateNickname", async (req: Request, res: Response) => {
             },
             process.env.JWT_SECRET,
             {
-              expiresIn: "1y",
-            }
+              expiresIn: '1y',
+            },
           ),
           {
             maxAge: 1 * 365 * 24 * 60 * 60 * 1000,
-            domain: __prod__ ? ".alextesting.ninja" : "localhost",
-            secure: __prod__,
-          }
+            domain: prod ? '.alextesting.ninja' : 'localhost',
+            secure: prod,
+          },
         )
         .send();
     }
   }
-  return res.status(401).send("no auth");
+  return res.status(401).send('no auth');
 });
-router.get("/getInfo", async (req: Request, res: Response) => {
-  if (typeof req.headers.jwt === "string") {
+router.get('/getInfo', async (req: Request, res: Response) => {
+  if (typeof req.headers.jwt === 'string') {
     const rawToken = req.headers.jwt as string;
     try {
       const token = jwt.verify(rawToken, process.env.JWT_SECRET) as {
@@ -57,12 +60,14 @@ router.get("/getInfo", async (req: Request, res: Response) => {
           .status(200)
           .send(JSON.stringify(await User.findOne(token.email)));
       }
-    } catch {}
+    } catch (err) {
+      res.status(500).send(err);
+    }
   }
-  return res.status(401).send("no auth");
+  return res.status(401).send('no auth');
 });
-router.get("/getClasses", async (req: Request, res: Response) => {
-  if (typeof req.headers.jwt === "string") {
+router.get('/getClasses', async (req: Request, res: Response) => {
+  if (typeof req.headers.jwt === 'string') {
     const rawToken = req.headers.jwt as string;
     try {
       const token = jwt.verify(rawToken, process.env.JWT_SECRET) as {
@@ -71,16 +76,18 @@ router.get("/getClasses", async (req: Request, res: Response) => {
       if (token.email) {
         return res.status(200).send(
           (await User.findOne(token.email, {
-            relations: ["classes"],
-          }))!.classes.sort((a, b) => a.startTime - b.startTime)
+            relations: ['classes'],
+          }))!.classes.sort((a, b) => a.startTime - b.startTime),
         );
       }
-    } catch {}
+    } catch (err) {
+      res.status(500).send(err);
+    }
   }
-  return res.status(401).send("no auth");
+  return res.status(401).send('no auth');
 });
-router.get("/getInfo/:email", async (req: Request, res: Response) => {
-  if (typeof req.headers.jwt === "string") {
+router.get('/getInfo/:email', async (req: Request, res: Response) => {
+  if (typeof req.headers.jwt === 'string') {
     const rawToken = req.headers.jwt as string;
     try {
       const token = jwt.verify(rawToken, process.env.JWT_SECRET);
@@ -89,9 +96,11 @@ router.get("/getInfo/:email", async (req: Request, res: Response) => {
           .status(200)
           .send(JSON.stringify(await User.findOne(req.params.email)));
       }
-    } catch {}
+    } catch (err) {
+      res.status(500).send(err);
+    }
   }
-  return res.status(401).send("no auth");
+  return res.status(401).send('no auth');
 });
 
 export default router;

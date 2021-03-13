@@ -1,13 +1,13 @@
 import { Card, IconButton, Typography } from "@material-ui/core";
 import { KeyboardArrowLeft, KeyboardArrowRight } from "@material-ui/icons";
-import React from "react";
 
 const DayPicker = ({
   day,
   setDay,
 }: {
   day: number;
-  setDay(day: number): void;
+  // eslint-disable-next-line no-unused-vars
+  setDay(value: number): void;
 }) => {
   const days = [
     "Sunday",

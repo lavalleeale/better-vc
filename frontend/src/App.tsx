@@ -1,3 +1,5 @@
+/* eslint-disable import/extensions */
+/* eslint-disable import/no-unresolved */
 import {
   Card,
   CircularProgress,
@@ -6,12 +8,13 @@ import {
   Typography,
 } from "@material-ui/core";
 import { ThemeProvider } from "@material-ui/styles";
-import React, { lazy, Suspense, useState } from "react";
+import { lazy, Suspense, useState } from "react";
 import { useCookies } from "react-cookie";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Header from "./components/Header";
 import ManageUsers from "./components/ManageUsers";
 import User from "./components/User";
+
 const AddStudent = lazy(() => import("./components/AddUser"));
 const TeacherDash = lazy(() => import("./components/TeacherDash"));
 const Login = lazy(() => import("./components/Login"));
@@ -21,12 +24,12 @@ const ManageClasses = lazy(() => import("./components/ManageClasses"));
 const Schedule = lazy(() => import("./components/Schedule"));
 
 const darkThemeMq = window.matchMedia("(prefers-color-scheme: dark)");
-let darkTheme = createMuiTheme({
+const darkTheme = createMuiTheme({
   palette: {
     type: "dark",
   },
 });
-let lightTheme = createMuiTheme({
+const lightTheme = createMuiTheme({
   palette: {
     type: "light",
   },
@@ -42,7 +45,7 @@ function Loading() {
 }
 function App() {
   const [darkMode, setDarkMode] = useState(darkThemeMq.matches);
-  darkThemeMq.addEventListener("change", function (evt) {
+  darkThemeMq.addEventListener("change", (evt) => {
     setDarkMode(evt.matches);
   });
   const [cookies] = useCookies(["auth"]);
@@ -85,7 +88,7 @@ function App() {
             </Route>
             <Route path="/teacher/addTeacher">
               <Suspense fallback={<Loading />}>
-                <AddStudent teacher={true} />
+                <AddStudent teacher />
               </Suspense>
             </Route>
             <Route path="/teacher/addStudent">

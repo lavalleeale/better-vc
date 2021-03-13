@@ -1,13 +1,15 @@
+/* eslint-disable import/extensions */
+/* eslint-disable import/no-unresolved */
 import { Button, Card, TextField, Typography } from "@material-ui/core";
-import jwt_decode from "jwt-decode";
-import React, { FormEvent, useState } from "react";
+import jwtDecode from "jwt-decode";
+import { FormEvent, useState } from "react";
 import { useCookies } from "react-cookie";
-import { API_BASE_URL } from "../constants";
+import API_BASE_URL from "../constants";
 
 const Profile = () => {
   const [cookies] = useCookies(["auth"]);
   const [info, setInfo] = useState({
-    nickname: jwt_decode<{ nickname: string }>(cookies.auth).nickname,
+    nickname: jwtDecode<{ nickname: string }>(cookies.auth).nickname,
   });
   function onSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -26,7 +28,7 @@ const Profile = () => {
   return (
     <Card className="card">
       <Typography variant="h4">
-        {jwt_decode<{ name: string }>(cookies.auth).name}
+        {jwtDecode<{ name: string }>(cookies.auth).name}
       </Typography>
       <form onSubmit={onSubmit}>
         <TextField

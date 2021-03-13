@@ -1,24 +1,28 @@
-import { BaseEntity, Column, Entity, ManyToMany, PrimaryColumn } from "typeorm";
-import { Class } from "./Class";
+/* eslint-disable import/no-unresolved */
+/* eslint-disable import/extensions */
+import {
+  BaseEntity, Column, Entity, ManyToMany, PrimaryColumn,
+} from 'typeorm';
+import Class from './Class';
 
 @Entity()
-export class User extends BaseEntity {
-  @PrimaryColumn("text", { unique: true })
+export default class User extends BaseEntity {
+  @PrimaryColumn('text', { unique: true })
   email: string;
 
-  @Column("text", { nullable: true })
+  @Column('text', { nullable: true })
   name: string;
 
-  @Column("text")
+  @Column('text')
   nickname: string;
 
-  @Column("text", { nullable: true })
+  @Column('text', { nullable: true })
   image: string;
 
-  @Column("text", { nullable: true })
+  @Column('text', { nullable: true })
   imageId: string;
 
-  @Column("boolean", { nullable: true })
+  @Column('boolean', { nullable: true })
   teacher: boolean;
 
   @ManyToMany(() => Class, (block) => block.students)

@@ -1,9 +1,12 @@
+/* eslint-disable react/require-default-props */
+/* eslint-disable import/extensions */
+/* eslint-disable import/no-unresolved */
 import { Card, IconButton, Typography } from "@material-ui/core";
 import { Delete } from "@material-ui/icons";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import { useParams } from "react-router-dom";
-import { API_BASE_URL } from "../constants";
+import API_BASE_URL from "../constants";
 
 const User = ({
   userProp,
