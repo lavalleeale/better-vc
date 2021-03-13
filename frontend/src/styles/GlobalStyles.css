@@ -2,23 +2,18 @@
   margin: 10px;
   padding: 10px;
 }
-.selected {
-  margin: 10px;
-  padding: 10px;
-  border-left-style: solid;
-  border-color: red;
-}
 .notSelected {
   margin: 10px;
   padding: 10px;
   border-left-style: solid;
   border-color: rgb(0, 0, 150);
 }
-.spacer {
-  margin-top: 110px;
-}
 .longText {
   width: 100%;
+}
+a {
+  text-decoration: none;
+  color: inherit;
 }
 li {
   margin-left: none;
