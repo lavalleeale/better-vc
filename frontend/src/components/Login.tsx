@@ -3,8 +3,7 @@
 import { Button, Card, Typography } from "@material-ui/core";
 import API_BASE_URL from "../constants";
 
-const Login = () => {
-  return (
+const Login = () => (
     <Card
       style={{
         margin: "auto",
@@ -28,6 +27,5 @@ const Login = () => {
       </Button>
     </Card>
   );
-};
 
 export default Login;

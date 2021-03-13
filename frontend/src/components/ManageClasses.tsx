@@ -57,8 +57,7 @@ const ManageClasses = () => {
         end={classes.length}
       />
       <ul>
-        {classes.slice(start, start + skip).map((block: ClassType, index) => {
-          return (
+        {classes.slice(start, start + skip).map((block: ClassType, index) => (
             <li key={block.name}>
               <EditClass
                 deleteClass={() => deleteClass(block.name, index)}
@@ -72,8 +71,7 @@ const ManageClasses = () => {
                 }}
               />
             </li>
-          );
-        })}
+          ))}
       </ul>
     </div>
   );

@@ -23,8 +23,7 @@ const PageSelect = ({
   skip: number;
   // eslint-disable-next-line no-unused-vars
   setSkip(value: number): void;
-}) => {
-  return (
+}) => (
     <Card className="card" style={{ textAlign: "center" }}>
       <IconButton
         aria-label="Previous Day"
@@ -75,6 +74,5 @@ const PageSelect = ({
       </FormControl>
     </Card>
   );
-};
 
 export default PageSelect;

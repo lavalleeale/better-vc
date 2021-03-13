@@ -50,13 +50,11 @@ const ManageClasses = () => {
     <div>
       <DayPicker day={day} setDay={(value: number) => setDay(value)} />
       <ul>
-        {classes.map((block: ClassType) => {
-          return (
+        {classes.map((block: ClassType) => (
             <li key={block.name}>
               <ViewClass day={day} teacher={false} block={block} />
             </li>
-          );
-        })}
+          ))}
       </ul>
     </div>
   );

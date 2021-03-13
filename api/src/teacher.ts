@@ -1,18 +1,18 @@
 /* eslint-disable import/no-unresolved */
 /* eslint-disable import/extensions */
-import { Response, Request } from "express";
-import jwt from "jsonwebtoken";
-import { QueryFailedError } from "typeorm";
-import { v2 as cloudinary } from "cloudinary";
-import Class from "./entities/Class";
-import User from "./entities/User";
+import { Response, Request } from 'express';
+import jwt from 'jsonwebtoken';
+import { QueryFailedError } from 'typeorm';
+import { v2 as cloudinary } from 'cloudinary';
+import Class from './entities/Class';
+import User from './entities/User';
 
-const express = require("express");
+const express = require('express');
 
 const router = express.Router();
 
-router.post("/promoteTeacher", async (req: Request, res: Response) => {
-  if (typeof req.headers.jwt === "string") {
+router.post('/promoteTeacher', async (req: Request, res: Response) => {
+  if (typeof req.headers.jwt === 'string') {
     const rawToken = req.headers.jwt as string;
     if (rawToken) {
       const token = jwt.verify(rawToken, process.env.JWT_SECRET) as {
@@ -22,15 +22,15 @@ router.post("/promoteTeacher", async (req: Request, res: Response) => {
         return res
           .status(200)
           .send(
-            await User.update({ email: req.body.email }, { teacher: true })
+            await User.update({ email: req.body.email }, { teacher: true }),
           );
       }
     }
   }
-  return res.status(401).send("no auth");
+  return res.status(401).send('no auth');
 });
-router.get("/getTeachers", async (req: Request, res: Response) => {
-  if (typeof req.headers.jwt === "string") {
+router.get('/getTeachers', async (req: Request, res: Response) => {
+  if (typeof req.headers.jwt === 'string') {
     const rawToken = req.headers.jwt as string;
     if (rawToken) {
       const token = jwt.verify(rawToken, process.env.JWT_SECRET) as {
@@ -41,10 +41,10 @@ router.get("/getTeachers", async (req: Request, res: Response) => {
       }
     }
   }
-  return res.status(401).send("no auth");
+  return res.status(401).send('no auth');
 });
-router.get("/getStudents", async (req: Request, res: Response) => {
-  if (typeof req.headers.jwt === "string") {
+router.get('/getStudents', async (req: Request, res: Response) => {
+  if (typeof req.headers.jwt === 'string') {
     const rawToken = req.headers.jwt as string;
     if (rawToken) {
       const token = jwt.verify(rawToken, process.env.JWT_SECRET) as {
@@ -56,10 +56,10 @@ router.get("/getStudents", async (req: Request, res: Response) => {
       }
     }
   }
-  return res.status(401).send("no auth");
+  return res.status(401).send('no auth');
 });
-router.get("/getAllClasses", async (req: Request, res: Response) => {
-  if (typeof req.headers.jwt === "string") {
+router.get('/getAllClasses', async (req: Request, res: Response) => {
+  if (typeof req.headers.jwt === 'string') {
     const rawToken = req.headers.jwt as string;
     if (rawToken) {
       const token = jwt.verify(rawToken, process.env.JWT_SECRET) as {
@@ -70,10 +70,10 @@ router.get("/getAllClasses", async (req: Request, res: Response) => {
       }
     }
   }
-  return res.status(401).send("no auth");
+  return res.status(401).send('no auth');
 });
-router.post("/addClass", async (req: Request, res: Response) => {
-  if (typeof req.headers.jwt === "string") {
+router.post('/addClass', async (req: Request, res: Response) => {
+  if (typeof req.headers.jwt === 'string') {
     const rawToken = req.headers.jwt as string;
     if (rawToken) {
       const token = jwt.verify(rawToken, process.env.JWT_SECRET) as {
@@ -87,25 +87,23 @@ router.post("/addClass", async (req: Request, res: Response) => {
               where: { name: req.body.teacher },
             }),
             students: (await Promise.all(
-              req.body.students.map(async (student: { name: string }) =>
-                User.findOne({ name: student.name })
-              )
+              req.body.students.map(async (student: { name: string }) => User.findOne({ name: student.name })),
             )) as User[],
           }).save();
           return res.status(200).send(block);
         } catch (e) {
           if (e instanceof QueryFailedError) {
-            return res.status(500).send("QueryFailedError");
+            return res.status(500).send('QueryFailedError');
           }
           return res.status(500).end();
         }
       }
     }
   }
-  return res.status(401).send("not authed");
+  return res.status(401).send('not authed');
 });
-router.put("/updateClass", async (req: Request, res: Response) => {
-  if (typeof req.headers.jwt === "string") {
+router.put('/updateClass', async (req: Request, res: Response) => {
+  if (typeof req.headers.jwt === 'string') {
     const rawToken = req.headers.jwt as string;
     if (rawToken) {
       const token = jwt.verify(rawToken, process.env.JWT_SECRET) as {
@@ -121,27 +119,25 @@ router.put("/updateClass", async (req: Request, res: Response) => {
               ...req.body.block,
               teacher,
               students: (await Promise.all(
-                req.body.block.students.map(async (student: { name: string }) =>
-                  User.findOne({ name: student.name })
-                )
+                req.body.block.students.map(async (student: { name: string }) => User.findOne({ name: student.name })),
               )) as User[],
-            })
+            }),
           );
         } catch (e) {
           if (e instanceof QueryFailedError) {
-            return res.status(500).send("QueryFailedError");
+            return res.status(500).send('QueryFailedError');
           }
           return res.status(500).end();
         }
       }
     }
   }
-  return res.status(401).send("not authed");
+  return res.status(401).send('not authed');
 });
-router.delete("/deleteClass", async (req: Request, res: Response) => {
+router.delete('/deleteClass', async (req: Request, res: Response) => {
   if (
-    typeof req.headers.jwt === "string" &&
-    typeof req.headers.name === "string"
+    typeof req.headers.jwt === 'string'
+    && typeof req.headers.name === 'string'
   ) {
     const rawToken = req.headers.jwt as string;
     if (rawToken) {
@@ -153,19 +149,19 @@ router.delete("/deleteClass", async (req: Request, res: Response) => {
           return res.status(200).send(Class.delete({ name: req.headers.name }));
         } catch (e) {
           if (e instanceof QueryFailedError) {
-            return res.status(500).send("QueryFailedError");
+            return res.status(500).send('QueryFailedError');
           }
           return res.status(500).end();
         }
       }
     }
   }
-  return res.status(401).send("not authed");
+  return res.status(401).send('not authed');
 });
-router.delete("/deleteUser", async (req: Request, res: Response) => {
+router.delete('/deleteUser', async (req: Request, res: Response) => {
   if (
-    typeof req.headers.jwt === "string" &&
-    typeof req.headers.email === "string"
+    typeof req.headers.jwt === 'string'
+    && typeof req.headers.email === 'string'
   ) {
     const rawToken = req.headers.jwt as string;
     if (rawToken) {
@@ -181,17 +177,17 @@ router.delete("/deleteUser", async (req: Request, res: Response) => {
           return res.status(200).send(User.remove(user));
         } catch (e) {
           if (e instanceof QueryFailedError) {
-            return res.status(500).send("QueryFailedError");
+            return res.status(500).send('QueryFailedError');
           }
           return res.status(500).end();
         }
       }
     }
   }
-  return res.status(401).send("not authed");
+  return res.status(401).send('not authed');
 });
-router.post("/addUser", async (req: Request, res: Response) => {
-  if (typeof req.headers.jwt === "string") {
+router.post('/addUser', async (req: Request, res: Response) => {
+  if (typeof req.headers.jwt === 'string') {
     const rawToken = req.headers.jwt as string;
     if (rawToken) {
       const token = jwt.verify(rawToken, process.env.JWT_SECRET) as {
@@ -199,17 +195,20 @@ router.post("/addUser", async (req: Request, res: Response) => {
       };
       if (token.teacher) {
         if (!req.body.nickname) {
-          req.body = { ...req.body, nickname: req.body.name.split(" ")[0] };
+          req.body = {
+            ...req.body,
+            nickname: req.body.name.split(' ')[0],
+          };
         }
         try {
           let imageId;
           if (req.body.image) {
             imageId = (
               await cloudinary.uploader.upload(req.body.image, {
-                format: "png",
+                format: 'png',
                 width: 100,
                 height: 100,
-                crop: "limit",
+                crop: 'limit',
               })
             ).public_id;
           }
@@ -218,23 +217,25 @@ router.post("/addUser", async (req: Request, res: Response) => {
             email: req.body.email.toLowerCase(),
             nickname: req.body.nickname,
             teacher: req.body.teacher,
-            image: cloudinary.url(imageId as string, { secure: true }),
+            image: cloudinary.url(imageId as string, {
+              secure: true,
+            }),
             imageId,
           }).save();
           return res.status(200).send(block);
         } catch (e) {
           if (e instanceof QueryFailedError) {
-            return res.status(500).send("QueryFailedError");
+            return res.status(500).send('QueryFailedError');
           }
           return res.status(500).end();
         }
       }
     }
   }
-  return res.status(401).send("not authed");
+  return res.status(401).send('not authed');
 });
-router.get("/getClasses", async (req: Request, res: Response) => {
-  if (typeof req.headers.jwt === "string") {
+router.get('/getClasses', async (req: Request, res: Response) => {
+  if (typeof req.headers.jwt === 'string') {
     const rawToken = req.headers.jwt as string;
     try {
       const token = jwt.verify(rawToken, process.env.JWT_SECRET) as {
@@ -244,17 +245,17 @@ router.get("/getClasses", async (req: Request, res: Response) => {
       if (token.email && token.teacher) {
         return res.status(200).send(
           await Class.find({
-            relations: ["teacher"],
-            order: { startTime: "ASC" },
+            relations: ['teacher'],
+            order: { startTime: 'ASC' },
             where: { teacher: token.email },
-          })
+          }),
         );
       }
     } catch {
       return res.status(500).end();
     }
   }
-  return res.status(401).send("no auth");
+  return res.status(401).send('no auth');
 });
 
 export default router;

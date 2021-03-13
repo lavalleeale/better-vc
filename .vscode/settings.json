@@ -1,0 +1,9 @@
+{
+  "eslint.workingDirectories": [
+    "./api",
+    "./frontend"
+  ],
+  "eslint.format.enable": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.formatOnSave": true
+}

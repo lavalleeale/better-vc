@@ -66,16 +66,14 @@ const ManageUsers = () => {
         end={users.length}
       />
       <ul>
-        {users.slice(start, start + skip).map((student, index) => {
-          return (
+        {users.slice(start, start + skip).map((student, index) => (
             <li key={student.name}>
               <User
                 userProp={student}
                 deleteUser={() => deleteUser(student.email, index)}
               />
             </li>
-          );
-        })}
+          ))}
       </ul>
     </div>
   );
