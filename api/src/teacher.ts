@@ -22,7 +22,7 @@ router.post('/promoteTeacher', async (req: Request, res: Response) => {
         return res
           .status(200)
           .send(
-            await User.update({ email: req.body.email }, { teacher: true }),
+            await User.update({ email: req.body.email }, { teacher: true })
           );
       }
     }
@@ -87,7 +87,9 @@ router.post('/addClass', async (req: Request, res: Response) => {
               where: { name: req.body.teacher },
             }),
             students: (await Promise.all(
-              req.body.students.map(async (student: { name: string }) => User.findOne({ name: student.name })),
+              req.body.students.map(async (student: { name: string }) =>
+                User.findOne({ name: student.name })
+              )
             )) as User[],
           }).save();
           return res.status(200).send(block);
@@ -119,9 +121,11 @@ router.put('/updateClass', async (req: Request, res: Response) => {
               ...req.body.block,
               teacher,
               students: (await Promise.all(
-                req.body.block.students.map(async (student: { name: string }) => User.findOne({ name: student.name })),
+                req.body.block.students.map(async (student: { name: string }) =>
+                  User.findOne({ name: student.name })
+                )
               )) as User[],
-            }),
+            })
           );
         } catch (e) {
           if (e instanceof QueryFailedError) {
@@ -136,8 +140,8 @@ router.put('/updateClass', async (req: Request, res: Response) => {
 });
 router.delete('/deleteClass', async (req: Request, res: Response) => {
   if (
-    typeof req.headers.jwt === 'string'
-    && typeof req.headers.name === 'string'
+    typeof req.headers.jwt === 'string' &&
+    typeof req.headers.name === 'string'
   ) {
     const rawToken = req.headers.jwt as string;
     if (rawToken) {
@@ -160,8 +164,8 @@ router.delete('/deleteClass', async (req: Request, res: Response) => {
 });
 router.delete('/deleteUser', async (req: Request, res: Response) => {
   if (
-    typeof req.headers.jwt === 'string'
-    && typeof req.headers.email === 'string'
+    typeof req.headers.jwt === 'string' &&
+    typeof req.headers.email === 'string'
   ) {
     const rawToken = req.headers.jwt as string;
     if (rawToken) {
@@ -227,6 +231,7 @@ router.post('/addUser', async (req: Request, res: Response) => {
           if (e instanceof QueryFailedError) {
             return res.status(500).send('QueryFailedError');
           }
+          console.log(e);
           return res.status(500).end();
         }
       }
@@ -248,7 +253,7 @@ router.get('/getClasses', async (req: Request, res: Response) => {
             relations: ['teacher'],
             order: { startTime: 'ASC' },
             where: { teacher: token.email },
-          }),
+          })
         );
       }
     } catch {
