@@ -1,0 +1,5 @@
+image: gitpod/workspace-full
+
+tasks:
+  - init: yarn --cwd api&&yarn --cwd frontend
+    command: yarn --cwd api start
