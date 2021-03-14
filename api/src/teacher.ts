@@ -7,9 +7,17 @@ import { v2 as cloudinary } from 'cloudinary';
 import Class from './entities/Class';
 import User from './entities/User';
 
+require('dotenv-safe').config();
+
 const express = require('express');
 
 const router = express.Router();
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_NAME,
+  api_key: process.env.CLOUDINARY_KEY,
+  api_secret: process.env.CLOUDINARY_SECRET,
+});
 
 router.post('/promoteTeacher', async (req: Request, res: Response) => {
   if (typeof req.headers.jwt === 'string') {
@@ -231,7 +239,6 @@ router.post('/addUser', async (req: Request, res: Response) => {
           if (e instanceof QueryFailedError) {
             return res.status(500).send('QueryFailedError');
           }
-          console.log(e);
           return res.status(500).end();
         }
       }

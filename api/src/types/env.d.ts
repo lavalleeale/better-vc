@@ -1,6 +1,4 @@
-// eslint-disable-next-line no-unused-vars
 declare namespace NodeJS {
-  // eslint-disable-next-line no-unused-vars
   interface ProcessEnv {
     DATABASE_PASSWORD: string;
     DATABASE_USERNAME: string;
@@ -12,6 +10,8 @@ declare namespace NodeJS {
     JWT_SECRET: string;
     API_URL: string;
     FRONTEND_URL: string;
-    CLOUDINARY_URL: string;
+    CLOUDINARY_NAME: string;
+    CLOUDINARY_KEY: string;
+    CLOUDINARY_SECRET: string;
   }
 }
