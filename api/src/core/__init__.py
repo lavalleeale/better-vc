@@ -14,7 +14,15 @@ app = Flask(__name__)
 jwt = JWTManager(app)
 
 
-CORS(app, origins=["http://localhost:3000"], supports_credentials=True)
+CORS(
+    app,
+    origins=[
+        "http://localhost:3000"
+        if app.config["ENV"]
+        else "https://bettervc.alextesting.ninja"
+    ],
+    supports_credentials=True,
+)
 if app.config["ENV"] == "production":
     app.config["SESSION_COOKIE_SECURE"] = True
     app.config["SESSION_COOKIE_DOMAIN"] = ".alextesting.ninja"
