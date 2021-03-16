@@ -46,7 +46,7 @@ const AddClass = ({
             credentials: "include",
             headers: {
                 "content-type": "application/json",
-                X_CSRF_TOKEN: cookies.csrf_access_token,
+                "X-CSRF-TOKEN": cookies.csrf_access_token,
             },
             body: JSON.stringify({ ...block, teacher: block.teacher }),
         });
@@ -73,7 +73,7 @@ const AddClass = ({
                     method: "PUT",
                     credentials: "include",
                     headers: {
-                        X_CSRF_TOKEN: cookies.csrf_access_token,
+                        "X-CSRF-TOKEN": cookies.csrf_access_token,
                         "content-type": "application/json",
                     },
                     body: JSON.stringify(block),

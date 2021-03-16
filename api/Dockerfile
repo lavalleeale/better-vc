@@ -9,7 +9,7 @@ ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
 # install dependencies
-RUN apk update && apk add  --no-cache libressl-dev musl-dev libffi-dev postgresql-dev gcc python3-dev musl-dev make build-base cargo
+RUN apk update && apk add  --no-cache musl-dev libffi-dev postgresql-dev gcc python3-dev musl-dev make build-base cargo
 RUN python -m venv /opt/venv
 ENV PATH="/opt/venv/bin:$PATH"
 RUN pip install --upgrade pip

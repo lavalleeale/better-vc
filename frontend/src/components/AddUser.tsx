@@ -37,7 +37,7 @@ const AddUser = ({ teacher }: { teacher: boolean }) => {
                 credentials: "include",
                 headers: {
                     "content-type": "application/json",
-                    X_CSRF_TOKEN: cookies.csrf_access_token,
+                    "X-CSRF-TOKEN": cookies.csrf_access_token,
                 },
                 body: JSON.stringify({
                     ...student,

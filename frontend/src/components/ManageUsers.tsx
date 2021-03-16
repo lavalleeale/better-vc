@@ -31,7 +31,7 @@ const ManageUsers = () => {
                     {
                         credentials: "include",
                         headers: {
-                            X_CSRF_TOKEN: cookies.csrf_access_token,
+                            "X-CSRF-TOKEN": cookies.csrf_access_token,
                         },
                     }
                 );
@@ -53,7 +53,7 @@ const ManageUsers = () => {
             credentials: "include",
             method: "delete",
             headers: {
-                X_CSRF_TOKEN: cookies.csrf_access_token,
+                "X-CSRF-TOKEN": cookies.csrf_access_token,
             },
         });
         setUsers([...users.slice(0, index), ...users.slice(index + 1)]);

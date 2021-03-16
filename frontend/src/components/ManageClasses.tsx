@@ -29,7 +29,7 @@ const ManageClasses = () => {
             credentials: "include",
             method: "delete",
             headers: {
-                X_CSRF_TOKEN: cookies.csrf_access_token,
+                "X-CSRF-TOKEN": cookies.csrf_access_token,
             },
         });
         setClasses([...classes.slice(0, index), ...classes.slice(index + 1)]);
