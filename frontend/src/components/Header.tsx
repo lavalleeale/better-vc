@@ -155,7 +155,7 @@ const Header = () => {
                                 setUsername(userData.name);
                             }
                         }}
-                        onFailure={console.log}
+                        // onFailure={console.log}
                         cookiePolicy="single_host_origin"
                     />
                 )}
