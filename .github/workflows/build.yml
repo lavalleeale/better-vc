@@ -12,17 +12,11 @@ jobs:
         name: Checkout
         uses: actions/checkout@v2
       - 
-        name: Cache
-        uses: actions/cache@v2
-        with:
-          path: './api/node_modules'
-          key: ${{ runner.os }}-modules-${{ hashFiles('./api/yarn.lock') }}
-      - 
-        name: Yarn Install
-        run: yarn  --cwd api install --frozen-lockfile
+        name: Install black
+        run: pip install black
       - 
         name: Lint
-        run: yarn --cwd api run eslint --ext .ts src
+        run: black --check api/src
   LintFrontend:
     runs-on: ubuntu-latest
     name: "Lint Frontend"

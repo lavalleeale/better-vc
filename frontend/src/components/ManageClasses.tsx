@@ -2,79 +2,70 @@
 /* eslint-disable import/no-unresolved */
 import { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
-import API_BASE_URL from "../constants";
 import { ClassType } from "../@types/class";
+import API_BASE_URL from "../constants";
 import EditClass from "./EditClass";
 import PageSelect from "./PageSelect";
 
 const ManageClasses = () => {
-  const [cookies, , removeCookie] = useCookies(["auth"]);
-  const [classes, setClasses] = useState<ClassType[]>([]);
-  const [start, setStart] = useState(0);
-  const [skip, setSkip] = useState(10);
-  useEffect(() => {
-    async function getData() {
-      try {
-        const response = await fetch(`${API_BASE_URL}/teacher/getAllClasses`, {
-          credentials: "omit",
-          headers: {
-            jwt: cookies.auth,
-          },
+    const [classes, setClasses] = useState<ClassType[]>([]);
+    const [cookies] = useCookies();
+    const [skip, setSkip] = useState(10);
+    const [start, setStart] = useState(0);
+    useEffect(() => {
+        async function getData() {
+            const response = await fetch(
+                `${API_BASE_URL}/teacher/getAllClasses`,
+                {
+                    credentials: "include",
+                }
+            );
+            setClasses(await response.json());
+        }
+        getData();
+    }, []);
+    async function deleteClass(id: number, index: number) {
+        await fetch(`${API_BASE_URL}/teacher/deleteClass/${id}`, {
+            credentials: "include",
+            method: "delete",
+            headers: {
+                X_CSRF_TOKEN: cookies.csrf_access_token,
+            },
         });
-        setClasses(await response.json());
-      } catch {
-        removeCookie("auth", {
-          path: "/",
-          domain:
-            process.env.NODE_ENV === "production"
-              ? ".alextesting.ninja"
-              : "localhost",
-        });
-      }
+        setClasses([...classes.slice(0, index), ...classes.slice(index + 1)]);
     }
-    if (cookies.auth) {
-      getData();
-    }
-  }, [cookies.auth, removeCookie]);
-  async function deleteClass(name: string, index: number) {
-    await fetch(`${API_BASE_URL}/teacher/deleteClass`, {
-      credentials: "omit",
-      method: "delete",
-      headers: {
-        jwt: cookies.auth,
-        name,
-      },
-    });
-    setClasses([...classes.slice(0, index), ...classes.slice(index + 1)]);
-  }
-  return (
-    <div>
-      <PageSelect
-        skip={skip}
-        setSkip={setSkip}
-        start={start}
-        setStart={setStart}
-        end={classes.length}
-      />
-      <ul>
-        {classes.slice(start, start + skip).map((block: ClassType, index) => (
-            <li key={block.name}>
-              <EditClass
-                deleteClass={() => deleteClass(block.name, index)}
-                block={block}
-                setBlock={(value) => {
-                  setClasses([
-                    ...classes.slice(0, index + start),
-                    value,
-                    ...classes.slice(index + start + 1),
-                  ]);
-                }}
-              />
-            </li>
-          ))}
-      </ul>
-    </div>
-  );
+    return (
+        <div>
+            <PageSelect
+                skip={skip}
+                setSkip={setSkip}
+                start={start}
+                setStart={setStart}
+                end={classes.length}
+            />
+            <ul>
+                {classes
+                    .slice(start, start + skip)
+                    .map((block: ClassType, index) => (
+                        <li key={block.name}>
+                            <EditClass
+                                deleteClass={() =>
+                                    deleteClass(block.id!, index)
+                                }
+                                block={block}
+                                setBlock={(value) => {
+                                    setClasses([
+                                        ...classes.slice(0, index + start),
+                                        value,
+                                        ...classes.slice(index + start + 1),
+                                    ]);
+                                }}
+                            />
+                        </li>
+                    ))}
+            </ul>
+        </div>
+    );
 };
 
 export default ManageClasses;

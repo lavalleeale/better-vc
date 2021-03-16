@@ -1,0 +1,26 @@
+# Use postgres/example user/password credentials
+version: "3.1"
+services:
+  db:
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD: md5073d28a58035d42dc46132089271c126
+      POSTGRES_USER: bettervc
+      POSTGRES_DB: bettervc
+    deploy:
+      placement:
+        constraints: [node.role == manager]
+    ports:
+      - 5432:5432
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+  api:
+    image: ghcr.io/lavalleeale/better-vc/better-vc:latest
+    deploy:
+      replicas: 4
+    ports:
+      - 5000:5000
+    volumes:
+      - ${PWD}/gunicorn_config.py:/app/gunicorn_config.py
+volumes:
+  pgdata:

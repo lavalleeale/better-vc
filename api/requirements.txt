@@ -1,0 +1,13 @@
+Flask
+Flask-Login
+Flask-Migrate
+black
+cloudinary
+flask-sqlalchemy
+flask_cors
+flask_jwt_extended
+gunicorn
+oauthlib
+psycopg2
+pyOpenSSL
+requests

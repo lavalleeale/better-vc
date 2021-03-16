@@ -1,11 +1,11 @@
 /* eslint-disable import/extensions */
 /* eslint-disable import/no-unresolved */
 import {
-  Card,
-  CircularProgress,
-  createMuiTheme,
-  CssBaseline,
-  Typography,
+    Card,
+    CircularProgress,
+    createMuiTheme,
+    CssBaseline,
+    Typography,
 } from "@material-ui/core";
 import { ThemeProvider } from "@material-ui/styles";
 import { lazy, Suspense, useState } from "react";
@@ -25,92 +25,92 @@ const Schedule = lazy(() => import("./components/Schedule"));
 
 const darkThemeMq = window.matchMedia("(prefers-color-scheme: dark)");
 const darkTheme = createMuiTheme({
-  palette: {
-    type: "dark",
-  },
+    palette: {
+        type: "dark",
+    },
 });
 const lightTheme = createMuiTheme({
-  palette: {
-    type: "light",
-  },
+    palette: {
+        type: "light",
+    },
 });
 
 function Loading() {
-  return (
-    <Card className="card" style={{ textAlign: "center" }}>
-      <Typography variant="h3">Loading...</Typography>
-      <CircularProgress style={{ width: "10%", height: "10%" }} />
-    </Card>
-  );
+    return (
+        <Card className="card" style={{ textAlign: "center" }}>
+            <Typography variant="h3">Loading...</Typography>
+            <CircularProgress style={{ width: "10%", height: "10%" }} />
+        </Card>
+    );
 }
 function App() {
-  const [darkMode, setDarkMode] = useState(darkThemeMq.matches);
-  darkThemeMq.addEventListener("change", (evt) => {
-    setDarkMode(evt.matches);
-  });
-  const [cookies] = useCookies(["auth"]);
-  return (
-    <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
-      <CssBaseline />
-      <Router>
-        <Header />
-        <br />
-        {!cookies.auth ? (
-          <Suspense fallback={<Loading />}>
-            <Login />
-          </Suspense>
-        ) : (
-          <Switch>
-            <Route exact path="/">
-              <Suspense fallback={<Loading />}>
-                <Schedule />
-              </Suspense>
-            </Route>
-            <Route exact path="/dashboard">
-              <Suspense fallback={<Loading />}>
-                <TeacherDash />
-              </Suspense>
-            </Route>
-            <Route path="/profile">
-              <Suspense fallback={<Loading />}>
-                <Profile />
-              </Suspense>
-            </Route>
-            <Route path="/user/:name">
-              <Suspense fallback={<Loading />}>
-                <User />
-              </Suspense>
-            </Route>
-            <Route path="/teacher/addClass">
-              <Suspense fallback={<Loading />}>
-                <AddClass />
-              </Suspense>
-            </Route>
-            <Route path="/teacher/addTeacher">
-              <Suspense fallback={<Loading />}>
-                <AddStudent teacher />
-              </Suspense>
-            </Route>
-            <Route path="/teacher/addStudent">
-              <Suspense fallback={<Loading />}>
-                <AddStudent teacher={false} />
-              </Suspense>
-            </Route>
-            <Route path="/teacher/manageClasses">
-              <Suspense fallback={<Loading />}>
-                <ManageClasses />
-              </Suspense>
-            </Route>
-            <Route path="/teacher/manage/:userType">
-              <Suspense fallback={<Loading />}>
-                <ManageUsers />
-              </Suspense>
-            </Route>
-          </Switch>
-        )}
-      </Router>
-    </ThemeProvider>
-  );
+    const [darkMode, setDarkMode] = useState(darkThemeMq.matches);
+    darkThemeMq.addEventListener("change", (evt) => {
+        setDarkMode(evt.matches);
+    });
+    const [cookies] = useCookies(["name"]);
+    return (
+        <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
+            <CssBaseline />
+            <Router>
+                <Header />
+                <br />
+                {!cookies.name ? (
+                    <Suspense fallback={<Loading />}>
+                        <Login />
+                    </Suspense>
+                ) : (
+                    <Switch>
+                        <Route exact path="/">
+                            <Suspense fallback={<Loading />}>
+                                <Schedule />
+                            </Suspense>
+                        </Route>
+                        <Route exact path="/dashboard">
+                            <Suspense fallback={<Loading />}>
+                                <TeacherDash />
+                            </Suspense>
+                        </Route>
+                        <Route path="/profile">
+                            <Suspense fallback={<Loading />}>
+                                <Profile />
+                            </Suspense>
+                        </Route>
+                        <Route path="/user/:name">
+                            <Suspense fallback={<Loading />}>
+                                <User />
+                            </Suspense>
+                        </Route>
+                        <Route path="/teacher/addClass">
+                            <Suspense fallback={<Loading />}>
+                                <AddClass />
+                            </Suspense>
+                        </Route>
+                        <Route path="/teacher/addTeacher">
+                            <Suspense fallback={<Loading />}>
+                                <AddStudent teacher />
+                            </Suspense>
+                        </Route>
+                        <Route path="/teacher/addStudent">
+                            <Suspense fallback={<Loading />}>
+                                <AddStudent teacher={false} />
+                            </Suspense>
+                        </Route>
+                        <Route path="/teacher/manageClasses">
+                            <Suspense fallback={<Loading />}>
+                                <ManageClasses />
+                            </Suspense>
+                        </Route>
+                        <Route path="/teacher/manage/:userType">
+                            <Suspense fallback={<Loading />}>
+                                <ManageUsers />
+                            </Suspense>
+                        </Route>
+                    </Switch>
+                )}
+            </Router>
+        </ThemeProvider>
+    );
 }
 
 export default App;

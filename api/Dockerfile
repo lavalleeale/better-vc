@@ -1,29 +1,18 @@
-# Use the official lightweight Node.js 14 image.
-# https://hub.docker.com/_/node
-FROM node:14-alpine as build
-
-# Create and change to the app directory.
-WORKDIR /usr/src/app
-
-COPY package.json ./
-COPY yarn.lock ./
-
-RUN yarn install --frozen-lockfile
-
-# Copy local code to the container image.
-COPY . ./
-
-RUN yarn compile
-
-FROM node:14-alpine as run
-
+# pull official base image
+FROM python:3-alpine
+# set work directory
 WORKDIR /app
+# set environment variables
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
+RUN apk update && apk add  --no-cache libressl-dev musl-dev libffi-dev postgresql-dev gcc python3-dev musl-dev make build-base cargo
+# install dependencies
+RUN pip install --upgrade pip
+COPY ./requirements.txt /app/requirements.txt
 
-COPY --from=build /usr/src/app/ ./
+RUN pip install -r requirements.txt
+# copy project
+COPY . /app/
+EXPOSE 5000
 
-RUN yarn install --prod --frozen-lockfile
-
-ENV NODE_ENV=production
-
-# Run the web service on container startup.
-CMD ["node", "dist/index.js"]
+ENTRYPOINT ["/app/gunicorn.sh"]

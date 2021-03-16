@@ -1,10 +1,10 @@
 export type ClassType = {
-  name: string;
-  teacher: Record<string, string>;
-  startTime: number;
-  endTime: number;
-  zoomLink: string;
-  classroomLink;
-  students: Array<{ name: string; email: string }>;
-  days: Array<boolean>;
+    name: string;
+    id?: number;
+    teacher: { name: string; id: number; email: string };
+    startTime: number;
+    endTime: number;
+    zoomLink: string;
+    students: Array<{ name: string; id: number; email: string }>;
+    days: Array<boolean>;
 };
