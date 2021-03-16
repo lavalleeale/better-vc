@@ -26,6 +26,7 @@ CORS(
 if app.config["ENV"] == "production":
     app.config["SESSION_COOKIE_SECURE"] = True
     app.config["SESSION_COOKIE_DOMAIN"] = ".alextesting.ninja"
+    app.config["JWT_COOKIE_DOMAIN"] = ".alextesting.ninja"
     app.config["JWT_COOKIE_SECURE"] = True
 app.config["JWT_TOKEN_LOCATION"] = ["cookies"]
 app.config["JWT_SESSION_COOKIE"] = False
