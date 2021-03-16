@@ -26,6 +26,9 @@ FROM python:3-alpine as run
 COPY --from=build /opt/venv /opt/venv
 COPY --from=build /app /app
 
+# install runtime dependencies
+RUN apk update && apk add --no-cache postgresql-dev
+
 # set work directory
 WORKDIR /app
 

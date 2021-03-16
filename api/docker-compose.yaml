@@ -7,17 +7,17 @@ services:
       POSTGRES_PASSWORD: md5073d28a58035d42dc46132089271c126
       POSTGRES_USER: bettervc
       POSTGRES_DB: bettervc
-    deploy:
-      placement:
-        constraints: [node.role == manager]
+    # deploy:
+    #   placement:
+    #     constraints: [node.role == manager]
     ports:
       - 5432:5432
     volumes:
       - pgdata:/var/lib/postgresql/data
   api:
-    image: ghcr.io/lavalleeale/better-vc/better-vc:latest
-    deploy:
-      replicas: 4
+    build: .
+    # deploy:
+    #   replicas: 4
     ports:
       - 5000:5000
     volumes:
