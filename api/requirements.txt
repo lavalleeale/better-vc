@@ -9,5 +9,4 @@ flask_jwt_extended
 gunicorn
 oauthlib
 psycopg2
-pyOpenSSL
 requests
