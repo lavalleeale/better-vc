@@ -18,7 +18,7 @@ CORS(
     app,
     origins=[
         "http://localhost:3000"
-        if app.config["ENV"]
+        if app.config["ENV"] != "production"
         else "https://bettervc.alextesting.ninja"
     ],
     supports_credentials=True,
