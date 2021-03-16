@@ -15,7 +15,7 @@ services:
     volumes:
       - pgdata:/var/lib/postgresql/data
   api:
-    image: ghcr.io/lavalleeale/better-vc/better-vc:latest
+    image: test
     deploy:
       replicas: 4
     ports:

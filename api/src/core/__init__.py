@@ -28,7 +28,7 @@ app.config["SQLALCHEMY_DATABASE_URI"] = (
     else os.getenv("DEV_DB_URL")
 )
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
-app.secret_key = "test"
+app.secret_key = os.getenv("APP_SECRET")
 jwt = JWTManager(app)
 
 
