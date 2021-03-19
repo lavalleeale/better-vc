@@ -11,6 +11,12 @@ from flask_jwt_extended import (
 )
 
 app = Flask(__name__)
+app.config["JWT_TOKEN_LOCATION"] = ["cookies"]
+app.config["JWT_SESSION_COOKIE"] = False
+if app.config["ENV"] == "production":
+    app.config["JWT_COOKIE_DOMAIN"] = ".alextesting.ninja"
+    app.config["JWT_COOKIE_SECURE"] = True
+app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(days=30)
 jwt = JWTManager(app)
 
 
@@ -23,14 +29,6 @@ CORS(
     ],
     supports_credentials=True,
 )
-if app.config["ENV"] == "production":
-    app.config["SESSION_COOKIE_SECURE"] = True
-    app.config["SESSION_COOKIE_DOMAIN"] = ".alextesting.ninja"
-    app.config["JWT_COOKIE_DOMAIN"] = ".alextesting.ninja"
-    app.config["JWT_COOKIE_SECURE"] = True
-app.config["JWT_TOKEN_LOCATION"] = ["cookies"]
-app.config["JWT_SESSION_COOKIE"] = False
-app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(days=30)
 app.config["SQLALCHEMY_DATABASE_URI"] = (
     os.getenv("DB_URL")
     if app.config["ENV"] == "production"
@@ -38,7 +36,6 @@ app.config["SQLALCHEMY_DATABASE_URI"] = (
 )
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 app.secret_key = os.getenv("APP_SECRET")
-jwt = JWTManager(app)
 
 
 @app.after_request

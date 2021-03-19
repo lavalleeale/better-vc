@@ -1,20 +1,20 @@
 /* eslint-disable react/require-default-props */
 /* eslint-disable import/extensions */
 /* eslint-disable import/no-unresolved */
-import { useState } from "react";
-import { ClassType } from "../@types/class";
-import AddClass from "./AddClass";
-import ViewClass from "./ViewClass";
+import { useState } from 'react';
+import { ClassType } from '../types/class';
+import AddClass from '../pages/teacher/addClass';
+import ViewClass from './ViewClass';
 
 const EditClass = ({
   block,
   setBlock,
   deleteClass,
 }: {
-  block: ClassType;
-  // eslint-disable-next-line no-unused-vars
-  setBlock: (value: ClassType) => void;
-  deleteClass: () => void;
+    block: ClassType;
+    // eslint-disable-next-line no-unused-vars
+    setBlock: (value: ClassType) => void;
+    deleteClass: () => void;
 }) => {
   const [editing, setEditing] = useState(false);
 

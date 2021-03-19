@@ -10,11 +10,11 @@ import {
     Typography,
 } from "@material-ui/core";
 import { AccountCircle } from "@material-ui/icons";
+import Link from "next/link";
 import { useState } from "react";
 import { useCookies } from "react-cookie";
-import { Link } from "react-router-dom";
 import GoogleLogin, { GoogleLoginResponse } from "react-google-login";
-import API_BASE_URL from "../constants";
+import { API_BASE_URL } from "../constants";
 
 const Header = () => {
     const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -28,22 +28,13 @@ const Header = () => {
                 </Typography>
                 {username ? (
                     <div>
-                        <Link
-                            style={{
-                                textDecoration: "none",
-                                marginRight: "10px",
-                            }}
-                            to="/"
-                        >
+                        <Link href="/schedule">
                             <Button aria-label="schedule" variant="outlined">
                                 Schedule
                             </Button>
                         </Link>
                         {cookies.teacher && (
-                            <Link
-                                style={{ textDecoration: "none" }}
-                                to="/dashboard"
-                            >
+                            <Link href="/teacher/dashboard">
                                 <Button
                                     aria-label="dashboard"
                                     variant="outlined"
@@ -78,14 +69,7 @@ const Header = () => {
                             open={Boolean(anchorEl)}
                             onClose={() => setAnchorEl(null)}
                         >
-                            <Link
-                                style={{
-                                    textDecoration: "none",
-                                    color: "inherit",
-                                }}
-                                to="/profile"
-                                onClick={() => setAnchorEl(null)}
-                            >
+                            <Link href="/user/profile">
                                 <MenuItem onClick={() => setAnchorEl(null)}>
                                     {username}
                                 </MenuItem>

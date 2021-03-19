@@ -16,6 +16,8 @@ __pycache__
 .env.test.local
 .env.production.local
 .env
+.next
+out
 gunicorn_config.py
 
 npm-debug.log*

@@ -1,5 +1,5 @@
-import { Card, IconButton, Typography } from "@material-ui/core";
-import { KeyboardArrowLeft, KeyboardArrowRight } from "@material-ui/icons";
+import { Card, IconButton, Typography } from '@material-ui/core';
+import { KeyboardArrowLeft, KeyboardArrowRight } from '@material-ui/icons';
 
 const DayPicker = ({
   day,
@@ -10,16 +10,16 @@ const DayPicker = ({
   setDay(value: number): void;
 }) => {
   const days = [
-    "Sunday",
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday",
+    'Sunday',
+    'Monday',
+    'Tuesday',
+    'Wednesday',
+    'Thursday',
+    'Friday',
+    'Saturday',
   ];
   return (
-    <Card className="card" style={{ textAlign: "center" }}>
+    <Card className="card" style={{ textAlign: 'center' }}>
       <IconButton
         aria-label="Previous Day"
         onClick={() => {
@@ -29,11 +29,11 @@ const DayPicker = ({
             setDay(day - 1);
           }
         }}
-        style={{ marginRight: "10px" }}
+        style={{ marginRight: '10px' }}
       >
         <KeyboardArrowLeft />
       </IconButton>
-      <Typography style={{ display: "inline" }}>
+      <Typography style={{ display: 'inline' }}>
         {days[Math.abs(day)]}
       </Typography>
       <IconButton
@@ -45,7 +45,7 @@ const DayPicker = ({
             setDay(day + 1);
           }
         }}
-        style={{ marginLeft: "10px" }}
+        style={{ marginLeft: '10px' }}
       >
         <KeyboardArrowRight />
       </IconButton>
