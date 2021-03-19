@@ -30,7 +30,7 @@ def add_user():
                 if body["image"]
                 else ""
             )
-            image_url = cloudinary.utils.cloudinary_url(image_id)[0]
+            image_url = cloudinary.utils.cloudinary_url(image_id, secure=True)[0]
             new_user = UserModel(
                 body["name"],
                 body["email"].lower(),
