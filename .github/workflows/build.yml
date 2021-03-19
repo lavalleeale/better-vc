@@ -70,12 +70,16 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Cache
+      - name: Cache Dependancies
         uses: actions/cache@v2
         with:
           path: "./frontend/node_modules"
           key: ${{ runner.os }}-modules-${{ hashFiles('./frontend/yarn.lock') }}
-
+      - name: Cache Build
+        uses: actions/cache@v2
+        with:
+        path: frontend/.next/cache
+        key: ${{ runner.os }}-nextjs-${{ hashFiles('frontend/package-lock.json') }}
       - name: Yarn Install
         run: yarn  --cwd ./frontend install --frozen-lockfile
       - name: Yarn Build
