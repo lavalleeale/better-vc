@@ -21,10 +21,13 @@ def login():
                 .filter(UserModel.email == userInfo["email"])
                 .one()
             )
-            resp = make_response({"name": user.nickname, "teacher": user.teacher})
+            token = create_access_token(identity=user)
+            resp = make_response(
+                {"name": user.nickname, "teacher": user.teacher, "token": token}
+            )
             set_access_cookies(
                 resp,
-                create_access_token(identity=user),
+                token,
                 max_age=int(timedelta(days=30).total_seconds()),
             )
 

@@ -17,18 +17,20 @@ jwt = JWTManager(app)
 CORS(
     app,
     origins=[
-        "http://localhost:3000"
+        "https://localhost:19006"
         if app.config["ENV"] != "production"
         else "https://bettervc.alextesting.ninja"
     ],
     supports_credentials=True,
 )
+app.config["SESSION_COOKIE_SECURE"] = True
+app.config["JWT_COOKIE_SECURE"] = True
 if app.config["ENV"] == "production":
-    app.config["SESSION_COOKIE_SECURE"] = True
     app.config["SESSION_COOKIE_DOMAIN"] = ".alextesting.ninja"
     app.config["JWT_COOKIE_DOMAIN"] = ".alextesting.ninja"
-    app.config["JWT_COOKIE_SECURE"] = True
-app.config["JWT_TOKEN_LOCATION"] = ["cookies"]
+else:
+    app.config["JWT_COOKIE_DOMAIN"] = ".localhost"
+app.config["JWT_TOKEN_LOCATION"] = ["cookies", "headers"]
 app.config["JWT_SESSION_COOKIE"] = False
 app.config["JWT_ACCESS_TOKEN_EXPIRES"] = timedelta(days=30)
 app.config["SQLALCHEMY_DATABASE_URI"] = (
