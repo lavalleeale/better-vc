@@ -21,7 +21,6 @@ const LoginScreen = ({ finish }: { finish(): void }) => {
 
   React.useEffect(() => {
     async function login() {
-      AsyncStorage.clear();
       if (response?.type === "success") {
         const { authentication } = response;
         const request = await fetch(`${API_BASE_URL}/auth/login`, {

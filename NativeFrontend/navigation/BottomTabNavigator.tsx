@@ -14,9 +14,9 @@ import LoginScreen from "../screens/LoginScreen";
 import {
   BottomTabParamList,
   ScheduleParamList,
-  DashboardParamList,
-  LoginParamList,
+  TeacherParamList,
 } from "../types";
+import ManageClassesScreen from "../screens/ManageClassesScreen";
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
@@ -39,13 +39,13 @@ export default function BottomTabNavigator() {
         component={ScheduleNavigator}
         options={{
           tabBarIcon: ({ color }) => (
-            <TabBarIcon name="ios-code" color={color} />
+            <TabBarIcon name="calendar-outline" color={color} />
           ),
         }}
       />
       {teacher && (
         <BottomTab.Screen
-          name="Dashboard"
+          name="teacher"
           component={DashboardNavigator}
           options={{
             tabBarIcon: ({ color }) => (
@@ -93,8 +93,6 @@ function ScheduleNavigator() {
   );
 }
 
-const LoginStack = createStackNavigator<LoginParamList>();
-
 function LoginNavigator({
   navigation,
 }: {
@@ -109,16 +107,21 @@ function LoginNavigator({
   );
 }
 
-const DashboardStack = createStackNavigator<DashboardParamList>();
+const TeacherStack = createStackNavigator<TeacherParamList>();
 
 function DashboardNavigator() {
   return (
-    <DashboardStack.Navigator>
-      <DashboardStack.Screen
-        name="DashboardScreen"
+    <TeacherStack.Navigator>
+      <TeacherStack.Screen
+        name="Dashboard"
         component={DashboardScreen}
         options={{ headerTitle: "Dashboard" }}
       />
-    </DashboardStack.Navigator>
+      <TeacherStack.Screen
+        name="ManageClasses"
+        component={ManageClassesScreen}
+        options={{ headerTitle: "Manage Classes" }}
+      />
+    </TeacherStack.Navigator>
   );
 }

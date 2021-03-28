@@ -25,4 +25,4 @@ export default function App() {
   }
 }
 
-AppRegistry.registerComponent("NativeFrontend", () => App);
+AppRegistry.registerComponent("BetterVC", () => App);
